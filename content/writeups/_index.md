@@ -1,5 +1,10 @@
 ---
 title: "Writeups"
+draft: false
 ---
 
-HTB, TryHackMe and PicoCTF writeups.
+## Platforms
+
+- [Hack The Box](/writeups/htb/)
+- [TryHackMe](/writeups/tryhackme/)
+- [PicoCTF](/writeups/picoctf/)
