@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>endianness-v2 | NullByte Notes</title>
+<meta name="keywords" content="picoctf, forensics, metadata, exiftool">
+<meta name="description" content="
+Description
+Here&rsquo;s a file that was recovered from a 32-bits system
+that organized the bytes a weird way. We&rsquo;re not even
+sure what type of file it is.
+Download it here and see what you can get out of it
+Solution
+By using CyberChef the file was put into the input section. Then converted to hex for the &ldquo;Swap Endianness&rdquo; function under a word length of 4. After this, the hex looks more like a JPG with the correct ÿØÿà␀␐JFIF␀␁ magic bytes start. After the endianness was swapped and save the file . and it automatically saved with the exension of jpg . open this image and you finally get the flag .">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/writeups/picoctf/pico-2024/endianness-v2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/writeups/picoctf/pico-2024/endianness-v2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="NullByte Notes (Alt + H)">NullByte Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/writeups/" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tools/" title="Tools">
+                    <span>Tools</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/certifications/" title="Certifications">
+                    <span>Certifications</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/news/" title="News">
+                    <span>News</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      endianness-v2
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><hr>
+<h1 id="description">Description<a hidden class="anchor" aria-hidden="true" href="#description">#</a></h1>
+<p>Here&rsquo;s a file that was recovered from a 32-bits system
+that organized the bytes a weird way. We&rsquo;re not even
+sure what type of file it is.
+Download it here and see what you can get out of it</p>
+<h1 id="solution">Solution<a hidden class="anchor" aria-hidden="true" href="#solution">#</a></h1>
+<p>By using CyberChef the file was put into the input section. Then converted to hex for the &ldquo;Swap Endianness&rdquo; function under a word length of 4. After this, the hex looks more like a JPG with the correct ÿØÿà␀␐JFIF␀␁ magic bytes start. After the endianness was swapped and save the file . and it automatically saved with the exension of jpg . open this image and you finally get the flag .</p>
+<p><code>Flag: picoCTF{cert!f1Ed_iNd!4n_s0rrY_3nDian_76e...}</code></p>
+<h1 id="-conclusion-of-the-ctf">✅ Conclusion of the CTF:<a hidden class="anchor" aria-hidden="true" href="#-conclusion-of-the-ctf">#</a></h1>
+<h3 id="-what-you-learned-from-this-ctf-challenge">🧠 What You Learned from This CTF Challenge:<a hidden class="anchor" aria-hidden="true" href="#-what-you-learned-from-this-ctf-challenge">#</a></h3>
+<h4 id="-1-understanding-endianness">🔹 1. Understanding Endianness<a hidden class="anchor" aria-hidden="true" href="#-1-understanding-endianness">#</a></h4>
+<p>Endianness is how multi-byte data is stored:</p>
+<p>Big-endian: most significant byte first.</p>
+<p>Little-endian: least significant byte first.</p>
+<p>Swapping endianness is often required when transferring data between systems with different architectures.</p>
+<h4 id="-2-architecture-matters">🔹 2. Architecture Matters<a hidden class="anchor" aria-hidden="true" href="#-2-architecture-matters">#</a></h4>
+<p>The mention of a 32-bit system was your clue to use a 4-byte word length.</p>
+<p>Different architectures use different &ldquo;word sizes&rdquo; (e.g., 32-bit = 4 bytes, 64-bit = 8 bytes).</p>
+<h4 id="-3-file-signature-recognition">🔹 3. File Signature Recognition<a hidden class="anchor" aria-hidden="true" href="#-3-file-signature-recognition">#</a></h4>
+<p>You learned how to recognize a JPEG file by its magic bytes:
+FF D8 FF E0 (aka ÿØÿà in ASCII)</p>
+<p>This helps identify file types even when filenames/extensions are removed or data is jumbled.</p>
+<p>🏁 Final Takeaway:
+Even when data looks broken or unreadable, understanding low-level data structures—like endianness and file signatures—can help you reconstruct and recover the original content.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/picoctf/">Picoctf</a></li>
+      <li><a href="http://localhost:1313/tags/forensics/">Forensics</a></li>
+      <li><a href="http://localhost:1313/tags/metadata/">Metadata</a></li>
+      <li><a href="http://localhost:1313/tags/exiftool/">Exiftool</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">NullByte Notes</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

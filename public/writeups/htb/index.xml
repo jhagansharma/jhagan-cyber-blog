@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Htb on Jhagan Cyber Blog</title>
+    <title>Htb on NullByte Notes</title>
     <link>http://localhost:1313/writeups/htb/</link>
-    <description>Recent content in Htb on Jhagan Cyber Blog</description>
+    <description>Recent content in Htb on NullByte Notes</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate></lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/writeups/htb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTB Jerry</title>
+      <link>http://localhost:1313/writeups/htb/jerry/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/htb/jerry/</guid>
+      <description>&lt;hr&gt;
+&lt;h1 id=&#34;enumeration&#34;&gt;Enumeration&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap -sC -sV TARGET_IP
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;exploitation&#34;&gt;Exploitation&lt;/h1&gt;
+&lt;p&gt;Describe exploit steps.&lt;/p&gt;
+&lt;h1 id=&#34;privilege-escalation&#34;&gt;Privilege Escalation&lt;/h1&gt;
+&lt;p&gt;Describe privesc.&lt;/p&gt;
+&lt;h1 id=&#34;lessons-learned&#34;&gt;Lessons Learned&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows IIS&lt;/li&gt;
+&lt;li&gt;File Upload Vulnerability&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>HTB Lame</title>
+      <link>http://localhost:1313/writeups/htb/lame/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/writeups/htb/lame/</guid>
+      <description>&lt;p&gt;Test HTB writeup&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

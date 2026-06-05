@@ -4,13 +4,14 @@ title = "NullByte Notes"
 
 theme = "PaperMod"
 
+# This is the KEY fix — only sections listed here appear on homepage feed
+# Since homepage uses layout = "single", this also acts as a safety net
 [params]
-defaultTheme = "dark"
 ShowReadingTime = false
 ShowShareButtons = false
 ShowPostNavLinks = false
 ShowBreadCrumbs = false
-disableSpecial1stPost = true
+mainSections = []   # Empty = no sections feed on homepage
 
 [[menu.main]]
 identifier = "home"
@@ -48,8 +49,3 @@ name = "News"
 url = "/news/"
 weight = 6
 
-[[menu.main]]
-identifier = "about"
-name = "About"
-url = "/about/"
-weight = 7

