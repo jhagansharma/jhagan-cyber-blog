@@ -40,3 +40,9 @@ url = "/news/"
 name = "About"
 weight = 7
 url = "/about/"
+
+[params]
+disableSpecial1stPost = true
+
+[outputs]
+home = ["HTML"]

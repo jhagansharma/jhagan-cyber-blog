@@ -19,6 +19,3 @@ Cybersecurity Enthusiast
 - NovaEmail
 - Email Phishing Detector
 
-## Latest Writeups
-
-Check the Writeups section.
