@@ -1,4 +1,4 @@
 ---
-title: "PicoCTF 2025"
+title: "PicoCTF 2024"
 draft: false
 ---
