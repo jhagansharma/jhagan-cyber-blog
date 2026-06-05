@@ -1,27 +1,101 @@
 ---
 
-title: "canyouseeme"
+title: "canYouSeeMe"
 date: 2026-06-05
 draft: false
-------------
+tags: ["picoctf", "forensics", "metadata", "exiftool"]
+------------------------------------------------------
 
-# Description
-### How about some hide and seek?
+# CanYouSeeMe
 
-## Solution
+## Challenge Description
+
+> How about some hide and seek?
+
+This challenge focuses on metadata analysis. The flag is hidden within the metadata of an image file.
+
+---
+
+## Download Challenge
+
+```bash
+wget https://artifacts.picoctf.net/c_titan/6/unknown.zip
 ```
-1. wget https://artifacts.picoctf.net/c_titan/6/unknown.zip
-3. unzip unknown.zip 
-2. exiftool ukn_reality.jpg
+
+Extract the archive:
+
+```bash
+unzip unknown.zip
 ```
-## exiftool is one of the most powerful command-line tools for reading, writing, and editing metadata in files. It works on images (JPG, PNG), PDFs, videos, and even audio files
 
+This gives us:
 
-Attribution URL                 : cGljb0NURntNRTc0RDQ3QV9ISUREM05fYTZkZjhkYjh9Cg==
+```text
+ukn_reality.jpg
+```
 
-the Attribution URL section looks like it has Base64 encoded text (cGljb0NURntNRTc0RDQ3QV9ISUREM05fYTZkZjhkYjh9Cg==).
-By putting that text into  with Base64 decoding the flag could be found.
+---
 
-USE : https://gchq.github.io/CyberChef/#recipe=From_Base64('A-Za-z0-9%2B/%3D',true,false)
+## Initial Analysis
 
-Flag: picoCTF{ME74D47A_HIDD3N_a6d...}
+A good first step in forensic challenges is checking file metadata.
+
+Run:
+
+```bash
+exiftool ukn_reality.jpg
+```
+
+### What is ExifTool?
+
+ExifTool is a powerful command-line utility used to read, write, and edit metadata from files such as:
+
+* Images (JPG, PNG)
+* PDFs
+* Audio files
+* Video files
+
+It is widely used in digital forensics and CTF challenges.
+
+---
+
+## Interesting Finding
+
+The output contains the following field:
+
+```text
+Attribution URL : cGljb0NURntNRTc0RDQ3QV9ISUREM05fYTZkZjhkYjh9Cg==
+```
+
+This looks like Base64 encoded data.
+
+---
+
+## Decoding the Value
+
+The string can be decoded using CyberChef.
+
+Recipe:
+
+```text
+From Base64
+```
+
+After decoding, the hidden flag is revealed.
+
+---
+
+## Flag
+
+```text
+picoCTF{ME74D47A_HIDD3N_a6df8db8}
+```
+
+---
+
+## Key Takeaways
+
+* Always inspect metadata during forensic challenges.
+* ExifTool is an essential tool for CTFs and DFIR work.
+* Metadata often contains hidden information.
+* Base64 encoding is commonly used to conceal flags in beginner challenges.
