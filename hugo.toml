@@ -8,34 +8,35 @@ canonifyURLs = true
 
 [[menu.main]]
 name = "Home"
+weight=1
 url = "/"
 
 [[menu.main]]
 name = "Writeups"
-weight = 1
+weight = 2
 url = "/writeups/"
 
 [[menu.main]]
 name = "Projects"
-weight = 2
+weight = 3
 url = "/projects/"
 
 [[menu.main]]
 name = "Tools"
-weight = 3
+weight = 4
 url = "/tools/"
 
 [[menu.main]]
 name = "Certifications"
-weight = 4
+weight = 5
 url = "/certifications/"
 
 [[menu.main]]
 name = "News"
-weight = 5
+weight = 6
 url = "/news/"
 
 [[menu.main]]
 name = "About"
-weight = 6
+weight = 7
 url = "/about/"
