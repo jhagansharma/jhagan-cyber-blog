@@ -12,24 +12,30 @@ url = "/"
 
 [[menu.main]]
 name = "Writeups"
+weight = 1
 url = "/writeups/"
 
 [[menu.main]]
 name = "Projects"
+weight = 2
 url = "/projects/"
 
 [[menu.main]]
 name = "Tools"
+weight = 3
 url = "/tools/"
 
 [[menu.main]]
 name = "Certifications"
+weight = 4
 url = "/certifications/"
 
 [[menu.main]]
 name = "News"
+weight = 5
 url = "/news/"
 
 [[menu.main]]
 name = "About"
+weight = 6
 url = "/about/"
