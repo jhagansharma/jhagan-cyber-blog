@@ -1,6 +1,6 @@
 baseURL = "https://jhagan-cyber-blog.pages.dev/"
 languageCode = "en-us"
-title = "Jhagan Cyber Blog"
+title = "NullByte Notes"
 
 theme = "PaperMod"
 relativeURLs = false
