@@ -1,0 +1,33 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Jhagan Cyber Blog"
+
+theme = "PaperMod"
+
+[[menu.main]]
+name = "Home"
+url = "/"
+
+[[menu.main]]
+name = "Writeups"
+url = "/writeups/"
+
+[[menu.main]]
+name = "Projects"
+url = "/projects/"
+
+[[menu.main]]
+name = "Tools"
+url = "/tools/"
+
+[[menu.main]]
+name = "Certifications"
+url = "/certifications/"
+
+[[menu.main]]
+name = "News"
+url = "/news/"
+
+[[menu.main]]
+name = "About"
+url = "/about/"
