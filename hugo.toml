@@ -3,46 +3,53 @@ languageCode = "en-us"
 title = "NullByte Notes"
 
 theme = "PaperMod"
-relativeURLs = false
-canonifyURLs = true
-
-[[menu.main]]
-name = "Home"
-weight=1
-url = "/"
-
-[[menu.main]]
-name = "Writeups"
-weight = 2
-url = "/writeups/"
-
-[[menu.main]]
-name = "Projects"
-weight = 3
-url = "/projects/"
-
-[[menu.main]]
-name = "Tools"
-weight = 4
-url = "/tools/"
-
-[[menu.main]]
-name = "Certifications"
-weight = 5
-url = "/certifications/"
-
-[[menu.main]]
-name = "News"
-weight = 6
-url = "/news/"
-
-[[menu.main]]
-name = "About"
-weight = 7
-url = "/about/"
 
 [params]
+defaultTheme = "dark"
+ShowReadingTime = false
+ShowShareButtons = false
+ShowPostNavLinks = false
+ShowBreadCrumbs = false
 disableSpecial1stPost = true
 
-[outputs]
-home = ["HTML"]
+[[menu.main]]
+identifier = "home"
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+identifier = "writeups"
+name = "Writeups"
+url = "/writeups/"
+weight = 2
+
+[[menu.main]]
+identifier = "projects"
+name = "Projects"
+url = "/projects/"
+weight = 3
+
+[[menu.main]]
+identifier = "tools"
+name = "Tools"
+url = "/tools/"
+weight = 4
+
+[[menu.main]]
+identifier = "certifications"
+name = "Certifications"
+url = "/certifications/"
+weight = 5
+
+[[menu.main]]
+identifier = "news"
+name = "News"
+url = "/news/"
+weight = 6
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 7
