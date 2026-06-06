@@ -1,5 +1,5 @@
 ---
-title: "web application testing"
+title: "Web Application Testing"
 ---
 
 My certifications and learning journey.

@@ -1,5 +1,5 @@
 ---
-title: "info gatherring tools"
+title: "Information Gathering tools"
 ---
 
 My certifications and learning journey.
