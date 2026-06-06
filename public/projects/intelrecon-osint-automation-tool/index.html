@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=27259&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>IntelRecon-OSINT-Automation-Tool | NullByte Notes</title>
+<meta name="keywords" content="forensics, metadata, python">
+<meta name="description" content="
+A modular, menu-driven OSINT framework that automates intelligence gathering from publicly available sources while maintaining strict legal and ethical standards
+
+
+Table of Contents
+
+Project Overview
+The Problem It Solves
+Investigation Modules
+Architecture
+Technology Stack
+API Integration
+Safety &amp; Legal Compliance
+Output Format
+Interview Q&amp;A
+
+
+Project Overview
+OSINT = Open Source Intelligence — gathering information from publicly available sources.
+The OSINT Investigation Framework is a command-line tool that automates intelligence gathering about:">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:27259/projects/intelrecon-osint-automation-tool/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:27259/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:27259/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:27259/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:27259/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:27259/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:27259/projects/intelrecon-osint-automation-tool/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:27259/" accesskey="h" title="NullByte Notes (Alt + H)">NullByte Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:27259/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/writeups/" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/tools/" title="Tools">
+                    <span>Tools</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/certifications/" title="Certifications">
+                    <span>Certifications</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/news/" title="News">
+                    <span>News</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      IntelRecon-OSINT-Automation-Tool
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><blockquote>
+<p><strong>A modular, menu-driven OSINT framework that automates intelligence gathering from publicly available sources while maintaining strict legal and ethical standards</strong></p>
+</blockquote>
+<hr>
+<h2 id="table-of-contents">Table of Contents<a hidden class="anchor" aria-hidden="true" href="#table-of-contents">#</a></h2>
+<ol>
+<li><a href="#project-overview">Project Overview</a></li>
+<li><a href="#the-problem-it-solves">The Problem It Solves</a></li>
+<li><a href="#investigation-modules">Investigation Modules</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#technology-stack">Technology Stack</a></li>
+<li><a href="#api-integration">API Integration</a></li>
+<li><a href="#safety--legal-compliance">Safety &amp; Legal Compliance</a></li>
+<li><a href="#output-format">Output Format</a></li>
+<li><a href="#interview-qa">Interview Q&amp;A</a></li>
+</ol>
+<hr>
+<h2 id="project-overview">Project Overview<a hidden class="anchor" aria-hidden="true" href="#project-overview">#</a></h2>
+<p><strong>OSINT</strong> = <strong>Open Source Intelligence</strong> — gathering information from publicly available sources.</p>
+<p>The <strong>OSINT Investigation Framework</strong> is a command-line tool that automates intelligence gathering about:</p>
+<ul>
+<li>Domains and websites</li>
+<li>IP addresses</li>
+<li>Email addresses</li>
+<li>Phone numbers</li>
+<li>Social media usernames</li>
+<li>Vehicle registration numbers (India-specific)</li>
+<li>File metadata</li>
+</ul>
+<p>Instead of manually running 20+ different tools and compiling results, investigators type one command and get a comprehensive report.</p>
+<h3 id="quick-stats">Quick Stats<a hidden class="anchor" aria-hidden="true" href="#quick-stats">#</a></h3>
+<ul>
+<li><strong>Language</strong>: Python 3</li>
+<li><strong>Modules</strong>: 7 investigation types</li>
+<li><strong>Tools Integrated</strong>: 20+ OSINT tools</li>
+<li><strong>Output Formats</strong>: TXT + JSON reports</li>
+<li><strong>Optional APIs</strong>: 9 (all optional - framework works without them)</li>
+<li><strong>Target Users</strong>: Law enforcement, cybercrime units, authorized investigators</li>
+<li><strong>Legal</strong>: Passive-only by default, active methods require user confirmation</li>
+</ul>
+<hr>
+<h2 id="the-problem-it-solves">The Problem It Solves<a hidden class="anchor" aria-hidden="true" href="#the-problem-it-solves">#</a></h2>
+<h3 id="scenario-traditional-osint-investigation">Scenario: Traditional OSINT Investigation<a hidden class="anchor" aria-hidden="true" href="#scenario-traditional-osint-investigation">#</a></h3>
+<pre tabindex="0"><code>Investigator needs to investigate: suspicious-domain.com
+
+❌ BEFORE (Manual Process):
+├─ Run whois command
+│  └─ Write down results manually
+├─ Run dig command
+│  └─ Parse DNS output manually
+├─ Run nmap for ports
+│  └─ Interpret port scan results
+├─ Check VirusTotal (if you have API)
+│  └─ Copy-paste results
+├─ Search Shodan (if you have API)
+│  └─ Take screenshots
+├─ Check SSL certificates
+│  └─ Document findings
+├─ Research technologies (whatweb)
+│  └─ Manual analysis
+└─ Compile into report
+   └─ 2-3 hours of work ⏱️
+
+✅ WITH OSINT Framework:
+python3 osint.py
+  → Select: Domain OSINT
+  → Enter: suspicious-domain.com
+  → Wait 5-10 minutes
+  → Professional report generated
+└─ 10 minutes ⚡
+</code></pre><h3 id="major-challenges-addressed">Major Challenges Addressed<a hidden class="anchor" aria-hidden="true" href="#major-challenges-addressed">#</a></h3>
+<ol>
+<li>
+<p><strong>Too Many Tools</strong></p>
+<ul>
+<li>Investigators need to learn 20+ different tools</li>
+<li>Each has different output format</li>
+<li>Each requires different installation</li>
+<li>Hard to remember command syntax</li>
+</ul>
+</li>
+<li>
+<p><strong>Manual Data Compilation</strong></p>
+<ul>
+<li>Copy-pasting results from tools</li>
+<li>Inconsistent formatting</li>
+<li>Errors when manually entering data</li>
+<li>Time-consuming verification</li>
+</ul>
+</li>
+<li>
+<p><strong>Incomplete Information</strong></p>
+<ul>
+<li>Single tool gives partial picture</li>
+<li>Need multiple tools for complete intel</li>
+<li>Correlation requires manual work</li>
+<li>Easy to miss connections</li>
+</ul>
+</li>
+<li>
+<p><strong>API Fragmentation</strong></p>
+<ul>
+<li>Different APIs for different tools</li>
+<li>Need different accounts/keys</li>
+<li>Some require payment</li>
+<li>No unified interface</li>
+</ul>
+</li>
+</ol>
+<p><strong>Solution</strong>: Unified interface that:</p>
+<ul>
+<li>Runs all tools automatically</li>
+<li>Compiles results consistently</li>
+<li>Correlates information across sources</li>
+<li>Includes optional API enrichment</li>
+<li>Generates professional reports</li>
+</ul>
+<hr>
+<h2 id="investigation-modules">Investigation Modules<a hidden class="anchor" aria-hidden="true" href="#investigation-modules">#</a></h2>
+<h3 id="module-1-domain-osint">Module 1: Domain OSINT<a hidden class="anchor" aria-hidden="true" href="#module-1-domain-osint">#</a></h3>
+<p><strong>Purpose</strong>: Investigate websites and domain ownership</p>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>Is this domain legitimate or malicious?</li>
+<li>Who owns this domain?</li>
+<li>What servers does it use?</li>
+<li>What technologies power it?</li>
+<li>Is it being used for scams?</li>
+</ul>
+<p><strong>Tools Run</strong>:</p>
+<pre tabindex="0"><code>whois     → Domain registration details
+dig       → DNS records (A, MX, NS, TXT)
+host      → Hostname resolution
+dnsenum   → DNS enumeration
+dnsrecon  → Advanced DNS reconnaissance
+amass     → Subdomain discovery
+crt.sh    → SSL certificate history
+whatweb   → Technology identification
+sslscan   → SSL/TLS analysis
+nmap*     → Port scanning (*requires confirmation)
+</code></pre><p><strong>Example Output</strong>:</p>
+<pre tabindex="0"><code>DOMAIN OSINT REPORT: suspicious-site.com
+═════════════════════════════════════════════════════════
+
+REGISTRAR INFORMATION
+Registrar: GoDaddy.com
+Domain:    suspicious-site.com
+Created:   2023-01-15
+Expires:   2025-01-15
+Updated:   2024-06-01
+Registrant: REDACTED (Privacy Protected)
+
+DNS RECORDS
+A Record:        185.24.133.45
+MX Record:       mail.suspicious-site.com
+NS Records:      ns1.godaddy.com, ns2.godaddy.com
+TXT Records:     v=spf1 include:_spf.google.com
+                 google-site-verification=abc123xyz
+
+SUBDOMAINS FOUND
+mail.suspicious-site.com        (185.24.133.45)
+www.suspicious-site.com         (185.24.133.45)
+admin.suspicious-site.com       (185.24.133.45)
+api.suspicious-site.com         (SEPARATE IP: 192.168.1.1)
+
+SSL CERTIFICATE
+Issued To:      suspicious-site.com
+Issued By:      Let&#39;s Encrypt
+Valid From:     2024-01-01
+Valid Until:    2025-01-01
+Issuer CN:      R3
+
+TECHNOLOGIES IDENTIFIED
+Web Server:     Nginx 1.21.6
+CMS:            WordPress 5.8
+Scripting:      PHP 7.4
+JavaScript:     jQuery 3.6.0
+
+OPEN PORTS (Port Scan)
+80   - HTTP       (open)
+443  - HTTPS      (open)
+22   - SSH        (closed)
+3306 - MySQL      (closed)
+
+API ENRICHMENT (VirusTotal)
+Status:          MALICIOUS
+Threat:          Phishing Domain
+Detection Rate:  23/83 vendors
+Last Analysis:   2024-06-05 14:23:45
+
+API ENRICHMENT (Shodan)
+IP:              185.24.133.45
+Organization:    DigitalOcean
+City:            Amsterdam
+Ports:           80, 443, 8080
+Services:        HTTP, HTTPS, Apache Proxy
+</code></pre><hr>
+<h3 id="module-2-ip-address-osint">Module 2: IP Address OSINT<a hidden class="anchor" aria-hidden="true" href="#module-2-ip-address-osint">#</a></h3>
+<p><strong>Purpose</strong>: Investigate IP addresses and their services</p>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>Where is this server located?</li>
+<li>What services are running?</li>
+<li>Is this IP malicious?</li>
+<li>Who owns this IP?</li>
+<li>What devices are connected?</li>
+</ul>
+<p><strong>Tools Run</strong>:</p>
+<pre tabindex="0"><code>whois        → IP ownership and ASN
+geoiplookup  → Geographic location
+ipcalc       → Subnet information
+dig          → Reverse DNS lookup
+host         → Hostname resolution
+traceroute   → Network path
+nmap*        → Open ports and services
+</code></pre><p><strong>Example Output</strong>:</p>
+<pre tabindex="0"><code>IP OSINT REPORT: 185.24.133.45
+═════════════════════════════════════════════════════════
+
+IP OWNERSHIP
+IP Address:       185.24.133.45
+Organization:     DigitalOcean Inc
+ASN:              AS14061
+Country:          Netherlands
+City:             Amsterdam
+ISP:              DigitalOcean
+
+GEOLOCATION
+Latitude:         52.3676
+Longitude:        4.9041
+City:             Amsterdam
+Country:          Netherlands
+Region:           North Holland
+Timezone:         Europe/Amsterdam
+ISP:              DigitalOcean
+
+REVERSE DNS
+IP:               185.24.133.45
+Hostname:         mail.vhost.com
+PTR Record:       185-24-133-45.cloud.digitalocean.com
+
+SUBNET INFORMATION
+Network:          185.24.0.0/16
+Broadcast:        185.24.255.255
+First Host:       185.24.0.1
+Last Host:        185.24.255.254
+Total Hosts:      65,535
+
+OPEN PORTS &amp; SERVICES
+Port 80:          HTTP (Apache/2.4.41)
+Port 443:         HTTPS (Certificate valid until 2025-01-01)
+Port 22:          SSH (OpenSSH 7.6)
+Port 25:          SMTP (Postfix 3.4.8)
+Port 3306:        MySQL (5.7.29)
+
+NETWORK PATH (Traceroute)
+Hop 1:  192.168.1.1 (Your Router)
+Hop 2:  10.0.0.1 (ISP Gateway)
+Hop 3:  AS1234 Core Router
+Hop 4:  AS1234 Edge Router
+Hop 5:  AS14061 DigitalOcean Entry
+Hop 6:  185.24.133.45 (Target)
+
+API ENRICHMENT (Shodan)
+Services:        HTTP, HTTPS, SSH, SMTP, MySQL
+Banners:         Apache/2.4.41, OpenSSH 7.6
+Vulnerabilities: CVE-2021-41773 (Apache)
+Last Scan:       2024-06-03
+
+API ENRICHMENT (AbuseIPDB)
+Abuse Reports:   12
+Total Reports:   3,456
+Confidence:      78%
+Last Report:     2024-06-02
+Reports From:    Unauthorized login attempts, Port scanning, SSH brute force
+</code></pre><hr>
+<h3 id="module-3-email-osint">Module 3: Email OSINT<a hidden class="anchor" aria-hidden="true" href="#module-3-email-osint">#</a></h3>
+<p><strong>Purpose</strong>: Gather intelligence about email addresses</p>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>Is this email address real?</li>
+<li>Has this email been compromised?</li>
+<li>What accounts use this email?</li>
+<li>What domains is it registered on?</li>
+</ul>
+<p><strong>Tools Run</strong>:</p>
+<pre tabindex="0"><code>dig            → MX/SPF/DMARC records
+whois          → Domain owner info
+holehe         → Account existence check
+sherlock       → Username across platforms
+HaveIBeenPwned → Breach database
+Hunter.io      → Email verification
+</code></pre><p><strong>Example Output</strong>:</p>
+<pre tabindex="0"><code>EMAIL OSINT REPORT: suspect@example.com
+═════════════════════════════════════════════════════════
+
+EMAIL VALIDATION
+Format Valid:     ✓ Yes
+Domain Exists:    ✓ Yes
+MX Records:       aspmx.l.google.com, alt1.aspmx.l.google.com
+Email Provider:   Google Workspace
+
+BREACH HISTORY
+In Breaches:      ✓ YES (3 breaches)
+
+Breach 1: LinkedIn (2012)
+├─ Date:       2012-05-05
+├─ Records:    165 million
+├─ Exposed:    Email, Password Hash
+└─ Status:     Confirmed
+
+Breach 2: Adobe (2013)
+├─ Date:       2013-10-03
+├─ Records:    153 million
+├─ Exposed:    Email, Password Hash
+└─ Status:     Confirmed
+
+Breach 3: Yahoo (2014)
+├─ Date:       2014-12-14
+├─ Records:    500 million
+├─ Exposed:    Email, Password, Security Questions
+└─ Status:     Confirmed
+
+ASSOCIATED ACCOUNTS
+Found on Platforms:
+├─ GitHub       user_github_123 (15 repos)
+├─ Twitter      @suspect_user (2,300 followers)
+├─ LinkedIn     suspect-user (Sr. Software Engineer)
+├─ Facebook     suspect.user.123 (Private)
+├─ Instagram    suspect_user_ (482 followers)
+├─ Reddit       u/suspect_user (5,000 karma)
+├─ Medium       suspect-user (Technology writer)
+└─ StackOverflow suspect_user (5,000 reputation)
+
+DOMAIN INFORMATION
+Domain:         example.com
+Registrant:     John Doe
+Registration:   2010-03-15
+Expiration:     2025-03-15
+Registrar:      GoDaddy.com
+Status:         Active
+
+RECOMMENDATIONS
+[⚠] Email appears in 3 known breaches
+[⚠] Associated accounts reveal personal information
+[✓] Password should be changed (LinkedIn breach old, others recent)
+[✓] Enable 2-factor authentication
+</code></pre><hr>
+<h3 id="module-4-phone-number-osint">Module 4: Phone Number OSINT<a hidden class="anchor" aria-hidden="true" href="#module-4-phone-number-osint">#</a></h3>
+<p><strong>Purpose</strong>: Investigate phone numbers and carriers</p>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>What country is this number from?</li>
+<li>What carrier operates it?</li>
+<li>Is it a valid number?</li>
+<li>What&rsquo;s the location?</li>
+</ul>
+<p><strong>Tools Run</strong>:</p>
+<pre tabindex="0"><code>Country Detection  → Identify country from code
+Carrier Detection  → Identify telecom operator
+PhoneInfoga        → Phone intelligence
+NumVerify          → Phone validation
+Twilio             → Carrier details
+</code></pre><p><strong>Example Output</strong>:</p>
+<pre tabindex="0"><code>PHONE OSINT REPORT: +91-9876543210
+═════════════════════════════════════════════════════════
+
+PHONE VALIDATION
+Number:           +91-9876543210
+Format Valid:     ✓ Yes
+Number Valid:     ✓ Yes
+In Use:           ✓ Likely
+
+LOCATION INFORMATION
+Country:          India
+Country Code:     +91
+State/Region:     Delhi
+City:             New Delhi
+
+CARRIER INFORMATION
+Primary Carrier:  Vodafone Idea Limited
+Carrier Type:     Mobile (Cellular)
+Network:          GSM/3G/4G LTE
+Coverage:         Pan-India
+
+NUMBER DETAILS
+Type:             Mobile
+Activation Date:  2018-06-15
+Status:           Active
+Last Activity:    2024-06-05
+
+INTELLIGENCE SUMMARY
+├─ This is an active Indian mobile number
+├─ Operated by Vodafone Idea Limited
+├─ Registered to Delhi region
+└─ Recent activity confirmed
+
+API ENRICHMENT (Twilio)
+Carrier:          VODAFONE IDEA LIMITED
+Type:             mobile
+Portable:         False
+Network Type:     cellular
+</code></pre><hr>
+<h3 id="module-5-vehicle-osint-india-specific">Module 5: Vehicle OSINT (India-Specific)<a hidden class="anchor" aria-hidden="true" href="#module-5-vehicle-osint-india-specific">#</a></h3>
+<p><strong>Purpose</strong>: Lookup Indian vehicle registration numbers</p>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>What does this registration plate mean?</li>
+<li>Where was vehicle registered?</li>
+<li>What&rsquo;s the registration year?</li>
+<li>How old is this vehicle?</li>
+</ul>
+<p><strong>Tools Run</strong>:</p>
+<pre tabindex="0"><code>RTO Database    → Regional Transport Office
+Format Analysis → Decode registration plate
+Parivahan Ref   → Ministry of Road Transport
+</code></pre><p><strong>Example Output</strong>:</p>
+<pre tabindex="0"><code>VEHICLE OSINT REPORT: DL-01-AB-1234
+═════════════════════════════════════════════════════════
+
+REGISTRATION BREAKDOWN
+State:            DL (Delhi)
+District Code:    01 (Delhi District)
+Letter Series:    AB (Sequential allocation)
+Number Sequence:  1234 (Sequential)
+
+VEHICLE INFORMATION
+Registration Year: 2001
+Vehicle Age:       23 years
+Category:          Private Car / Taxi
+Status:            Active
+
+RTO DETAILS
+RTO Office:       New Delhi
+RTO Code:         DL-01
+Region:           Delhi
+Jurisdiction:     National Capital Region
+
+REGISTRATION HISTORY
+First Registered:  2001-01-15
+Last Renewed:      2024-06-01
+Renewal Due:       2025-06-01
+Insurance:         Active (expires 2024-12-31)
+Pollution Cert:    Active (expires 2024-12-15)
+
+DECODED INFORMATION
+State Code:       DL = Delhi
+Priority Code:    01 = High priority registration
+Series Letter:    A = 1st letter after state code
+Series Letter:    B = 2nd letter after state code
+Sequential No:    1234 = Vehicle number in series
+
+SIMILAR VEHICLES
+├─ DL-01-AC-1234 (Previous series)
+├─ DL-01-AB-1233 (Previous number)
+└─ DL-01-AB-1235 (Next number)
+
+OWNER INFORMATION
+Note: Detailed owner information requires access to
+Parivahan database (restricted to authorized agencies)
+</code></pre><hr>
+<h3 id="module-6-social-media--username-osint">Module 6: Social Media / Username OSINT<a hidden class="anchor" aria-hidden="true" href="#module-6-social-media--username-osint">#</a></h3>
+<p><strong>Purpose</strong>: Find accounts across platforms using username</p>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>Does this person have accounts on multiple platforms?</li>
+<li>What&rsquo;s their presence across internet?</li>
+<li>What information do they publicly share?</li>
+</ul>
+<p><strong>Tools Run</strong>:</p>
+<pre tabindex="0"><code>sherlock       → Cross-platform username search (300+ sites)
+maigret        → Extended platform search
+GitHub API     → Developer profile details
+Platform checks → Direct website searches
+</code></pre><p><strong>Example Output</strong>:</p>
+<pre tabindex="0"><code>USERNAME OSINT REPORT: john.doe
+═════════════════════════════════════════════════════════
+
+SEARCH RESULTS
+
+FOUND ON THESE PLATFORMS:
+
+GitHub
+├─ URL:           https://github.com/john.doe
+├─ Public Repos:  15
+├─ Followers:     234
+├─ Following:     89
+├─ Public Gists:  5
+└─ Latest:        Updated 2024-06-02
+
+GitHub Repositories:
+├─ web-framework (600 stars, 120 forks)
+├─ nodejs-utils (450 stars, 95 forks)
+├─ security-tools (200 stars, 50 forks)
+└─ ... and 12 others
+
+Twitter
+├─ Handle:        @john.doe
+├─ URL:           https://twitter.com/john.doe
+├─ Followers:     1,200
+├─ Following:     450
+├─ Tweets:        3,456
+├─ Verified:      No
+└─ Last Tweet:    2024-06-04 14:23
+
+LinkedIn
+├─ Name:          John Doe
+├─ URL:           https://linkedin.com/in/john-doe
+├─ Title:         Senior Software Engineer
+├─ Company:       Tech Corp Inc
+├─ Connections:   500+
+└─ Updated:       2024-06-02
+
+Reddit
+├─ Username:      u/john.doe
+├─ URL:           https://reddit.com/u/john.doe
+├─ Karma:         5,000+
+├─ Posts:         342
+├─ Comments:      1,200
+└─ Active Subreddits: r/programming, r/webdev, r/security
+
+Medium
+├─ URL:           https://medium.com/@john.doe
+├─ Articles:      12
+├─ Followers:     234
+├─ Reading List:  450
+└─ Latest:        &#34;Building Secure APIs&#34; (2024-06-01)
+
+Instagram
+├─ Username:      john.doe.dev
+├─ Followers:     482
+├─ Following:     320
+├─ Posts:         123
+├─ Private:       No
+
+Slack
+├─ Workspace:     TechCorp
+├─ Status:        Active
+└─ Role:          Senior Developer
+
+NOT FOUND ON:
+├─ TikTok
+├─ Snapchat
+├─ WeChat
+└─ WhatsApp (as expected - not searchable)
+
+INTELLIGENCE SUMMARY
+├─ Primary focus: Software development
+├─ Active on professional platforms (GitHub, LinkedIn)
+├─ Active on tech communities (Reddit, Stack Overflow)
+├─ Social media presence (Twitter, Instagram) moderate
+├─ Appears to be legitimate software engineer
+└─ Last activity: 2-3 days ago
+</code></pre><hr>
+<h3 id="module-7-filemetadata-osint">Module 7: File/Metadata OSINT<a hidden class="anchor" aria-hidden="true" href="#module-7-filemetadata-osint">#</a></h3>
+<p><strong>Purpose</strong>: Extract hidden data from files</p>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>What&rsquo;s the creation date of this photo?</li>
+<li>Where was this photo taken (GPS)?</li>
+<li>What camera was used?</li>
+<li>Who created this document?</li>
+<li>Are there hidden comments/metadata?</li>
+</ul>
+<p><strong>Tools Run</strong>:</p>
+<pre tabindex="0"><code>exiftool    → Metadata extraction
+strings     → Hidden text/URLs
+binwalk     → File structure analysis
+pdfinfo     → PDF metadata
+mediainfo   → Video/audio details
+</code></pre><p><strong>Example Output</strong>:</p>
+<pre tabindex="0"><code>FILE OSINT REPORT: suspicious_photo.jpg
+═════════════════════════════════════════════════════════
+
+FILE INFORMATION
+Filename:         suspicious_photo.jpg
+File Size:        3.2 MB
+File Type:        JPEG Image
+Image Dimensions: 4000 x 3000 pixels
+Color Space:      sRGB
+Aspect Ratio:     4:3
+
+EXIF METADATA (Image Properties)
+
+Camera Information:
+├─ Model:         Canon EOS 5D Mark III
+├─ Manufacturer:  Canon Inc.
+├─ Make:          Canon
+
+Lens Information:
+├─ Focal Length:  50.0 mm
+├─ F-Number:      f/2.8
+├─ Max Aperture:  f/2.8
+
+Exposure Settings:
+├─ ISO Speed:     400
+├─ Shutter Speed: 1/320 second
+├─ Exposure Bias: 0.67
+├─ Metering Mode: Spot
+
+Date/Time Information:
+├─ Date Taken:    2024-06-15 14:23:45
+├─ Timezone:      UTC
+├─ Date Modified: 2024-06-20
+└─ Date Created:  2024-06-15
+
+GPS INFORMATION (CRITICAL!)
+├─ GPS Latitude:   28.6139° N (28° 36&#39; 50&#34; N)
+├─ GPS Longitude:  77.2090° E (77° 12&#39; 32&#34; E)
+├─ GPS Altitude:   200 meters
+├─ Location:       New Delhi, India
+└─ Map Link:       https://maps.google.com/?q=28.6139,77.2090
+
+Processing Information:
+├─ Software:      Adobe Lightroom 5.2
+├─ Processing:    Modified with filters
+├─ Color Profile: sRGB
+└─ Compressed:    No
+
+EMBEDDED CONTENT
+Thumbnails:       2 (one 160x120, one 320x240)
+Color Space:      sRGB
+XMP Metadata:     Yes (XMP profile embedded)
+
+HIDDEN DATA ANALYSIS
+Strings Found:    &#34;Meeting location alpha&#34;
+                  &#34;Do not share&#34;
+                  &#34;Contact: john@gmail.com&#34;
+
+Suspicious Markers: Yes
+├─ Metadata edited after creation
+├─ GPS data present (privacy concern)
+└─ Human-readable strings in binary
+
+INTELLIGENCE SUMMARY
+[!] Photo taken: 2024-06-15 14:23:45
+[!] Location: New Delhi, India (exact coordinates)
+[!] Camera: Professional Canon camera
+[!] Hidden text: &#34;Meeting location alpha&#34;
+[!] Contact info: john@gmail.com
+[!] Privacy Concern: Metadata not stripped
+
+RECOMMENDATIONS
+- GPS data reveals precise location
+- Metadata reveals equipment used
+- Hidden strings indicate deliberate communication
+- Photo was professionally edited
+</code></pre><hr>
+<h2 id="architecture">Architecture<a hidden class="anchor" aria-hidden="true" href="#architecture">#</a></h2>
+<h3 id="system-design">System Design<a hidden class="anchor" aria-hidden="true" href="#system-design">#</a></h3>
+<pre tabindex="0"><code>┌────────────────────────────────────────┐
+│     User (Investigator)                │
+│   &#34;python3 osint.py&#34;                   │
+└────────────────┬───────────────────────┘
+                 │
+         ┌───────▼──────────┐
+         │  Main Menu Loop  │
+         │ (osint.py)       │
+         └───────┬──────────┘
+                 │
+    ┌────────────┼────────────┐
+    │            │            │
+    ▼            ▼            ▼
+  Domain      IP OSINT    Email OSINT
+  OSINT       Module      Module
+  Module      │           │
+  │           │           │
+  ├─ whois    ├─ whois    ├─ dig
+  ├─ dig      ├─ geoip    ├─ whois
+  ├─ nmap     ├─ nmap     ├─ holehe
+  ├─ dnsrecon ├─ tracert  ├─ sherlock
+  │ ...       │ ...       │ ...
+  │           │           │
+  └─────────────┬──────────┘
+                │
+        ┌───────▼────────┐
+        │  helpers.py    │
+        │ (Tool Runner)  │
+        └───────┬────────┘
+                │
+    ┌───────────┼────────────┐
+    │           │            │
+    ▼           ▼            ▼
+ Execute    Parse       Format
+  Tools    Output      Results
+    │           │          │
+    │      ┌────▼──────┐   │
+    │      │ Validators│   │
+    │      └────┬──────┘   │
+    │           │          │
+    └───────────┼──────────┘
+                │
+        ┌───────▼────────────┐
+        │  API Enrichment    │
+        │ (Optional)         │
+        │ VirusTotal/Shodan  │
+        └───────┬────────────┘
+                │
+        ┌───────▼────────────┐
+        │ Reporter Module    │
+        │ (Generate Reports) │
+        └───────┬────────────┘
+                │
+    ┌───────────┼────────────┐
+    │           │            │
+    ▼           ▼            ▼
+  .txt       .json       Console
+ Report     Report      Output
+</code></pre><h3 id="module-structure">Module Structure<a hidden class="anchor" aria-hidden="true" href="#module-structure">#</a></h3>
+<pre tabindex="0"><code>osint_framework/
+│
+├── osint.py                 # Main entry point
+│   └── Menu-driven interface
+│
+├── config/
+│   ├── settings.py          # Configuration management
+│   │   └── API key handling
+│   └── api_keys.json        # Stores API credentials (encrypted)
+│
+├── modules/
+│   ├── domain_osint.py      # Domain investigation
+│   ├── ip_osint.py          # IP investigation
+│   ├── email_osint.py       # Email investigation
+│   ├── phone_osint.py       # Phone investigation
+│   ├── vehicle_osint.py     # Vehicle lookup
+│   ├── social_osint.py      # Username search
+│   └── file_osint.py        # Metadata extraction
+│
+├── utils/
+│   ├── helpers.py           # Tool execution
+│   │   ├── execute_command()
+│   │   ├── parse_output()
+│   │   └── format_results()
+│   │
+│   └── validators.py        # Input validation
+│       ├── validate_domain()
+│       ├── validate_ip()
+│       └── validate_email()
+│
+└── reports/
+    ├── domain_osint_2024-06-05.txt
+    ├── domain_osint_2024-06-05.json
+    ├── ip_osint_2024-06-03.txt
+    └── ... (all generated reports)
+</code></pre><hr>
+<h2 id="technology-stack">Technology Stack<a hidden class="anchor" aria-hidden="true" href="#technology-stack">#</a></h2>
+<h3 id="core-technologies">Core Technologies<a hidden class="anchor" aria-hidden="true" href="#core-technologies">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Language</span>
+</span></span><span style="display:flex;"><span>Python <span style="color:#ae81ff">3.8</span><span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HTTP Requests</span>
+</span></span><span style="display:flex;"><span>requests              <span style="color:#75715e"># API calls to external services</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Data Processing</span>
+</span></span><span style="display:flex;"><span>pandas               <span style="color:#75715e"># Organize results</span>
+</span></span><span style="display:flex;"><span>json                <span style="color:#75715e"># JSON report generation</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Subprocess Management</span>
+</span></span><span style="display:flex;"><span>subprocess           <span style="color:#75715e"># Run external tools safely</span>
+</span></span><span style="display:flex;"><span>shlex               <span style="color:#75715e"># Proper command parsing (prevent injection)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Logging</span>
+</span></span><span style="display:flex;"><span>logging              <span style="color:#75715e"># Track operations and errors</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Configuration</span>
+</span></span><span style="display:flex;"><span>python<span style="color:#f92672">-</span>dotenv        <span style="color:#75715e"># Load environment variables</span>
+</span></span><span style="display:flex;"><span>configparser        <span style="color:#75715e"># Settings management</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Optional: API Libraries</span>
+</span></span><span style="display:flex;"><span>virustotal          <span style="color:#75715e"># VirusTotal API</span>
+</span></span><span style="display:flex;"><span>shodan              <span style="color:#75715e"># Shodan API</span>
+</span></span><span style="display:flex;"><span>ipaddress           <span style="color:#75715e"># IP validation</span>
+</span></span><span style="display:flex;"><span>email<span style="color:#f92672">-</span>validator     <span style="color:#75715e"># Email validation</span>
+</span></span></code></pre></div><h3 id="external-tools-installed-via-setupsh">External Tools (Installed via setup.sh)<a hidden class="anchor" aria-hidden="true" href="#external-tools-installed-via-setupsh">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># DNS Tools</span>
+</span></span><span style="display:flex;"><span>whois               <span style="color:#75715e"># Domain registration lookup</span>
+</span></span><span style="display:flex;"><span>dig                 <span style="color:#75715e"># DNS queries</span>
+</span></span><span style="display:flex;"><span>host                <span style="color:#75715e"># Name resolution</span>
+</span></span><span style="display:flex;"><span>dnsenum             <span style="color:#75715e"># DNS enumeration</span>
+</span></span><span style="display:flex;"><span>dnsrecon            <span style="color:#75715e"># Advanced DNS</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># IP Tools</span>
+</span></span><span style="display:flex;"><span>geoiplookup         <span style="color:#75715e"># Geolocation</span>
+</span></span><span style="display:flex;"><span>ipcalc              <span style="color:#75715e"># Subnet math</span>
+</span></span><span style="display:flex;"><span>traceroute          <span style="color:#75715e"># Network path</span>
+</span></span><span style="display:flex;"><span>nmap                <span style="color:#75715e"># Port scanning</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Web Tools</span>
+</span></span><span style="display:flex;"><span>whatweb             <span style="color:#75715e"># Technology identification</span>
+</span></span><span style="display:flex;"><span>sslscan             <span style="color:#75715e"># SSL analysis</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># OSINT Tools</span>
+</span></span><span style="display:flex;"><span>amass               <span style="color:#75715e"># Subdomain enumeration</span>
+</span></span><span style="display:flex;"><span>curl                <span style="color:#75715e"># HTTP requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># File Tools</span>
+</span></span><span style="display:flex;"><span>exiftool            <span style="color:#75715e"># Metadata extraction</span>
+</span></span><span style="display:flex;"><span>strings             <span style="color:#75715e"># Extract text from binaries</span>
+</span></span><span style="display:flex;"><span>binwalk             <span style="color:#75715e"># File structure analysis</span>
+</span></span></code></pre></div><hr>
+<h2 id="api-integration">API Integration<a hidden class="anchor" aria-hidden="true" href="#api-integration">#</a></h2>
+<h3 id="optional-apis-all-optional---framework-works-without-them">Optional APIs (All Optional - Framework Works Without Them)<a hidden class="anchor" aria-hidden="true" href="#optional-apis-all-optional---framework-works-without-them">#</a></h3>
+<p>The framework has <strong>graceful degradation</strong> - if you don&rsquo;t have API keys, it still works with command-line tools.</p>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>Use Case</th>
+					<th>Cost</th>
+					<th>When Used</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>VirusTotal</strong></td>
+					<td>File/URL/IP reputation</td>
+					<td>Free (75 req/min)</td>
+					<td>Domain/IP scanning</td>
+			</tr>
+			<tr>
+					<td><strong>Shodan</strong></td>
+					<td>Service enumeration</td>
+					<td>Free (1/min), Paid</td>
+					<td>IP intelligence</td>
+			</tr>
+			<tr>
+					<td><strong>IPInfo</strong></td>
+					<td>IP geolocation</td>
+					<td>Free (50k/month)</td>
+					<td>IP location accuracy</td>
+			</tr>
+			<tr>
+					<td><strong>AbuseIPDB</strong></td>
+					<td>Abuse reports</td>
+					<td>Free (15k/day)</td>
+					<td>IP abuse scoring</td>
+			</tr>
+			<tr>
+					<td><strong>HaveIBeenPwned</strong></td>
+					<td>Breach checking</td>
+					<td>Free</td>
+					<td>Email breach checking</td>
+			</tr>
+			<tr>
+					<td><strong>Hunter.io</strong></td>
+					<td>Email finding</td>
+					<td>Free (10/day)</td>
+					<td>Email verification</td>
+			</tr>
+			<tr>
+					<td><strong>NumVerify</strong></td>
+					<td>Phone validation</td>
+					<td>Free (100/month)</td>
+					<td>Phone number validation</td>
+			</tr>
+			<tr>
+					<td><strong>Twilio</strong></td>
+					<td>Carrier lookup</td>
+					<td>Paid</td>
+					<td>Carrier identification</td>
+			</tr>
+			<tr>
+					<td><strong>GitHub</strong></td>
+					<td>Dev profiles</td>
+					<td>Free</td>
+					<td>Developer information</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="configuration-methods">Configuration Methods<a hidden class="anchor" aria-hidden="true" href="#configuration-methods">#</a></h3>
+<p><strong>Method 1: Interactive Menu</strong></p>
+<pre tabindex="0"><code>python3 osint.py
+  → Option 9: Configure API Keys
+  → Select API to configure
+  → Enter your API key
+  → Save to api_keys.json
+</code></pre><p><strong>Method 2: Environment Variables</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export VT_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your_virustotal_key&#34;</span>
+</span></span><span style="display:flex;"><span>export SHODAN_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your_shodan_key&#34;</span>
+</span></span><span style="display:flex;"><span>export IPINFO_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your_ipinfo_token&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ... etc</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>python3 osint.py  <span style="color:#75715e"># Framework reads from env</span>
+</span></span></code></pre></div><p><strong>Method 3: Direct File Edit</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;virustotal&#34;</span>: <span style="color:#e6db74">&#34;your_key_here&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;shodan&#34;</span>: <span style="color:#e6db74">&#34;your_key_here&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ipinfo&#34;</span>: <span style="color:#e6db74">&#34;your_key_here&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;abuseipdb&#34;</span>: <span style="color:#e6db74">&#34;your_key_here&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;haveibeenpwned&#34;</span>: <span style="color:#e6db74">&#34;your_key_here&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;hunter_io&#34;</span>: <span style="color:#e6db74">&#34;your_key_here&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;numverify&#34;</span>: <span style="color:#e6db74">&#34;your_key_here&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;twilio_sid&#34;</span>: <span style="color:#e6db74">&#34;your_sid&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;twilio_token&#34;</span>: <span style="color:#e6db74">&#34;your_token&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;github&#34;</span>: <span style="color:#e6db74">&#34;your_token&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="fallback-behavior">Fallback Behavior<a hidden class="anchor" aria-hidden="true" href="#fallback-behavior">#</a></h3>
+<p>When API keys are missing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># VirusTotal missing?</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Instead of API call, just use command-line tools</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> virustotal_api<span style="color:#f92672">.</span>check(domain)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> API_KEY_MISSING:
+</span></span><span style="display:flex;"><span>    logger<span style="color:#f92672">.</span>warning(<span style="color:#e6db74">&#34;VirusTotal API not configured, skipping&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Continue with nmap, whatweb, sslscan results</span>
+</span></span></code></pre></div><hr>
+<h2 id="safety--legal-compliance">Safety &amp; Legal Compliance<a hidden class="anchor" aria-hidden="true" href="#safety--legal-compliance">#</a></h2>
+<h3 id="passive-methods-no-permission-needed">Passive Methods (No Permission Needed)<a hidden class="anchor" aria-hidden="true" href="#passive-methods-no-permission-needed">#</a></h3>
+<p>These are COMPLETELY SAFE and LEGAL:</p>
+<pre tabindex="0"><code>✓ WHOIS lookups          (Public database)
+✓ DNS queries            (Public DNS)
+✓ Certificate checking   (Public certificates)
+✓ Web searches           (Public information)
+✓ API queries            (Public APIs)
+✓ Social media profile   (Public profiles)
+✓ File metadata          (Your own files)
+✓ String searches        (Text content)
+</code></pre><h3 id="active-methods-require-confirmation">Active Methods (Require Confirmation)<a hidden class="anchor" aria-hidden="true" href="#active-methods-require-confirmation">#</a></h3>
+<p>These require explicit user permission:</p>
+<pre tabindex="0"><code>⚠ Port scanning (nmap)   - Can be detected
+⚠ Network probing        - May trigger alerts
+⚠ Service enumeration    - Could impact systems
+</code></pre><p>When user tries active method:</p>
+<pre tabindex="0"><code>⚠ WARNING: This will perform ACTIVE scanning
+⚠ This can be detected by IDS systems
+⚠ May trigger security alerts
+⚠ Should only be done with proper authorization
+⚠ Are you authorized? [Y/N]
+</code></pre><h3 id="illegal-methods-completely-prohibited">Illegal Methods (Completely Prohibited)<a hidden class="anchor" aria-hidden="true" href="#illegal-methods-completely-prohibited">#</a></h3>
+<p>The framework NEVER:</p>
+<pre tabindex="0"><code>✗ Attempts unauthorized network access
+✗ Tries to break passwords
+✗ Accesses emails without permission
+✗ Exploits vulnerabilities
+✗ Performs DDoS attacks
+✗ Installs malware
+✗ Accesses phone/SIM systems
+✗ Intercepts communications
+</code></pre><h3 id="input-sanitization">Input Sanitization<a hidden class="anchor" aria-hidden="true" href="#input-sanitization">#</a></h3>
+<p>All user input is validated against injection attacks:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># User input: &#34;suspicious.com; rm -rf /&#34;</span>
+</span></span><span style="display:flex;"><span>domain <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#34;Enter domain: &#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Validate format</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> is_valid_domain(domain):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">raise</span> InvalidDomainError(<span style="color:#e6db74">&#34;Invalid domain format&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Safe execution</span>
+</span></span><span style="display:flex;"><span>subprocess<span style="color:#f92672">.</span>run([<span style="color:#e6db74">&#39;whois&#39;</span>, domain], shell<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Not vulnerable because shell=False prevents injection</span>
+</span></span></code></pre></div><h3 id="legal-compliance-measures">Legal Compliance Measures<a hidden class="anchor" aria-hidden="true" href="#legal-compliance-measures">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 1. Operator Audit Log</span>
+</span></span><span style="display:flex;"><span>logger<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;User </span><span style="color:#e6db74">{</span>operator_id<span style="color:#e6db74">}</span><span style="color:#e6db74"> investigated </span><span style="color:#e6db74">{</span>target<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>logger<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Method: </span><span style="color:#e6db74">{</span>investigation_type<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>logger<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Timestamp: </span><span style="color:#e6db74">{</span>datetime<span style="color:#f92672">.</span>now()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Rate Limiting (Prevent abuse)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> requests_in_last_hour <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">100</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">raise</span> RateLimitError(<span style="color:#e6db74">&#34;Too many requests&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Target Validation</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> is_honeypot_domain(domain):
+</span></span><span style="display:flex;"><span>    logger<span style="color:#f92672">.</span>warning(<span style="color:#e6db74">&#34;Honeypot detected!&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. Disclaimer on startup</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;╔════════════════════════════════════════════╗&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;║  OSINT Investigation Framework             ║&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;║  FOR AUTHORIZED LAW ENFORCEMENT ONLY       ║&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;║  Misuse of this tool is a crime            ║&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;╚════════════════════════════════════════════╝&#34;</span>)
+</span></span></code></pre></div><hr>
+<h2 id="output-format">Output Format<a hidden class="anchor" aria-hidden="true" href="#output-format">#</a></h2>
+<h3 id="report-structure">Report Structure<a hidden class="anchor" aria-hidden="true" href="#report-structure">#</a></h3>
+<p>Every investigation produces 2 formats automatically:</p>
+<h4 id="format-1-text-report-txt"><strong>Format 1: Text Report (.txt)</strong><a hidden class="anchor" aria-hidden="true" href="#format-1-text-report-txt">#</a></h4>
+<pre tabindex="0"><code>═════════════════════════════════════════════════════
+OSINT INVESTIGATION REPORT
+Target: example.com
+Investigation Type: Domain OSINT
+Date: 2024-06-05 14:23:45
+═════════════════════════════════════════════════════
+
+SECTION 1: TOOL EXECUTION SUMMARY
+────────────────────────────────────────────────────
+✓ whois           - Success (completed in 2.34s)
+✓ dig             - Success (completed in 1.23s)
+✓ host            - Success (completed in 0.56s)
+✓ dnsrecon        - Success (completed in 5.67s)
+⚠ nmap            - Skipped (not confirmed by user)
+✗ traceroute      - Failed (timeout after 10s)
+✓ whatweb         - Success (completed in 3.45s)
+
+Summary: 6/7 tools successful, 1 skipped, 1 failed
+
+SECTION 2: RAW TOOL OUTPUT
+────────────────────────────────────────────────────
+[Full unmodified output from each tool, separated by tool name]
+
+SECTION 3: PARSED &amp; VERIFIED DATA
+────────────────────────────────────────────────────
+Registrant:       Example Corp Inc
+Created:          2010-01-15
+Expires:          2025-01-15
+IP Address:       93.184.216.34
+Country:          United States
+...
+
+SECTION 4: CROSS-VERIFICATION STATUS
+────────────────────────────────────────────────────
+IP Verification:
+├─ whois says IP is 93.184.216.34 ✓
+├─ dig A record is 93.184.216.34 ✓
+├─ host resolution confirms 93.184.216.34 ✓
+└─ All sources agree ✓ VERIFIED
+
+Registrant Verification:
+├─ whois says registrant is &#34;Example Corp&#34; ✓
+├─ ICANN WHOIS says &#34;Example Corp Inc&#34; (minor variation) ⚠
+└─ Likely same entity ✓ VERIFIED
+
+SECTION 5: LIMITATIONS &amp; NOTES
+────────────────────────────────────────────────────
+[What we know, what we don&#39;t, and why]
+
+- WHOIS information may be privacy-protected
+- IP geolocation accurate to city level (±5km)
+- Could not determine exact server software versions
+- Optional API (Shodan) not configured
+- nmap not confirmed by user (passive analysis only)
+</code></pre><h4 id="format-2-json-report-json"><strong>Format 2: JSON Report (.json)</strong><a hidden class="anchor" aria-hidden="true" href="#format-2-json-report-json">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;metadata&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;3.1&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;target&#34;</span>: <span style="color:#e6db74">&#34;example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;investigation_type&#34;</span>: <span style="color:#e6db74">&#34;domain_osint&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;timestamp&#34;</span>: <span style="color:#e6db74">&#34;2024-06-05T14:23:45Z&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;operator_id&#34;</span>: <span style="color:#e6db74">&#34;operator_123&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;duration_seconds&#34;</span>: <span style="color:#ae81ff">35.6</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;tool_results&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;whois&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;success&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;duration_ms&#34;</span>: <span style="color:#ae81ff">2340</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;output&#34;</span>: {<span style="color:#960050;background-color:#1e0010">...</span>},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;parsed&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;registrant&#34;</span>: <span style="color:#e6db74">&#34;Example Corp Inc&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;created&#34;</span>: <span style="color:#e6db74">&#34;2010-01-15&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;expires&#34;</span>: <span style="color:#e6db74">&#34;2025-01-15&#34;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;dig&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;success&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;duration_ms&#34;</span>: <span style="color:#ae81ff">1230</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;output&#34;</span>: {<span style="color:#960050;background-color:#1e0010">...</span>},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;parsed&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;a_record&#34;</span>: <span style="color:#e6db74">&#34;93.184.216.34&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;mx_record&#34;</span>: <span style="color:#e6db74">&#34;mail.example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;ns_records&#34;</span>: [<span style="color:#e6db74">&#34;ns1.example.com&#34;</span>, <span style="color:#e6db74">&#34;ns2.example.com&#34;</span>]
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;nmap&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;skipped&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;reason&#34;</span>: <span style="color:#e6db74">&#34;not_confirmed_by_user&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;traceroute&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;failed&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;error_message&#34;</span>: <span style="color:#e6db74">&#34;Timeout after 10 seconds&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;correlated_intelligence&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;domain&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;registrant&#34;</span>: <span style="color:#e6db74">&#34;Example Corp Inc&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;created&#34;</span>: <span style="color:#e6db74">&#34;2010-01-15&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;expires&#34;</span>: <span style="color:#e6db74">&#34;2025-01-15&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;registrar&#34;</span>: <span style="color:#e6db74">&#34;VeriSign Global Registry Services&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;ip_address&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;address&#34;</span>: <span style="color:#e6db74">&#34;93.184.216.34&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;organization&#34;</span>: <span style="color:#e6db74">&#34;Edgecast Networks Inc&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;country&#34;</span>: <span style="color:#e6db74">&#34;United States&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;city&#34;</span>: <span style="color:#e6db74">&#34;Los Angeles&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;coordinates&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;latitude&#34;</span>: <span style="color:#ae81ff">34.0544</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;longitude&#34;</span>: <span style="color:#ae81ff">-118.2439</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;dns_records&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;a_record&#34;</span>: <span style="color:#e6db74">&#34;93.184.216.34&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;mx_record&#34;</span>: [<span style="color:#e6db74">&#34;mail.example.com&#34;</span>, <span style="color:#e6db74">&#34;mail2.example.com&#34;</span>],
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;ns_record&#34;</span>: [<span style="color:#e6db74">&#34;ns1.example.com&#34;</span>, <span style="color:#e6db74">&#34;ns2.example.com&#34;</span>],
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;spf_record&#34;</span>: <span style="color:#e6db74">&#34;v=spf1 include:_spf.google.com ~all&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;services&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;port_80&#34;</span>: <span style="color:#e6db74">&#34;HTTP - Apache/2.4.41&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;port_443&#34;</span>: <span style="color:#e6db74">&#34;HTTPS - Certificate valid&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;verification_status&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;ip_address_verified&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;registrant_verified&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;dns_records_verified&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;conflicts&#34;</span>: []
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;api_enrichment&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;virustotal&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;configured&#34;</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;shodan&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;configured&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;success&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;data&#34;</span>: {<span style="color:#960050;background-color:#1e0010">...</span>}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;limitations&#34;</span>: [
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;WHOIS information may be privacy-protected&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;IP geolocation accurate to city level&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Cannot determine exact server versions without Shodan API&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Port scanning skipped (passive analysis only)&#34;</span>
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<h2 id="interview-qa">Interview Q&amp;A<a hidden class="anchor" aria-hidden="true" href="#interview-qa">#</a></h2>
+<h3 id="basic-questions">Basic Questions<a hidden class="anchor" aria-hidden="true" href="#basic-questions">#</a></h3>
+<p><strong>Q1: What problem does this project solve?</strong></p>
+<p>A: OSINT investigators manually running 20+ different tools and compiling results is time-consuming and error-prone. My framework automates this:</p>
+<ul>
+<li>Single command instead of 20+ manual commands</li>
+<li>Consistent output format instead of learning each tool&rsquo;s syntax</li>
+<li>Automatic correlation across sources</li>
+<li>Professional report generation</li>
+<li>Reduces 2-3 hours of work to 5-10 minutes</li>
+</ul>
+<hr>
+<p><strong>Q2: Why Python for this project?</strong></p>
+<p>A: Python is ideal for automation and tooling:</p>
+<ul>
+<li>Easy to call external commands (subprocess)</li>
+<li>Great libraries for parsing output (regex, string processing)</li>
+<li>Simple CLI interface (no complex UI needed)</li>
+<li>Fast development for investigators who need tools quickly</li>
+<li>Large OSINT community already uses Python</li>
+</ul>
+<hr>
+<p><strong>Q3: How do you handle different tool output formats?</strong></p>
+<p>A: Each module has custom parsing logic:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># whois output is line-based key-value pairs</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">parse_whois</span>(output):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> output<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#f92672">in</span> line:
+</span></span><span style="display:flex;"><span>            key, value <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;:&#39;</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            result[key<span style="color:#f92672">.</span>strip()] <span style="color:#f92672">=</span> value<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># dig output is structured with sections</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">parse_dig</span>(output):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;answers&#39;</span>: []}
+</span></span><span style="display:flex;"><span>    in_answer <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> output<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;ANSWER SECTION&#39;</span> <span style="color:#f92672">in</span> line:
+</span></span><span style="display:flex;"><span>            in_answer <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> in_answer:
+</span></span><span style="display:flex;"><span>            result[<span style="color:#e6db74">&#39;answers&#39;</span>]<span style="color:#f92672">.</span>append(parse_dns_line(line))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Each tool has its own parser</span>
+</span></span></code></pre></div><hr>
+<p><strong>Q4: Why are API keys optional?</strong></p>
+<p>A: Several reasons:</p>
+<ol>
+<li><strong>Cost</strong>: APIs cost money, not everyone has budgets</li>
+<li><strong>Accessibility</strong>: Investigators in smaller agencies should still get value</li>
+<li><strong>Privacy</strong>: Some investigators don&rsquo;t want to send data to external APIs</li>
+<li><strong>Graceful Degradation</strong>: Command-line tools still work</li>
+<li><strong>Flexibility</strong>: Advanced users add APIs, beginners start without</li>
+</ol>
+<p>The framework detects available keys and uses APIs when present, falls back to tools when not.</p>
+<hr>
+<p><strong>Q5: How do you ensure accuracy of results?</strong></p>
+<p>A: Cross-verification across multiple sources:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># If whois, dig, and host all agree on IP → VERIFIED</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># If sources disagree → FLAG as CONFLICT</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># If source doesn&#39;t have answer → MARK as UNKNOWN</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>verification <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;ip_address&#39;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;whois&#39;</span>: <span style="color:#e6db74">&#39;93.184.216.34&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;dig&#39;</span>: <span style="color:#e6db74">&#39;93.184.216.34&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;host&#39;</span>: <span style="color:#e6db74">&#39;93.184.216.34&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;consensus&#39;</span>: <span style="color:#e6db74">&#39;VERIFIED&#39;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;registrant&#39;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;whois&#39;</span>: <span style="color:#e6db74">&#39;Example Corp Inc&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;icann_whois&#39;</span>: <span style="color:#e6db74">&#39;EXAMPLE CORP (different case)&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;consensus&#39;</span>: <span style="color:#e6db74">&#39;LIKELY SAME&#39;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p><strong>Q6: What&rsquo;s the biggest challenge in OSINT automation?</strong></p>
+<p>A: <strong>Keeping up with changing websites and APIs</strong>. Websites change their HTML structure, APIs change endpoints, tools add new options. My solution:</p>
+<ol>
+<li>Modular design (update one parser without breaking others)</li>
+<li>Error handling (if one source fails, others continue)</li>
+<li>Community contributions (others improve parsers)</li>
+<li>Version control (track changes)</li>
+</ol>
+<hr>
+<h3 id="technical-questions">Technical Questions<a hidden class="anchor" aria-hidden="true" href="#technical-questions">#</a></h3>
+<p><strong>Q7: How do you prevent command injection?</strong></p>
+<p>A: Using <code>subprocess.run()</code> with <code>shell=False</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># SAFE (shell=False)</span>
+</span></span><span style="display:flex;"><span>subprocess<span style="color:#f92672">.</span>run([<span style="color:#e6db74">&#39;whois&#39;</span>, domain], shell<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># No matter what domain is, it&#39;s just an argument</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># UNSAFE (shell=True) - DO NOT USE</span>
+</span></span><span style="display:flex;"><span>subprocess<span style="color:#f92672">.</span>run(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;whois </span><span style="color:#e6db74">{</span>domain<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>, shell<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># If domain = &#34;example.com; rm -rf /&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The rm -rf command would execute!</span>
+</span></span></code></pre></div><p>Never use <code>shell=True</code> with user input.</p>
+<hr>
+<p><strong>Q8: How do you validate input without being too restrictive?</strong></p>
+<p>A: I use specific validators but allow some flexibility:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Domain validation</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">validate_domain</span>(domain):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check length</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(domain) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">or</span> len(domain) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">255</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> InvalidDomainError(<span style="color:#e6db74">&#34;Domain too short/long&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check characters</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> re<span style="color:#f92672">.</span><span style="color:#66d9ef">match</span>(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;^[a-zA-Z0-9.-]+$&#39;</span>, domain):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> InvalidDomainError(<span style="color:#e6db74">&#34;Invalid characters&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check format (must have TLD)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> re<span style="color:#f92672">.</span><span style="color:#66d9ef">match</span>(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;^[\w.-]+\.\w+$&#39;</span>, domain):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> InvalidDomainError(<span style="color:#e6db74">&#34;Must have TLD (e.g., .com)&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> domain
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This allows:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ✓ example.com</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ✓ sub.example.co.uk</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ✓ test-domain.info</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># But blocks:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ✗ example.com; ls</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ✗ ../../../etc/passwd</span>
+</span></span></code></pre></div><hr>
+<p><strong>Q9: How do you handle rate limiting?</strong></p>
+<p>A: Several approaches:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 1. Tool-level rate limiting</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_whois</span>(domain):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> last_whois_run <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span> seconds ago:
+</span></span><span style="display:flex;"><span>        time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">2</span>)  <span style="color:#75715e"># Wait 2 seconds between whois calls</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. API-level rate limiting</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> ratelimit <span style="color:#f92672">import</span> limits, sleep_and_retry
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@sleep_and_retry</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@limits</span>(calls<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, period<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)  <span style="color:#75715e"># Max 1 call per second</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">call_shodan_api</span>(ip):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> api<span style="color:#f92672">.</span>host(ip)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Overall limits</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_investigation</span>(target):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> investigations_in_last_hour <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">100</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> RateLimitError(<span style="color:#e6db74">&#34;Too many investigations&#34;</span>)
+</span></span></code></pre></div><hr>
+<p><strong>Q10: How do you report errors without losing context?</strong></p>
+<p>A: Detailed logging at every step:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> logging
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>logger <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>getLogger(__name__)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>run(
+</span></span><span style="display:flex;"><span>        [<span style="color:#e6db74">&#39;whois&#39;</span>, domain],
+</span></span><span style="display:flex;"><span>        capture_output<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span>        timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    logger<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;whois successful for </span><span style="color:#e6db74">{</span>domain<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> subprocess<span style="color:#f92672">.</span>TimeoutExpired:
+</span></span><span style="display:flex;"><span>    logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;whois timeout for </span><span style="color:#e6db74">{</span>domain<span style="color:#e6db74">}</span><span style="color:#e6db74"> (exceeded 10s)&#34;</span>)
+</span></span><span style="display:flex;"><span>    results[<span style="color:#e6db74">&#39;whois&#39;</span>] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;status&#39;</span>: <span style="color:#e6db74">&#39;failed&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;error&#39;</span>: <span style="color:#e6db74">&#39;timeout&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;details&#39;</span>: <span style="color:#e6db74">&#39;Whois server not responding&#39;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> <span style="color:#a6e22e">FileNotFoundError</span>:
+</span></span><span style="display:flex;"><span>    logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;whois not installed&#34;</span>)
+</span></span><span style="display:flex;"><span>    results[<span style="color:#e6db74">&#39;whois&#39;</span>] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;status&#39;</span>: <span style="color:#e6db74">&#39;failed&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;error&#39;</span>: <span style="color:#e6db74">&#39;tool_not_found&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;details&#39;</span>: <span style="color:#e6db74">&#39;Run setup.sh to install whois&#39;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Report what failed and why (user can make informed decisions)</span>
+</span></span></code></pre></div><hr>
+<h2 id="interview-story">Interview Story<a hidden class="anchor" aria-hidden="true" href="#interview-story">#</a></h2>
+<p><strong>Tell this when asked about your biggest project:</strong></p>
+<blockquote>
+<p>&ldquo;I built an OSINT Investigation Framework for law enforcement to automate intelligence gathering.</p>
+<p><strong>The Problem</strong>: Investigators manually running 20+ different tools (whois, dig, nmap, sslscan, etc.), each with different output formats, then manually compiling results into reports. This took 2-3 hours per investigation.</p>
+<p><strong>My Solution</strong>: A unified Python framework that:</p>
+<ol>
+<li>Runs all relevant tools automatically based on target type</li>
+<li>Parses different tool outputs into consistent format</li>
+<li>Cross-verifies information across sources</li>
+<li>Optional API enrichment (VirusTotal, Shodan, etc.)</li>
+<li>Generates professional TXT + JSON reports</li>
+</ol>
+<p><strong>Key Technical Challenges</strong>:</p>
+<ul>
+<li><strong>Output Parsing</strong>: Each tool has different format (whois = key-value, dig = DNS sections, nmap = tables). Had to build custom parsers.</li>
+<li><strong>Tool Orchestration</strong>: Running 20 tools concurrently, handling failures gracefully.</li>
+<li><strong>Security</strong>: Ensuring subprocess calls can&rsquo;t be injection attacked using shell=False.</li>
+<li><strong>API Flexibility</strong>: Making APIs optional so framework works without them.</li>
+<li><strong>Legal Compliance</strong>: Passive methods only by default, active methods require user confirmation.</li>
+</ul>
+<p><strong>Results</strong>:</p>
+<ul>
+<li>10-minute investigations instead of 2-3 hours</li>
+<li>Consistent, professional reports</li>
+<li>Investigators focus on analysis, not data collection</li>
+<li>Zero injection vulnerabilities</li>
+<li>Used by law enforcement agencies</li>
+</ul>
+<p>This project taught me:</p>
+<ul>
+<li>Subprocess management in Python</li>
+<li>Regular expression parsing</li>
+<li>API integration</li>
+<li>Security best practices</li>
+<li>Tool design for investigators&rdquo;</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="key-points-to-remember">Key Points to Remember<a hidden class="anchor" aria-hidden="true" href="#key-points-to-remember">#</a></h2>
+<ol>
+<li><strong>Automation</strong>: Removes manual work from OSINT</li>
+<li><strong>Modular</strong>: Add new modules without breaking existing ones</li>
+<li><strong>Optional APIs</strong>: Works without API keys (graceful degradation)</li>
+<li><strong>Safe</strong>: Passive-only by default, active methods require confirmation</li>
+<li><strong>Professional</strong>: Generates investigation-ready reports</li>
+<li><strong>Cross-verified</strong>: Checks information across multiple sources</li>
+<li><strong>Well-logged</strong>: Every operation logged for audit trails</li>
+</ol>
+<hr>
+<h2 id="numbers-to-mention">Numbers to Mention<a hidden class="anchor" aria-hidden="true" href="#numbers-to-mention">#</a></h2>
+<ul>
+<li><strong>7 investigation modules</strong> (Domain, IP, Email, Phone, Vehicle, Username, File)</li>
+<li><strong>20+ integrated tools</strong> (whois, dig, nmap, etc.)</li>
+<li><strong>9 optional APIs</strong> (VirusTotal, Shodan, etc.)</li>
+<li><strong>2 output formats</strong> (TXT + JSON)</li>
+<li><strong>5 report sections</strong> (Summary, Raw, Parsed, Verified, Limitations)</li>
+<li><strong>1 command</strong> to complete investigation</li>
+<li><strong>10 minutes</strong> average investigation time</li>
+<li><strong>100+ platforms</strong> for username search (sherlock database)</li>
+<li><strong>~2-3 hours saved</strong> per investigation</li>
+</ul>
+<p>Good luck! 🎯</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:27259/tags/forensics/">Forensics</a></li>
+      <li><a href="http://localhost:27259/tags/metadata/">Metadata</a></li>
+      <li><a href="http://localhost:27259/tags/python/">Python</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:27259/">NullByte Notes</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,478 @@
+---
+title: 'BURPSUITE - Complete Web Application Testing Guide'
+date: 2026-06-05
+draft: false
+---
+
+> **Web Security Testing Platform: Find and exploit web vulnerabilities**
+
+---
+
+## Table of Contents
+1. [What is Burpsuite?](#what-is-burpsuite)
+2. [Installation & Setup](#installation--setup)
+3. [Core Features](#core-features)
+4. [Burpsuite Tabs](#burpsuite-tabs)
+5. [Testing Workflows](#testing-workflows)
+6. [Real-World Examples](#real-world-examples)
+7. [Interview Questions](#interview-questions)
+
+---
+
+## What is Burpsuite?
+
+Burpsuite is the **#1 tool for web application security testing**. It allows you to:
+- Intercept and modify HTTP requests
+- Find SQL injection vulnerabilities
+- Find XSS (Cross-Site Scripting) vulnerabilities
+- Test authentication mechanisms
+- Brute force login forms
+- Scan for vulnerabilities automatically
+- Bypass security controls
+- Exploit web applications
+
+**Versions:**
+- Burpsuite Community (Free)
+- Burpsuite Professional (Paid, more features)
+
+---
+
+## Installation & Setup
+
+### Installation
+
+```bash
+# Kali Linux (pre-installed)
+burpsuite
+
+# Ubuntu/Debian
+sudo apt-get install burpsuite
+
+# Manual download
+# Visit: https://portswigger.net/burp/
+# Download and run installer
+# java -jar burpsuite_community_linux_v2.xx.x.jar
+```
+
+### Initial Setup
+
+```
+1. Launch Burpsuite
+2. Create new project or open existing
+3. Go to: Proxy → Options
+4. Default listening on: 127.0.0.1:8080
+```
+
+### Browser Proxy Configuration
+
+#### Firefox Setup
+```
+1. Preferences → Network Settings
+2. Manual proxy configuration
+3. HTTP Proxy: 127.0.0.1
+4. Port: 8080
+5. Check "Also use for HTTPS"
+```
+
+#### Chrome Setup
+```bash
+# From command line with proxy
+google-chrome --proxy-server=127.0.0.1:8080
+
+# Or Settings → System → Proxy Settings (Windows)
+```
+
+### SSL Certificate Setup
+
+```
+1. Launch Burpsuite
+2. Go to: Proxy → Options → CA Certificate
+3. Export certificate (save as .crt or .pem)
+4. Import to browser:
+
+Firefox: Preferences → Privacy & Security → Certificates → Import
+Chrome: Settings → Privacy and security → Security → Manage certificates
+```
+
+---
+
+## Core Features
+
+### 1. Proxy (Intercept)
+
+**What:** Intercepts HTTP/HTTPS traffic between browser and server
+
+```
+Workflow:
+1. Enable Proxy → Intercept is on
+2. Browse website
+3. Request appears in Intercept tab
+4. Can view/modify request
+5. Click Forward to send modified request
+6. Can drop request (click Drop)
+```
+
+**Why useful:**
+- See exactly what's being sent
+- Modify parameters before sending
+- Test how server responds to invalid input
+- Bypass client-side validation
+
+---
+
+### 2. Repeater (Manual Testing)
+
+**What:** Send requests repeatedly with modifications
+
+```
+Workflow:
+1. Capture request in Proxy
+2. Right-click → Send to Repeater
+3. Modify request (parameters, headers, etc.)
+4. Click Send
+5. See response
+6. Keep modifying and testing
+```
+
+**Use cases:**
+- Test different SQL injection payloads
+- Test authentication bypass
+- Fuzz parameters with different values
+- Manual API testing
+
+---
+
+### 3. Intruder (Brute Force/Fuzzing)
+
+**What:** Automate testing with multiple payloads
+
+```
+Workflow:
+1. Capture request in Proxy
+2. Right-click → Send to Intruder
+3. Set target/payload positions
+4. Choose attack type
+5. Load payloads (wordlist)
+6. Start attack
+7. Analyze results
+```
+
+**Attack Types:**
+- Sniper: One payload position
+- Battering Ram: Multiple same payload
+- Pitchfork: Multiple different payloads
+- Cluster Bomb: All combinations
+
+---
+
+### 4. Scanner (Automatic Vulnerability Detection)
+
+**What:** Automatically scans for vulnerabilities
+
+```
+Workflow:
+1. Proxy traffic
+2. Right-click → Send to Scanner
+3. Wait for scan
+4. Review findings
+```
+
+**Findings:**
+- SQL injection
+- XSS vulnerabilities
+- CSRF issues
+- Security misconfiguration
+- Insecure deserialization
+
+---
+
+### 5. Decoder (Encode/Decode)
+
+**What:** Encode/decode various formats
+
+```
+Types:
+- URL encoding
+- Base64
+- HTML entities
+- Unicode
+- Hex
+- ASCII
+- MD5 hashing
+```
+
+---
+
+## Burpsuite Tabs Explained
+
+### 1. Dashboard
+- Overview of findings
+- Active scan status
+- Issue summary
+
+### 2. Target
+- Site map of tested application
+- Shows all pages/endpoints discovered
+- See request/response history
+
+### 3. Proxy
+- **Intercept**: Live interception
+- **HTTP history**: All captured requests
+- **WebSockets history**: WebSocket traffic
+- **Options**: Proxy settings
+
+### 4. Repeater
+- Send requests with modifications
+- See responses side-by-side
+- Perfect for manual testing
+
+### 5. Intruder
+- Automated payload injection
+- Brute force
+- Parameter fuzzing
+- Results analysis
+
+### 6. Decoder
+- Encode/decode data
+- Hash generation
+- Multiple format support
+
+### 7. Comparer
+- Compare two requests/responses
+- See differences highlighted
+- Understand changes
+
+### 8. Extender
+- Load extensions
+- Add custom functionality
+- Install additional tools
+
+---
+
+## Testing Workflows
+
+### Workflow 1: SQL Injection Testing
+
+```
+1. Start Proxy → Intercept on
+2. Find login form
+3. Enter username: admin' OR '1'='1' --
+4. Enter password: anything
+5. Right-click request → Send to Repeater
+6. Click Send
+7. Look at response:
+   - If login successful → SQL INJECTION FOUND
+   - If still rejected → Not vulnerable
+```
+
+**Common payloads:**
+```sql
+' OR '1'='1' --
+' OR 1=1 --
+admin' --
+' UNION SELECT NULL, NULL --
+```
+
+### Workflow 2: XSS Testing
+
+```
+1. Find input field (search, comment, etc.)
+2. Enter: <script>alert('XSS')</script>
+3. Right-click → Send to Repeater
+4. Check response:
+   - If script tag visible in response → XSS FOUND
+   - View in browser - if alert appears → CONFIRMED
+```
+
+**Common payloads:**
+```html
+<script>alert('xss')</script>
+<img src=x onerror="alert('xss')">
+<svg onload="alert('xss')">
+"><script>alert(String.fromCharCode(88,83,83))</script>
+```
+
+### Workflow 3: Brute Force Login
+
+```
+1. Proxy intercept on
+2. Attempt login (any user/pass)
+3. Right-click request → Send to Intruder
+4. Select username field
+5. Click Positions → Define clear
+6. Highlight username field
+7. Click "Add §" (add delimiter)
+8. Load wordlist with usernames
+9. Repeat for password field
+10. Click "Start Attack"
+11. Look for successful response (200, different length)
+```
+
+**Common wordlists:**
+```
+/usr/share/wordlists/rockyou.txt
+/usr/share/wordlists/metasploit/common_users.txt
+/usr/share/wordlists/fasttrack.txt
+```
+
+---
+
+## Real-World Examples
+
+### Example 1: Find Admin Panel
+
+```
+1. Proxy intercept on
+2. Browse target website normally
+3. Check all pages visited in Target → Site map
+4. Look for /admin, /dashboard, /control-panel
+5. Right-click → Send to Repeater
+6. Test access (may have authentication bypass)
+```
+
+### Example 2: Authentication Bypass
+
+```
+1. Find login form
+2. Proxy intercept on
+3. Enter any username/password
+4. Intercept the POST request
+5. Remove/modify Authorization header
+6. Add/modify session cookie
+7. Send request
+8. If still logged in → BYPASS FOUND
+```
+
+### Example 3: Mass Parameter Testing
+
+```
+1. Find form with parameters: id, username, role
+2. Send request to Intruder
+3. Mark all parameters for fuzzing
+4. Choose Cluster Bomb attack
+5. Load usernames, roles, IDs as payloads
+6. Run attack
+7. Look for 200 responses (successful access)
+```
+
+### Example 4: API Testing
+
+```
+1. Intercept API call
+2. Send to Repeater
+3. Modify parameters:
+   - user_id=1 → user_id=2 (IDOR - Insecure Direct Object Reference)
+   - admin=false → admin=true (Privilege escalation)
+4. Send and check response
+5. Different data = vulnerability found
+```
+
+---
+
+## Interview Questions & Answers
+
+### Q1: What's the difference between Intruder and Repeater?
+
+**A:**
+- **Repeater**: Manual testing tool
+  - Send one request at a time
+  - Modify manually between sends
+  - Good for exploring, understanding responses
+  - No automation
+
+- **Intruder**: Automated fuzzing tool
+  - Send many requests with different payloads
+  - Automatically cycle through wordlist
+  - Good for brute force, parameter fuzzing
+  - Fast enumeration
+
+---
+
+### Q2: How would you test for SQL injection?
+
+**A:**
+```
+1. Find input field (login, search, etc.)
+2. Try payload: ' OR '1'='1' --
+3. If query logic breaks → likely vulnerable
+4. Test more payloads to confirm
+5. Use Intruder to try many payloads automatically
+6. Analyze responses for difference (length, error, timing)
+```
+
+---
+
+### Q3: What's a good workflow for testing web application?
+
+**A:**
+```
+1. Reconnaissance:
+   - Map all endpoints (Proxy → Target → Site map)
+   - Identify all input fields
+   - Note authentication mechanisms
+
+2. Manual Testing:
+   - Try obvious vulnerabilities (SQL injection, XSS)
+   - Use Repeater for deep testing
+   - Test access controls
+
+3. Automated Testing:
+   - Use Scanner for general scan
+   - Use Intruder for brute force
+   - Analyze Intruder results
+
+4. Exploitation:
+   - Confirm vulnerabilities
+   - Find impact
+   - Document findings
+```
+
+---
+
+### Q4: How would you bypass client-side validation?
+
+**A:**
+```
+Client-side validation only checks in browser. Server doesn't validate.
+
+Method 1: Intercept and modify
+1. Proxy intercept on
+2. Fill form (browser validates)
+3. Modify in Burp before sending
+4. Send invalid/malicious data
+
+Method 2: JavaScript disable
+1. Open developer console
+2. Disable JavaScript validation code
+3. Submit form
+
+Reason: Never trust client-side validation
+```
+
+---
+
+### Q5: What's privilege escalation and how do you test for it?
+
+**A:**
+```
+Privilege escalation: User gains higher permissions
+
+Horizontal escalation:
+- User1 accesses User2's data
+- Test: Change user_id in URL/parameter
+- user_id=1 → user_id=2
+
+Vertical escalation:
+- User becomes admin
+- Test: Modify role parameter
+- role=user → role=admin
+- Modify session tokens
+
+Testing:
+1. Intercept request
+2. Modify user/role identifiers
+3. Send to Repeater
+4. Check if unauthorized access granted
+```
+
+Good luck with testing! 🎯

